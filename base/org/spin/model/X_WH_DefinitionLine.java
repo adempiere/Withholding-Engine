@@ -1,0 +1,191 @@
+/******************************************************************************
+ * Product: ADempiere ERP & CRM Smart Business Solution                       *
+ * Copyright (C) 2006-2017 ADempiere Foundation, All Rights Reserved.         *
+ * This program is free software, you can redistribute it and/or modify it    *
+ * under the terms version 2 of the GNU General Public License as published   *
+ * or (at your option) any later version.										*
+ * by the Free Software Foundation. This program is distributed in the hope   *
+ * that it will be useful, but WITHOUT ANY WARRANTY, without even the implied *
+ * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.           *
+ * See the GNU General Public License for more details.                       *
+ * You should have received a copy of the GNU General Public License along    *
+ * with this program, if not, write to the Free Software Foundation, Inc.,    *
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.                     *
+ * For the text or an alternative of this public license, you may reach us    *
+ * or via info@adempiere.net or http://www.adempiere.net/license.html         *
+ *****************************************************************************/
+/** Generated Model - DO NOT CHANGE */
+package org.spin.model;
+
+import java.sql.ResultSet;
+import java.util.Properties;
+import org.compiere.model.*;
+
+/** Generated Model for WH_DefinitionLine
+ *  @author Adempiere (generated) 
+ *  @version Release 3.9.2 - $Id$ */
+public class X_WH_DefinitionLine extends PO implements I_WH_DefinitionLine, I_Persistent 
+{
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 20190612L;
+
+    /** Standard Constructor */
+    public X_WH_DefinitionLine (Properties ctx, int WH_DefinitionLine_ID, String trxName)
+    {
+      super (ctx, WH_DefinitionLine_ID, trxName);
+      /** if (WH_DefinitionLine_ID == 0)
+        {
+			setC_DocType_ID (0);
+			setWH_Definition_ID (0);
+			setWH_DefinitionLine_ID (0);
+        } */
+    }
+
+    /** Load Constructor */
+    public X_WH_DefinitionLine (Properties ctx, ResultSet rs, String trxName)
+    {
+      super (ctx, rs, trxName);
+    }
+
+    /** AccessLevel
+      * @return 3 - Client - Org 
+      */
+    protected int get_AccessLevel()
+    {
+      return accessLevel.intValue();
+    }
+
+    /** Load Meta Data */
+    protected POInfo initPO (Properties ctx)
+    {
+      POInfo poi = POInfo.getPOInfo (ctx, Table_ID, get_TrxName());
+      return poi;
+    }
+
+    public String toString()
+    {
+      StringBuffer sb = new StringBuffer ("X_WH_DefinitionLine[")
+        .append(get_ID()).append("]");
+      return sb.toString();
+    }
+
+	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_DocType)MTable.get(getCtx(), org.compiere.model.I_C_DocType.Table_Name)
+			.getPO(getC_DocType_ID(), get_TrxName());	}
+
+	/** Set Document Type.
+		@param C_DocType_ID 
+		Document type or rules
+	  */
+	public void setC_DocType_ID (int C_DocType_ID)
+	{
+		if (C_DocType_ID < 0) 
+			set_Value (COLUMNNAME_C_DocType_ID, null);
+		else 
+			set_Value (COLUMNNAME_C_DocType_ID, Integer.valueOf(C_DocType_ID));
+	}
+
+	/** Get Document Type.
+		@return Document type or rules
+	  */
+	public int getC_DocType_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_C_DocType_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** Set Is Include Processed.
+		@param IsIncludeProcessed 
+		allows me to point out that the document is already processed
+	  */
+	public void setIsIncludeProcessed (boolean IsIncludeProcessed)
+	{
+		set_Value (COLUMNNAME_IsIncludeProcessed, Boolean.valueOf(IsIncludeProcessed));
+	}
+
+	/** Get Is Include Processed.
+		@return allows me to point out that the document is already processed
+	  */
+	public boolean isIncludeProcessed () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsIncludeProcessed);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
+	/** Set Immutable Universally Unique Identifier.
+		@param UUID 
+		Immutable Universally Unique Identifier
+	  */
+	public void setUUID (String UUID)
+	{
+		set_Value (COLUMNNAME_UUID, UUID);
+	}
+
+	/** Get Immutable Universally Unique Identifier.
+		@return Immutable Universally Unique Identifier
+	  */
+	public String getUUID () 
+	{
+		return (String)get_Value(COLUMNNAME_UUID);
+	}
+
+	public org.spin.model.I_WH_Definition getWH_Definition() throws RuntimeException
+    {
+		return (org.spin.model.I_WH_Definition)MTable.get(getCtx(), org.spin.model.I_WH_Definition.Table_Name)
+			.getPO(getWH_Definition_ID(), get_TrxName());	}
+
+	/** Set Withholding .
+		@param WH_Definition_ID 
+		Withholding Definition is used for define a withholding rule for BP
+	  */
+	public void setWH_Definition_ID (int WH_Definition_ID)
+	{
+		if (WH_Definition_ID < 1) 
+			set_ValueNoCheck (COLUMNNAME_WH_Definition_ID, null);
+		else 
+			set_ValueNoCheck (COLUMNNAME_WH_Definition_ID, Integer.valueOf(WH_Definition_ID));
+	}
+
+	/** Get Withholding .
+		@return Withholding Definition is used for define a withholding rule for BP
+	  */
+	public int getWH_Definition_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_WH_Definition_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** Set Withholding Line .
+		@param WH_DefinitionLine_ID Withholding Line 	  */
+	public void setWH_DefinitionLine_ID (int WH_DefinitionLine_ID)
+	{
+		if (WH_DefinitionLine_ID < 1) 
+			set_ValueNoCheck (COLUMNNAME_WH_DefinitionLine_ID, null);
+		else 
+			set_ValueNoCheck (COLUMNNAME_WH_DefinitionLine_ID, Integer.valueOf(WH_DefinitionLine_ID));
+	}
+
+	/** Get Withholding Line .
+		@return Withholding Line 	  */
+	public int getWH_DefinitionLine_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_WH_DefinitionLine_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+}
