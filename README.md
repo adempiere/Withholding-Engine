@@ -1,0 +1,17 @@
+# Withholding Engine
+
+This project is a engine definition for process vendor and customer withholding, note that is only a engine. 
+If you want to use it you should implement your custom class with specific location, a example for a implementation exists here: https://github.com/adempiere/LVE/blob/master/withholding/src/main/java/org/erpya/lve/util/APInvoiceIVA.java
+
+## Getting Started
+
+- Download and install ADempiere last versión from https://github.com/adempiere/adempiere/releases
+- Download Withholding project using git user git clone https://github.com/erpcya/Withholding.git
+
+## License
+Copyright (C) 2003-2018 E.R.P. Consultores y Asociados, C.A. All Rights Reserved.
+Código disponible con licencia GNU/GPLv3.
+
+## Contact
+ - Yamel Senih ysenih@erpya.com E.R.P. Consultores y Asociados, C.A.
+ - Carlos Parada cparada@erpya.com E.R.P. Consultores y Asociados, C.A.
