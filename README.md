@@ -7,6 +7,7 @@ If you want to use it you should implement your custom class with specific locat
 
 - Download and install ADempiere last versión from https://github.com/adempiere/adempiere/releases
 - Download Withholding project using git user git clone https://github.com/erpcya/Withholding.git
+- Set for your Client model validator class **org.spin.model.Withholding**
 
 ## License
 Copyright (C) 2003-2018 E.R.P. Consultores y Asociados, C.A. All Rights Reserved.
