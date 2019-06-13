@@ -29,7 +29,7 @@ import org.compiere.util.DB;
 /** Generated Model for WH_Allocation
  *  @author Adempiere (generated) 
  *  @version Release 3.9.2 - $Id$ */
-public class MWHAllocation extends X_WH_Allocation implements DocAction {
+public class MWHWithholding extends X_WH_Withholding implements DocAction {
 
 	/**
 	 *
@@ -37,13 +37,13 @@ public class MWHAllocation extends X_WH_Allocation implements DocAction {
 	private static final long serialVersionUID = 20190611L;
 
     /** Standard Constructor */
-    public MWHAllocation (Properties ctx, int WH_Allocation_ID, String trxName)
+    public MWHWithholding (Properties ctx, int WH_Allocation_ID, String trxName)
     {
       super (ctx, WH_Allocation_ID, trxName);
     }
 
     /** Load Constructor */
-    public MWHAllocation (Properties ctx, ResultSet rs, String trxName)
+    public MWHWithholding (Properties ctx, ResultSet rs, String trxName)
     {
       super (ctx, rs, trxName);
     }

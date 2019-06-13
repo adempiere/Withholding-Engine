@@ -25,10 +25,10 @@ import org.compiere.model.*;
 import org.compiere.util.Env;
 import org.compiere.util.KeyNamePair;
 
-/** Generated Model for WH_Allocation
+/** Generated Model for WH_Withholding
  *  @author Adempiere (generated) 
  *  @version Release 3.9.2 - $Id$ */
-public class X_WH_Allocation extends PO implements I_WH_Allocation, I_Persistent 
+public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persistent 
 {
 
 	/**
@@ -37,12 +37,11 @@ public class X_WH_Allocation extends PO implements I_WH_Allocation, I_Persistent
 	private static final long serialVersionUID = 20190613L;
 
     /** Standard Constructor */
-    public X_WH_Allocation (Properties ctx, int WH_Allocation_ID, String trxName)
+    public X_WH_Withholding (Properties ctx, int WH_Withholding_ID, String trxName)
     {
-      super (ctx, WH_Allocation_ID, trxName);
-      /** if (WH_Allocation_ID == 0)
+      super (ctx, WH_Withholding_ID, trxName);
+      /** if (WH_Withholding_ID == 0)
         {
-			setA_Base_Amount (Env.ZERO);
 			setC_DocType_ID (0);
 			setDateDoc (new Timestamp( System.currentTimeMillis() ));
 // @#Date@
@@ -57,14 +56,15 @@ public class X_WH_Allocation extends PO implements I_WH_Allocation, I_Persistent
 // N
 			setProcessing (false);
 // N
-			setWH_Allocation_ID (0);
+			setWH_Definition_ID (0);
 			setWH_Setting_ID (0);
+			setWH_Withholding_ID (0);
 			setWithholdingAmt (Env.ZERO);
         } */
     }
 
     /** Load Constructor */
-    public X_WH_Allocation (Properties ctx, ResultSet rs, String trxName)
+    public X_WH_Withholding (Properties ctx, ResultSet rs, String trxName)
     {
       super (ctx, rs, trxName);
     }
@@ -86,7 +86,7 @@ public class X_WH_Allocation extends PO implements I_WH_Allocation, I_Persistent
 
     public String toString()
     {
-      StringBuffer sb = new StringBuffer ("X_WH_Allocation[")
+      StringBuffer sb = new StringBuffer ("X_WH_Withholding[")
         .append(get_ID()).append("]");
       return sb.toString();
     }
@@ -503,26 +503,6 @@ public class X_WH_Allocation extends PO implements I_WH_Allocation, I_Persistent
 		return (String)get_Value(COLUMNNAME_UUID);
 	}
 
-	/** Set Withholding Allocation.
-		@param WH_Allocation_ID Withholding Allocation	  */
-	public void setWH_Allocation_ID (int WH_Allocation_ID)
-	{
-		if (WH_Allocation_ID < 1) 
-			set_ValueNoCheck (COLUMNNAME_WH_Allocation_ID, null);
-		else 
-			set_ValueNoCheck (COLUMNNAME_WH_Allocation_ID, Integer.valueOf(WH_Allocation_ID));
-	}
-
-	/** Get Withholding Allocation.
-		@return Withholding Allocation	  */
-	public int getWH_Allocation_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_WH_Allocation_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
-	}
-
 	public org.spin.model.I_WH_Definition getWH_Definition() throws RuntimeException
     {
 		return (org.spin.model.I_WH_Definition)MTable.get(getCtx(), org.spin.model.I_WH_Definition.Table_Name)
@@ -574,6 +554,26 @@ public class X_WH_Allocation extends PO implements I_WH_Allocation, I_Persistent
 	public int getWH_Setting_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_WH_Setting_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	/** Set Withholding Generated.
+		@param WH_Withholding_ID Withholding Generated	  */
+	public void setWH_Withholding_ID (int WH_Withholding_ID)
+	{
+		if (WH_Withholding_ID < 1) 
+			set_ValueNoCheck (COLUMNNAME_WH_Withholding_ID, null);
+		else 
+			set_ValueNoCheck (COLUMNNAME_WH_Withholding_ID, Integer.valueOf(WH_Withholding_ID));
+	}
+
+	/** Get Withholding Generated.
+		@return Withholding Generated	  */
+	public int getWH_Withholding_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_WH_Withholding_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

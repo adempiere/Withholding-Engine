@@ -31,8 +31,7 @@ import org.compiere.process.DocAction;
 import org.compiere.util.Env;
 import org.compiere.util.Msg;
 import org.compiere.util.Util;
-import org.python.modules.newmodule;
-import org.spin.model.MWHAllocation;
+import org.spin.model.MWHWithholding;
 import org.spin.model.MWHDefinition;
 import org.spin.model.MWHSetting;
 
@@ -190,7 +189,7 @@ public class WithholdingEngine {
 						//	Validate amount
 						if(settingRunningImplementation.getWithholdingAmount() != null
 								&& settingRunningImplementation.getWithholdingAmount().compareTo(Env.ZERO) > 0) {
-							createAllocation(settingRunningImplementation);
+							createWithholding(settingRunningImplementation);
 						}
 					}
 					//	Add message
@@ -207,8 +206,8 @@ public class WithholdingEngine {
 	 * Create Allocation for processed setting
 	 * @param withholdingRunning
 	 */
-	private void createAllocation(AbstractWithholdingSetting withholdingRunning) {
-		MWHAllocation allocation = new MWHAllocation(withholdingRunning.getCtx(), 0, withholdingRunning.getTransactionName());
+	private void createWithholding(AbstractWithholdingSetting withholdingRunning) {
+		MWHWithholding allocation = new MWHWithholding(withholdingRunning.getCtx(), 0, withholdingRunning.getTransactionName());
 		allocation.setDateDoc(new Timestamp(System.currentTimeMillis()));
 		allocation.setA_Base_Amount(withholdingRunning.getBaseAmount());
 		allocation.setWithholdingAmt(withholdingRunning.getWithholdingAmount());
@@ -229,10 +228,10 @@ public class WithholdingEngine {
 			}
 		});
 		//	Save
-		allocation.setDocStatus(MWHAllocation.DOCSTATUS_Drafted);
+		allocation.setDocStatus(MWHWithholding.DOCSTATUS_Drafted);
 		allocation.saveEx();
 		//	Complete
-		if(allocation.processIt(MWHAllocation.ACTION_Complete)) {
+		if(allocation.processIt(MWHWithholding.ACTION_Complete)) {
 			throw new AdempiereException(allocation.getProcessMsg());
 		}
 	}

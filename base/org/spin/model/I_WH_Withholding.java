@@ -21,15 +21,15 @@ import java.sql.Timestamp;
 import org.compiere.model.*;
 import org.compiere.util.KeyNamePair;
 
-/** Generated Interface for WH_Allocation
+/** Generated Interface for WH_Withholding
  *  @author Adempiere (generated) 
  *  @version Release 3.9.2
  */
-public interface I_WH_Allocation 
+public interface I_WH_Withholding 
 {
 
-    /** TableName=WH_Allocation */
-    public static final String Table_Name = "WH_Allocation";
+    /** TableName=WH_Withholding */
+    public static final String Table_Name = "WH_Withholding";
 
     /** AD_Table_ID=54647 */
     public static final int Table_ID = MTable.getTable_ID(Table_Name);
@@ -310,15 +310,6 @@ public interface I_WH_Allocation
 	  */
 	public String getUUID();
 
-    /** Column name WH_Allocation_ID */
-    public static final String COLUMNNAME_WH_Allocation_ID = "WH_Allocation_ID";
-
-	/** Set Withholding Allocation	  */
-	public void setWH_Allocation_ID (int WH_Allocation_ID);
-
-	/** Get Withholding Allocation	  */
-	public int getWH_Allocation_ID();
-
     /** Column name WH_Definition_ID */
     public static final String COLUMNNAME_WH_Definition_ID = "WH_Definition_ID";
 
@@ -348,6 +339,15 @@ public interface I_WH_Allocation
 	public int getWH_Setting_ID();
 
 	public org.spin.model.I_WH_Setting getWH_Setting() throws RuntimeException;
+
+    /** Column name WH_Withholding_ID */
+    public static final String COLUMNNAME_WH_Withholding_ID = "WH_Withholding_ID";
+
+	/** Set Withholding Generated	  */
+	public void setWH_Withholding_ID (int WH_Withholding_ID);
+
+	/** Get Withholding Generated	  */
+	public int getWH_Withholding_ID();
 
     /** Column name WithholdingAmt */
     public static final String COLUMNNAME_WithholdingAmt = "WithholdingAmt";
