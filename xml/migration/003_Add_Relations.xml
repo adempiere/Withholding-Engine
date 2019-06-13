@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="D" Name="Withholding New Relation" ReleaseNo="3.9.3" SeqNo="4760">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="102" Action="I" Record_ID="54141" Table="AD_Reference">
+        <Data AD_Column_ID="556" Column="Updated">2019-06-13 16:48:31.879</Data>
+        <Data AD_Column_ID="553" Column="IsActive">true</Data>
+        <Data AD_Column_ID="554" Column="Created">2019-06-13 16:48:31.879</Data>
+        <Data AD_Column_ID="139" Column="ValidationType">T</Data>
+        <Data AD_Column_ID="132" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="54355" Column="IsOrderByValue">false</Data>
+        <Data AD_Column_ID="1180" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="130" Column="Name">RelType C_Invoice =&gt; WH_Log_ID Withholding Log</Data>
+        <Data AD_Column_ID="131" Column="Description">Withholding Log</Data>
+        <Data AD_Column_ID="129" Column="AD_Reference_ID">54141</Data>
+        <Data AD_Column_ID="363" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="364" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="6486" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="557" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="555" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84393" Column="UUID">cc378f78-8e20-11e9-a418-07b5da355089</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="126" Action="I" Record_ID="0" Table="AD_Reference_Trl">
+        <Data AD_Column_ID="280" Column="Name">RelType C_Invoice =&gt; WH_Log_ID Withholding Log</Data>
+        <Data AD_Column_ID="282" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="666" Column="IsActive">true</Data>
+        <Data AD_Column_ID="667" Column="Created">2019-06-13 16:48:33.229</Data>
+        <Data AD_Column_ID="669" Column="Updated">2019-06-13 16:48:33.229</Data>
+        <Data AD_Column_ID="668" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="283" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="281" Column="Description">Withholding Log</Data>
+        <Data AD_Column_ID="1203" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="1202" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="670" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="279" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="278" Column="AD_Reference_ID">54141</Data>
+        <Data AD_Column_ID="84394" Column="UUID">cc7c331c-8e20-11e9-a42b-136960b9b0d1</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="103" Action="I" Record_ID="54141" Table="AD_Ref_Table">
+        <Data AD_Column_ID="559" Column="Created">2019-06-13 16:50:06.024</Data>
+        <Data AD_Column_ID="561" Column="Updated">2019-06-13 16:50:06.024</Data>
+        <Data AD_Column_ID="558" Column="IsActive">true</Data>
+        <Data AD_Column_ID="147" Column="OrderByClause" isNewNull="true"/>
+        <Data AD_Column_ID="2377" Column="IsValueDisplayed">false</Data>
+        <Data AD_Column_ID="146" Column="WhereClause">WH_Log.SourceInvoice_ID = @C_Invoice_ID@</Data>
+        <Data AD_Column_ID="62120" Column="IsAlert">false</Data>
+        <Data AD_Column_ID="62121" Column="DisplaySQL" isNewNull="true"/>
+        <Data AD_Column_ID="62122" Column="IsDisplayIdentifier">false</Data>
+        <Data AD_Column_ID="145" Column="AD_Display">93678</Data>
+        <Data AD_Column_ID="7711" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="367" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="368" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="143" Column="AD_Table_ID">54651</Data>
+        <Data AD_Column_ID="57270" Column="AD_Window_ID">53675</Data>
+        <Data AD_Column_ID="144" Column="AD_Key">93676</Data>
+        <Data AD_Column_ID="142" Column="AD_Reference_ID">54141</Data>
+        <Data AD_Column_ID="562" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="560" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84392" Column="UUID">03cbc60c-8e21-11e9-a43b-2b4db105a89c</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="102" Action="I" Record_ID="54142" Table="AD_Reference">
+        <Data AD_Column_ID="556" Column="Updated">2019-06-13 16:50:59.501</Data>
+        <Data AD_Column_ID="553" Column="IsActive">true</Data>
+        <Data AD_Column_ID="554" Column="Created">2019-06-13 16:50:59.501</Data>
+        <Data AD_Column_ID="139" Column="ValidationType">T</Data>
+        <Data AD_Column_ID="132" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="54355" Column="IsOrderByValue">false</Data>
+        <Data AD_Column_ID="1180" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="130" Column="Name">RelType C_Invoice (Vendor) &lt;= WH_Log_ID</Data>
+        <Data AD_Column_ID="131" Column="Description">Withholding Log to Invoice</Data>
+        <Data AD_Column_ID="129" Column="AD_Reference_ID">54142</Data>
+        <Data AD_Column_ID="363" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="364" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="6486" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="557" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="555" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84393" Column="UUID">23ee5d5a-8e21-11e9-a451-3bfc625605ea</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="126" Action="I" Record_ID="0" Table="AD_Reference_Trl">
+        <Data AD_Column_ID="280" Column="Name">RelType C_Invoice (Vendor) &lt;= WH_Log_ID</Data>
+        <Data AD_Column_ID="282" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="666" Column="IsActive">true</Data>
+        <Data AD_Column_ID="667" Column="Created">2019-06-13 16:51:00.223</Data>
+        <Data AD_Column_ID="669" Column="Updated">2019-06-13 16:51:00.223</Data>
+        <Data AD_Column_ID="668" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="283" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="281" Column="Description">Withholding Log to Invoice</Data>
+        <Data AD_Column_ID="1203" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="1202" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="670" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="279" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="278" Column="AD_Reference_ID">54142</Data>
+        <Data AD_Column_ID="84394" Column="UUID">24199ff6-8e21-11e9-a464-fbeac3338130</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="103" Action="I" Record_ID="54142" Table="AD_Ref_Table">
+        <Data AD_Column_ID="559" Column="Created">2019-06-13 16:57:13.677</Data>
+        <Data AD_Column_ID="561" Column="Updated">2019-06-13 16:57:13.677</Data>
+        <Data AD_Column_ID="558" Column="IsActive">true</Data>
+        <Data AD_Column_ID="147" Column="OrderByClause" isNewNull="true"/>
+        <Data AD_Column_ID="2377" Column="IsValueDisplayed">false</Data>
+        <Data AD_Column_ID="146" Column="WhereClause">EXISTS(SELECT 1 FROM WH_Log l
+	WHERE l.WH_Log_ID = @WH_Log_ID@
+	AND l.C_Invoice_ID = C_Invoice.C_Invoice_ID)
+AND C_Invoice.IsSOTrx = 'N'</Data>
+        <Data AD_Column_ID="62120" Column="IsAlert">false</Data>
+        <Data AD_Column_ID="62121" Column="DisplaySQL" isNewNull="true"/>
+        <Data AD_Column_ID="62122" Column="IsDisplayIdentifier">false</Data>
+        <Data AD_Column_ID="145" Column="AD_Display">3492</Data>
+        <Data AD_Column_ID="7711" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="367" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="368" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="143" Column="AD_Table_ID">318</Data>
+        <Data AD_Column_ID="57270" Column="AD_Window_ID">183</Data>
+        <Data AD_Column_ID="144" Column="AD_Key">3484</Data>
+        <Data AD_Column_ID="142" Column="AD_Reference_ID">54142</Data>
+        <Data AD_Column_ID="562" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="560" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84392" Column="UUID">02b244a2-8e22-11e9-a475-9b2e2e29a3f0</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="104" Action="I" Record_ID="55370" Table="AD_Ref_List">
+        <Data AD_Column_ID="563" Column="IsActive">true</Data>
+        <Data AD_Column_ID="564" Column="Created">2019-06-13 16:57:59.034</Data>
+        <Data AD_Column_ID="566" Column="Updated">2019-06-13 16:57:59.034</Data>
+        <Data AD_Column_ID="200" Column="Value">WithholdingLog</Data>
+        <Data AD_Column_ID="7712" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="151" Column="AD_Reference_ID">53331</Data>
+        <Data AD_Column_ID="150" Column="Description" isNewNull="true"/>
+        <Data AD_Column_ID="152" Column="ValidFrom" isNewNull="true"/>
+        <Data AD_Column_ID="149" Column="Name">Withholding Log</Data>
+        <Data AD_Column_ID="153" Column="ValidTo" isNewNull="true"/>
+        <Data AD_Column_ID="148" Column="AD_Ref_List_ID">55370</Data>
+        <Data AD_Column_ID="372" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="371" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="565" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="567" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="84390" Column="UUID">1dff6898-8e22-11e9-a48b-6facfbb044c6</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="136" Action="I" Record_ID="55370" Table="AD_Ref_List_Trl">
+        <Data AD_Column_ID="707" Column="Created">2019-06-13 16:57:59.755</Data>
+        <Data AD_Column_ID="709" Column="Updated">2019-06-13 16:57:59.755</Data>
+        <Data AD_Column_ID="706" Column="IsActive">true</Data>
+        <Data AD_Column_ID="338" Column="Name">Withholding Log</Data>
+        <Data AD_Column_ID="340" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="339" Column="Description" isNewNull="true"/>
+        <Data AD_Column_ID="1216" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="1215" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="710" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="708" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="336" Column="AD_Ref_List_ID">55370</Data>
+        <Data AD_Column_ID="337" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="84391" Column="UUID">1e2943ca-8e22-11e9-a49e-3bef3636e7e6</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="136" Action="U" Record_ID="55370" Table="AD_Ref_List_Trl">
+        <Data AD_Column_ID="338" Column="Name" oldValue="Withholding Log">Log de Retención</Data>
+        <Data AD_Column_ID="336" Column="AD_Ref_List_ID" oldValue="55370">55370</Data>
+        <Data AD_Column_ID="337" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="104" Action="I" Record_ID="55371" Table="AD_Ref_List">
+        <Data AD_Column_ID="151" Column="AD_Reference_ID">53331</Data>
+        <Data AD_Column_ID="563" Column="IsActive">true</Data>
+        <Data AD_Column_ID="564" Column="Created">2019-06-13 16:58:30.201</Data>
+        <Data AD_Column_ID="566" Column="Updated">2019-06-13 16:58:30.201</Data>
+        <Data AD_Column_ID="200" Column="Value">WithholdingGenerated</Data>
+        <Data AD_Column_ID="7712" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="150" Column="Description" isNewNull="true"/>
+        <Data AD_Column_ID="152" Column="ValidFrom" isNewNull="true"/>
+        <Data AD_Column_ID="149" Column="Name">Withholding Generated</Data>
+        <Data AD_Column_ID="153" Column="ValidTo" isNewNull="true"/>
+        <Data AD_Column_ID="148" Column="AD_Ref_List_ID">55371</Data>
+        <Data AD_Column_ID="372" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="371" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="565" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="567" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="84390" Column="UUID">30e75aba-8e22-11e9-a4b2-fbf2ec22f00f</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="136" Action="I" Record_ID="55371" Table="AD_Ref_List_Trl">
+        <Data AD_Column_ID="707" Column="Created">2019-06-13 16:58:31.473</Data>
+        <Data AD_Column_ID="709" Column="Updated">2019-06-13 16:58:31.473</Data>
+        <Data AD_Column_ID="706" Column="IsActive">true</Data>
+        <Data AD_Column_ID="338" Column="Name">Withholding Generated</Data>
+        <Data AD_Column_ID="340" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="339" Column="Description" isNewNull="true"/>
+        <Data AD_Column_ID="1216" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="1215" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="710" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="708" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="336" Column="AD_Ref_List_ID">55371</Data>
+        <Data AD_Column_ID="337" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="84391" Column="UUID">3110e876-8e22-11e9-a4c5-8757b5b4d128</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="120" StepType="AD">
+      <PO AD_Table_ID="136" Action="U" Record_ID="55371" Table="AD_Ref_List_Trl">
+        <Data AD_Column_ID="338" Column="Name" oldValue="Withholding Generated">Retención Generada</Data>
+        <Data AD_Column_ID="336" Column="AD_Ref_List_ID" oldValue="55371">55371</Data>
+        <Data AD_Column_ID="337" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="130" StepType="AD">
+      <PO AD_Table_ID="53246" Action="I" Record_ID="50059" Table="AD_RelationType">
+        <Data AD_Column_ID="58577" Column="Description" isNewNull="true"/>
+        <Data AD_Column_ID="58587" Column="Type">I</Data>
+        <Data AD_Column_ID="58575" Column="Created">2019-06-13 16:59:05.396</Data>
+        <Data AD_Column_ID="58578" Column="IsActive">true</Data>
+        <Data AD_Column_ID="58580" Column="Updated">2019-06-13 16:59:05.396</Data>
+        <Data AD_Column_ID="58579" Column="Name">Invoice (Vendor) &lt;-&gt; Withholding Log</Data>
+        <Data AD_Column_ID="58582" Column="AD_Reference_Source_ID">54141</Data>
+        <Data AD_Column_ID="58583" Column="AD_Reference_Target_ID">54142</Data>
+        <Data AD_Column_ID="58584" Column="IsDirected">false</Data>
+        <Data AD_Column_ID="58585" Column="Role_Source">WithholdingLog</Data>
+        <Data AD_Column_ID="58586" Column="Role_Target">Invoice</Data>
+        <Data AD_Column_ID="58571" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="58572" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="58574" Column="AD_RelationType_ID">50059</Data>
+        <Data AD_Column_ID="58576" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="58581" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="84396" Column="UUID">458d510e-8e22-11e9-a900-5b86659f52be</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="140" StepType="AD">
+      <PO AD_Table_ID="103" Action="U" Record_ID="54142" Table="AD_Ref_Table">
+        <Data AD_Column_ID="146" Column="WhereClause" oldValue="EXISTS(SELECT 1 FROM WH_Log l&#10;&#9;WHERE l.WH_Log_ID = @WH_Log_ID@&#10;&#9;AND l.C_Invoice_ID = C_Invoice.C_Invoice_ID)&#10;AND C_Invoice.IsSOTrx = 'N'">EXISTS(SELECT 1 FROM WH_Log l
+	WHERE l.WH_Log_ID = @WH_Log_ID@
+	AND l.SourceInvoice_ID = C_Invoice.C_Invoice_ID)
+AND C_Invoice.IsSOTrx = 'N'</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="150" StepType="AD">
+      <PO AD_Table_ID="102" Action="I" Record_ID="54143" Table="AD_Reference">
+        <Data AD_Column_ID="556" Column="Updated">2019-06-13 17:01:04.83</Data>
+        <Data AD_Column_ID="553" Column="IsActive">true</Data>
+        <Data AD_Column_ID="554" Column="Created">2019-06-13 17:01:04.83</Data>
+        <Data AD_Column_ID="139" Column="ValidationType">T</Data>
+        <Data AD_Column_ID="132" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="54355" Column="IsOrderByValue">false</Data>
+        <Data AD_Column_ID="1180" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="130" Column="Name">RelType C_Invoice (Vendor) &lt;= WH_Withholding_ID</Data>
+        <Data AD_Column_ID="131" Column="Description">Withholding Generated to Invoice</Data>
+        <Data AD_Column_ID="129" Column="AD_Reference_ID">54143</Data>
+        <Data AD_Column_ID="363" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="364" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="6486" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="557" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="555" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84393" Column="UUID">8cede130-8e22-11e9-9b9b-37f368f34563</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="160" StepType="AD">
+      <PO AD_Table_ID="126" Action="I" Record_ID="0" Table="AD_Reference_Trl">
+        <Data AD_Column_ID="280" Column="Name">RelType C_Invoice (Vendor) &lt;= WH_Withholding_ID</Data>
+        <Data AD_Column_ID="282" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="666" Column="IsActive">true</Data>
+        <Data AD_Column_ID="667" Column="Created">2019-06-13 17:01:05.874</Data>
+        <Data AD_Column_ID="669" Column="Updated">2019-06-13 17:01:05.874</Data>
+        <Data AD_Column_ID="668" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="283" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="281" Column="Description">Withholding Generated to Invoice</Data>
+        <Data AD_Column_ID="1203" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="1202" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="670" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="279" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="278" Column="AD_Reference_ID">54143</Data>
+        <Data AD_Column_ID="84394" Column="UUID">8d18b3f6-8e22-11e9-9bae-0b9dca5538aa</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="170" StepType="AD">
+      <PO AD_Table_ID="103" Action="I" Record_ID="54143" Table="AD_Ref_Table">
+        <Data AD_Column_ID="559" Column="Created">2019-06-13 17:02:19.128</Data>
+        <Data AD_Column_ID="561" Column="Updated">2019-06-13 17:02:19.128</Data>
+        <Data AD_Column_ID="558" Column="IsActive">true</Data>
+        <Data AD_Column_ID="147" Column="OrderByClause" isNewNull="true"/>
+        <Data AD_Column_ID="2377" Column="IsValueDisplayed">false</Data>
+        <Data AD_Column_ID="146" Column="WhereClause">EXISTS(SELECT 1 FROM WH_Withholding l
+	WHERE l.WH_Withholding_ID = @WH_Withholding_ID@
+	AND l.SourceInvoice_ID = C_Invoice.C_Invoice_ID)
+AND C_Invoice.IsSOTrx = 'N'</Data>
+        <Data AD_Column_ID="62120" Column="IsAlert">false</Data>
+        <Data AD_Column_ID="62121" Column="DisplaySQL" isNewNull="true"/>
+        <Data AD_Column_ID="62122" Column="IsDisplayIdentifier">false</Data>
+        <Data AD_Column_ID="145" Column="AD_Display">3492</Data>
+        <Data AD_Column_ID="7711" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="367" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="368" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="143" Column="AD_Table_ID">318</Data>
+        <Data AD_Column_ID="57270" Column="AD_Window_ID">183</Data>
+        <Data AD_Column_ID="144" Column="AD_Key">3484</Data>
+        <Data AD_Column_ID="142" Column="AD_Reference_ID">54143</Data>
+        <Data AD_Column_ID="562" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="560" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84392" Column="UUID">b8c27e10-8e22-11e9-9bbe-fbd233dfe95d</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="180" StepType="AD">
+      <PO AD_Table_ID="102" Action="U" Record_ID="54141" Table="AD_Reference">
+        <Data AD_Column_ID="130" Column="Name" oldValue="RelType C_Invoice =&gt; WH_Log_ID Withholding Log">RelType C_Invoice (Vendor) =&gt; WH_Log_ID Withholding Log</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="190" StepType="AD">
+      <PO AD_Table_ID="102" Action="I" Record_ID="54144" Table="AD_Reference">
+        <Data AD_Column_ID="556" Column="Updated">2019-06-13 17:04:03.405</Data>
+        <Data AD_Column_ID="553" Column="IsActive">true</Data>
+        <Data AD_Column_ID="554" Column="Created">2019-06-13 17:04:03.405</Data>
+        <Data AD_Column_ID="139" Column="ValidationType">T</Data>
+        <Data AD_Column_ID="132" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="54355" Column="IsOrderByValue">false</Data>
+        <Data AD_Column_ID="1180" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="130" Column="Name">RelType C_Invoice (Vendor) =&gt; WH_Withholding_ID Withholding</Data>
+        <Data AD_Column_ID="131" Column="Description">Withholding</Data>
+        <Data AD_Column_ID="129" Column="AD_Reference_ID">54144</Data>
+        <Data AD_Column_ID="363" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="364" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="6486" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="557" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="555" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84393" Column="UUID">f72aa2a4-8e22-11e9-9bd7-e328e4aefa10</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="200" StepType="AD">
+      <PO AD_Table_ID="126" Action="I" Record_ID="0" Table="AD_Reference_Trl">
+        <Data AD_Column_ID="280" Column="Name">RelType C_Invoice (Vendor) =&gt; WH_Withholding_ID Withholding</Data>
+        <Data AD_Column_ID="282" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="666" Column="IsActive">true</Data>
+        <Data AD_Column_ID="667" Column="Created">2019-06-13 17:04:04.082</Data>
+        <Data AD_Column_ID="669" Column="Updated">2019-06-13 17:04:04.082</Data>
+        <Data AD_Column_ID="668" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="283" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="281" Column="Description">Withholding</Data>
+        <Data AD_Column_ID="1203" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="1202" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="670" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="279" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="278" Column="AD_Reference_ID">54144</Data>
+        <Data AD_Column_ID="84394" Column="UUID">f7510fde-8e22-11e9-9bea-9b8f13e44fa7</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="210" StepType="AD">
+      <PO AD_Table_ID="103" Action="I" Record_ID="54144" Table="AD_Ref_Table">
+        <Data AD_Column_ID="559" Column="Created">2019-06-13 17:04:39.523</Data>
+        <Data AD_Column_ID="561" Column="Updated">2019-06-13 17:04:39.523</Data>
+        <Data AD_Column_ID="558" Column="IsActive">true</Data>
+        <Data AD_Column_ID="147" Column="OrderByClause" isNewNull="true"/>
+        <Data AD_Column_ID="2377" Column="IsValueDisplayed">false</Data>
+        <Data AD_Column_ID="146" Column="WhereClause">WH_Withholding.SourceInvoice_ID = @C_Invoice_ID@</Data>
+        <Data AD_Column_ID="62120" Column="IsAlert">false</Data>
+        <Data AD_Column_ID="62121" Column="DisplaySQL" isNewNull="true"/>
+        <Data AD_Column_ID="62122" Column="IsDisplayIdentifier">false</Data>
+        <Data AD_Column_ID="145" Column="AD_Display">93598</Data>
+        <Data AD_Column_ID="7711" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="367" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="368" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="143" Column="AD_Table_ID">54647</Data>
+        <Data AD_Column_ID="57270" Column="AD_Window_ID">53672</Data>
+        <Data AD_Column_ID="144" Column="AD_Key">93609</Data>
+        <Data AD_Column_ID="142" Column="AD_Reference_ID">54144</Data>
+        <Data AD_Column_ID="562" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="560" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84392" Column="UUID">0c70ff14-8e23-11e9-9bfa-efe681724ba1</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="220" StepType="AD">
+      <PO AD_Table_ID="53246" Action="I" Record_ID="50060" Table="AD_RelationType">
+        <Data AD_Column_ID="58577" Column="Description" isNewNull="true"/>
+        <Data AD_Column_ID="58587" Column="Type">I</Data>
+        <Data AD_Column_ID="58575" Column="Created">2019-06-13 17:05:05.675</Data>
+        <Data AD_Column_ID="58578" Column="IsActive">true</Data>
+        <Data AD_Column_ID="58580" Column="Updated">2019-06-13 17:05:05.675</Data>
+        <Data AD_Column_ID="58579" Column="Name">Invoice (Vendor) &lt;-&gt; Withholding Generated</Data>
+        <Data AD_Column_ID="58582" Column="AD_Reference_Source_ID">54144</Data>
+        <Data AD_Column_ID="58583" Column="AD_Reference_Target_ID">54143</Data>
+        <Data AD_Column_ID="58584" Column="IsDirected">false</Data>
+        <Data AD_Column_ID="58585" Column="Role_Source">WithholdingGenerated</Data>
+        <Data AD_Column_ID="58586" Column="Role_Target">Invoice</Data>
+        <Data AD_Column_ID="58571" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="58572" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="58574" Column="AD_RelationType_ID">50060</Data>
+        <Data AD_Column_ID="58576" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="58581" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="84396" Column="UUID">1c65231e-8e23-11e9-9922-7b2fbf3dd0f1</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

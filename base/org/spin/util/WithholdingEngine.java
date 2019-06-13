@@ -33,6 +33,7 @@ import org.compiere.util.Msg;
 import org.compiere.util.Util;
 import org.spin.model.MWHWithholding;
 import org.spin.model.MWHDefinition;
+import org.spin.model.MWHLog;
 import org.spin.model.MWHSetting;
 
 /**
@@ -50,7 +51,7 @@ public class WithholdingEngine {
 	private static WithholdingEngine settingEngine = null;
 	private HashMap<String, Object> returnValues;
 	private StringBuffer errorMessage = new StringBuffer();
-	private HashMap<String, String> processMessage;
+	private HashMap<String, String> processLog;
 
 	/**
 	 * 	Get Singleton
@@ -97,7 +98,7 @@ public class WithholdingEngine {
 		}
 		//	flush return values
 		returnValues = new HashMap<String, Object>();
-		processMessage = new HashMap<String, String>();
+		processLog = new HashMap<String, String>();
 		//	Apply Listener
 		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId)
 			.forEach(withholding -> processWithholding(withholding, document, ModelValidator.documentEventValidators[documentTiming]));
@@ -142,7 +143,7 @@ public class WithholdingEngine {
 		}
 		//	flush return values
 		returnValues = new HashMap<String, Object>();
-		processMessage = new HashMap<String, String>();
+		processLog = new HashMap<String, String>();
 		//	Apply Listener
 		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId)
 			.forEach(withholding -> processWithholding(withholding, document, ModelValidator.tableEventValidators[changeType]));
@@ -190,11 +191,14 @@ public class WithholdingEngine {
 						if(settingRunningImplementation.getWithholdingAmount() != null
 								&& settingRunningImplementation.getWithholdingAmount().compareTo(Env.ZERO) > 0) {
 							createWithholding(settingRunningImplementation);
+						} else {
+							createLog(settingRunningImplementation);
 						}
 					}
 					//	Add message
-					if(!Util.isEmpty(settingRunningImplementation.getProcessMessage())) {
-						processMessage.put(setting.getWH_Setting_ID() + "|" + document.get_ID(), settingRunningImplementation.getProcessMessage());
+					if(!Util.isEmpty(settingRunningImplementation.getProcessLog())) {
+						processLog.put(setting.getWH_Setting_ID() + "|" + document.get_ID(), settingRunningImplementation.getProcessLog());
+						createLog(settingRunningImplementation);
 					}
 				} catch(Exception e) {
 					errorMessage.append(e);
@@ -207,32 +211,58 @@ public class WithholdingEngine {
 	 * @param withholdingRunning
 	 */
 	private void createWithholding(AbstractWithholdingSetting withholdingRunning) {
-		MWHWithholding allocation = new MWHWithholding(withholdingRunning.getCtx(), 0, withholdingRunning.getTransactionName());
-		allocation.setDateDoc(new Timestamp(System.currentTimeMillis()));
-		allocation.setA_Base_Amount(withholdingRunning.getBaseAmount());
-		allocation.setWithholdingAmt(withholdingRunning.getWithholdingAmount());
-		allocation.setWH_Definition_ID(withholdingRunning.getDefinition().getWH_Definition_ID());
-		allocation.setWH_Setting_ID(withholdingRunning.getSetting().getWH_Setting_ID());
-		allocation.setC_DocType_ID();
+		MWHWithholding withholding = new MWHWithholding(withholdingRunning.getCtx(), 0, withholdingRunning.getTransactionName());
+		withholding.setDateDoc(new Timestamp(System.currentTimeMillis()));
+		withholding.setA_Base_Amount(withholdingRunning.getBaseAmount());
+		withholding.setWithholdingAmt(withholdingRunning.getWithholdingAmount());
+		withholding.setWH_Definition_ID(withholdingRunning.getDefinition().getWH_Definition_ID());
+		withholding.setWH_Setting_ID(withholdingRunning.getSetting().getWH_Setting_ID());
+		withholding.setC_DocType_ID();
 		//	Description
 		if(!Util.isEmpty(withholdingRunning.getProcessDescription())) {
-			allocation.setDescription(Msg.parseTranslation(withholdingRunning.getCtx(), withholdingRunning.getProcessDescription()));
+			withholding.setDescription(Msg.parseTranslation(withholdingRunning.getCtx(), withholdingRunning.getProcessDescription()));
 		}
 		//	Add additional references
 		//	Note that not exist validation for types
 		withholdingRunning.getReturnValues().entrySet().forEach(value -> {
-			if(allocation.get_ColumnIndex(value.getKey()) > 0) {
+			if(withholding.get_ColumnIndex(value.getKey()) > 0) {
 				if(value.getValue() != null) {
-					allocation.set_ValueOfColumn(value.getKey(), value.getValue());
+					withholding.set_ValueOfColumn(value.getKey(), value.getValue());
 				}
 			}
 		});
 		//	Save
-		allocation.setDocStatus(MWHWithholding.DOCSTATUS_Drafted);
-		allocation.saveEx();
+		withholding.setDocStatus(MWHWithholding.DOCSTATUS_Drafted);
+		withholding.saveEx();
 		//	Complete
-		if(allocation.processIt(MWHWithholding.ACTION_Complete)) {
-			throw new AdempiereException(allocation.getProcessMsg());
+		if(withholding.processIt(MWHWithholding.ACTION_Complete)) {
+			throw new AdempiereException(withholding.getProcessMsg());
 		}
+	}
+	
+	/**
+	 * Create Event Log
+	 * @param withholdingRunning
+	 */
+	private void createLog(AbstractWithholdingSetting withholdingRunning) {
+		if(Util.isEmpty(withholdingRunning.getProcessLog())) {
+			return;
+		}
+		MWHLog log = new MWHLog(withholdingRunning.getCtx(), 0, withholdingRunning.getTransactionName());
+		log.setWH_Definition_ID(withholdingRunning.getDefinition().getWH_Definition_ID());
+		log.setWH_Setting_ID(withholdingRunning.getSetting().getWH_Setting_ID());
+		//	Description
+		log.setComments(Msg.parseTranslation(withholdingRunning.getCtx(), withholdingRunning.getProcessLog()));
+		//	Add additional references
+		//	Note that not exist validation for types
+		withholdingRunning.getReturnValues().entrySet().forEach(value -> {
+			if(log.get_ColumnIndex(value.getKey()) > 0) {
+				if(value.getValue() != null) {
+					log.set_ValueOfColumn(value.getKey(), value.getValue());
+				}
+			}
+		});
+		//	Save
+		log.saveEx();
 	}
 }

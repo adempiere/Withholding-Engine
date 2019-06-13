@@ -55,7 +55,7 @@ public abstract class AbstractWithholdingSetting {
 	/**	Transaction Name	*/
 	private String transactionName;
 	/**	Process Message	*/
-	private StringBuffer processMessage = new StringBuffer();
+	private StringBuffer processLog = new StringBuffer();
 	/**	Process Description	*/
 	private StringBuffer processDescription = new StringBuffer();
 	/**	Base Amount	*/
@@ -110,20 +110,20 @@ public abstract class AbstractWithholdingSetting {
 	 * Add Message for document
 	 * @param message
 	 */
-	protected void addMessage(String message) {
-		if(processMessage.length() > 0) {
-			processMessage.append(Env.NL);
+	protected void addLog(String message) {
+		if(processLog.length() > 0) {
+			processLog.append(Env.NL);
 		}
-		processMessage.append(message);
+		processLog.append(message);
 	}
 	
 	/**
 	 * Get Process Message
 	 * @return
 	 */
-	public String getProcessMessage() {
-		if(processMessage.length() > 0) {
-			return processMessage.toString();
+	public String getProcessLog() {
+		if(processLog.length() > 0) {
+			return processLog.toString();
 		}
 		//	Default nothing
 		return null;
