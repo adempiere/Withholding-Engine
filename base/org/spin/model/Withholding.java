@@ -72,7 +72,7 @@ public class Withholding implements ModelValidator {
 		if (po.get_TableName().equals(MInvoice.Table_Name)) {
 			MInvoice invoice = (MInvoice) po;
 			if(!invoice.isReversal()) {
-				WithholdingEngine.get().fireDocValidate(po, timing);
+				WithholdingEngine.get().fireDocValidate(invoice, timing);
 			}
 			//	Save
 			invoice.saveEx();

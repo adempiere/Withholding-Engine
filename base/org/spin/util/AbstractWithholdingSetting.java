@@ -1,7 +1,8 @@
 /******************************************************************************
  * Product: Adempiere ERP & CRM Smart Business Solution                       *
  * This program is free software; you can redistribute it and/or modify it    *
- * under the terms version 2 of the GNU General Public License as published   *
+ * under the terms version 2 or later of the                                  *
+ * GNU General Public License as published                                    *
  * by the Free Software Foundation. This program is distributed in the hope   *
  * that it will be useful, but WITHOUT ANY WARRANTY; without even the implied *
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.           *
@@ -17,12 +18,12 @@
 package org.spin.util;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import org.compiere.process.DocAction;
+import org.compiere.util.CLogger;
 import org.compiere.util.Env;
 import org.spin.model.MWHDefinition;
 import org.spin.model.MWHSetting;
@@ -37,6 +38,8 @@ public abstract class AbstractWithholdingSetting {
 	public AbstractWithholdingSetting(MWHSetting setting) {
 		this.setting = setting;
 		this.ctx = setting.getCtx();
+		this.baseAmount = Env.ZERO;
+		this.withholdingAmount = Env.ZERO;
 	}
 	
 	/**	Setting	*/
@@ -51,19 +54,40 @@ public abstract class AbstractWithholdingSetting {
 	private Properties ctx;
 	/**	Transaction Name	*/
 	private String transactionName;
-	/**	Processing Message	*/
+	/**	Process Message	*/
 	private StringBuffer processMessage = new StringBuffer();
-	/**	Withholding Lines	*/
-	private List<WithholdingLine> withholdingLines = new ArrayList<>();
-	/**	Default parameters	*/
-	public static final String PO = "PO";
-	
+	/**	Process Description	*/
+	private StringBuffer processDescription = new StringBuffer();
+	/**	Base Amount	*/
+	private BigDecimal baseAmount;
+	/**	Withholding Amount	*/
+	private BigDecimal withholdingAmount;
+	/**	Document	*/
+	private DocAction document;
+	/**	Logger							*/
+	protected CLogger	log = CLogger.getCLogger (getClass());
 	/**
 	 * Get Context
 	 * @return
 	 */
 	public Properties getCtx() {
 		return ctx;
+	}
+	
+	/**
+	 * Set document
+	 * @param document
+	 */
+	public void setDocument(DocAction document) {
+		this.document = document;
+	}
+	
+	/**
+	 * Get Document
+	 * @return
+	 */
+	public DocAction getDocument() {
+		return document;
 	}
 	
 	/**
@@ -106,6 +130,29 @@ public abstract class AbstractWithholdingSetting {
 	}
 	
 	/**
+	 * Add description for document
+	 * @param description
+	 */
+	protected void addDescription(String description) {
+		if(processDescription.length() > 0) {
+			processDescription.append(Env.NL);
+		}
+		processDescription.append(description);
+	}
+	
+	/**
+	 * Get Process Message
+	 * @return
+	 */
+	public String getProcessDescription() {
+		if(processDescription.length() > 0) {
+			return processDescription.toString();
+		}
+		//	Default nothing
+		return null;
+	}
+	
+	/**
 	 * Set Withholding Definition
 	 * @param withholdingDefinition
 	 */
@@ -117,7 +164,7 @@ public abstract class AbstractWithholdingSetting {
 	 * Get Functional Setting Applicability
 	 * @return
 	 */
-	public MWHDefinition getWithholdingDefinition() {
+	public MWHDefinition getDefinition() {
 		return withholdingDefinition;
 	}
 	
@@ -214,22 +261,51 @@ public abstract class AbstractWithholdingSetting {
 	}
 	
 	/**
-	 * Add a line to list
-	 * @param line
+	 * Get Calculated Withholding Amount
+	 * @return
 	 */
-	protected void addWithholdingLine(WithholdingLine line) {
-		if(line == null) {
-			return;
-		}
-		withholdingLines.add(line);
+	public BigDecimal getWithholdingAmount() {
+		return withholdingAmount;
+	}
+
+	/**
+	 * Set Withholding Amount
+	 * @param withholdingAmount
+	 */
+	public void setWithholdingAmount(BigDecimal withholdingAmount) {
+		this.withholdingAmount = withholdingAmount;
 	}
 	
 	/**
-	 * Get withholding lines processed
+	 * Add Amount for Withholding
+	 * @param withholdingAmount
+	 */
+	public void addWithholdingAmount(BigDecimal withholdingAmount) {
+		this.withholdingAmount = this.withholdingAmount.add(withholdingAmount);
+	}
+
+	/**
+	 * Get Base Amount for calculation
 	 * @return
 	 */
-	public List<WithholdingLine> getWithholdingLines() {
-		return withholdingLines;
+	public BigDecimal getBaseAmount() {
+		return baseAmount;
+	}
+
+	/**
+	 * Base Amount for calculate withholding
+	 * @param baseAmount
+	 */
+	public void setBaseAmount(BigDecimal baseAmount) {
+		this.baseAmount = baseAmount;
+	}
+
+	/**
+	 * Add Base Amount
+	 * @param baseAmount
+	 */
+	public void addBaseAmount(BigDecimal baseAmount) {
+		this.baseAmount = this.baseAmount.add(baseAmount);
 	}
 	
 	/**

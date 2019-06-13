@@ -241,6 +241,24 @@ public class MWHAllocation extends X_WH_Allocation implements DocAction {
 	}
 
 	/**
+	 * Set Document Type
+	 */
+	public void setC_DocType_ID() {
+		String sql = "SELECT C_DocType_ID FROM C_DocType "
+			+ "WHERE AD_Client_ID = ? AND AD_Org_ID IN (0," + getAD_Org_ID()
+			+ ") AND DocBaseType = ? "
+			+ " AND IsActive = 'Y' "
+			+ "ORDER BY AD_Org_ID, IsDefault DESC";
+		int documentTypeId = DB.getSQLValue(null, sql, getAD_Client_ID(), "WHA");
+		if (documentTypeId <= 0) {
+			log.severe ("Not found for AD_Client_ID=" + getAD_Client_ID () + ", DocBaseType=WHA");
+		} else {
+			log.fine("(APS) - " + "WHA");
+			setC_DocType_ID(documentTypeId);
+		}
+	}	//	setC_DocTypeTarget_ID
+	
+	/**
 	 * 	Void Document.
 	 * 	Same as Close.
 	 * 	@return true if success 

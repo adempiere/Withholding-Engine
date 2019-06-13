@@ -31,7 +31,7 @@ public class GenericWithholdingSetting extends AbstractWithholdingSetting {
 
 	@Override
 	public String run() {
-		System.err.println("PO: " + getParameter(AbstractWithholdingSetting.PO));
+		System.out.println("Document: " + getDocument());
 		return null;
 	}
 

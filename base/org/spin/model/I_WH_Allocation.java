@@ -334,6 +334,21 @@ public interface I_WH_Allocation
 
 	public org.spin.model.I_WH_Definition getWH_Definition() throws RuntimeException;
 
+    /** Column name WH_Setting_ID */
+    public static final String COLUMNNAME_WH_Setting_ID = "WH_Setting_ID";
+
+	/** Set Withholding Setting.
+	  * specifies the setting to each applied withholding
+	  */
+	public void setWH_Setting_ID (int WH_Setting_ID);
+
+	/** Get Withholding Setting.
+	  * specifies the setting to each applied withholding
+	  */
+	public int getWH_Setting_ID();
+
+	public org.spin.model.I_WH_Setting getWH_Setting() throws RuntimeException;
+
     /** Column name WithholdingAmt */
     public static final String COLUMNNAME_WithholdingAmt = "WithholdingAmt";
 

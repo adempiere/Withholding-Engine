@@ -34,7 +34,7 @@ public class X_WH_Allocation extends PO implements I_WH_Allocation, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190612L;
+	private static final long serialVersionUID = 20190613L;
 
     /** Standard Constructor */
     public X_WH_Allocation (Properties ctx, int WH_Allocation_ID, String trxName)
@@ -42,6 +42,7 @@ public class X_WH_Allocation extends PO implements I_WH_Allocation, I_Persistent
       super (ctx, WH_Allocation_ID, trxName);
       /** if (WH_Allocation_ID == 0)
         {
+			setA_Base_Amount (Env.ZERO);
 			setC_DocType_ID (0);
 			setDateDoc (new Timestamp( System.currentTimeMillis() ));
 // @#Date@
@@ -57,6 +58,7 @@ public class X_WH_Allocation extends PO implements I_WH_Allocation, I_Persistent
 			setProcessing (false);
 // N
 			setWH_Allocation_ID (0);
+			setWH_Setting_ID (0);
 			setWithholdingAmt (Env.ZERO);
         } */
     }
@@ -544,6 +546,34 @@ public class X_WH_Allocation extends PO implements I_WH_Allocation, I_Persistent
 	public int getWH_Definition_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_WH_Definition_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.spin.model.I_WH_Setting getWH_Setting() throws RuntimeException
+    {
+		return (org.spin.model.I_WH_Setting)MTable.get(getCtx(), org.spin.model.I_WH_Setting.Table_Name)
+			.getPO(getWH_Setting_ID(), get_TrxName());	}
+
+	/** Set Withholding Setting.
+		@param WH_Setting_ID 
+		specifies the setting to each applied withholding
+	  */
+	public void setWH_Setting_ID (int WH_Setting_ID)
+	{
+		if (WH_Setting_ID < 1) 
+			set_Value (COLUMNNAME_WH_Setting_ID, null);
+		else 
+			set_Value (COLUMNNAME_WH_Setting_ID, Integer.valueOf(WH_Setting_ID));
+	}
+
+	/** Get Withholding Setting.
+		@return specifies the setting to each applied withholding
+	  */
+	public int getWH_Setting_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_WH_Setting_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

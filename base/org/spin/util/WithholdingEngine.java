@@ -16,8 +16,9 @@
  *****************************************************************************/
 package org.spin.util;
 
+import java.sql.Timestamp;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
 
 import org.adempiere.exceptions.AdempiereException;
@@ -26,10 +27,14 @@ import org.compiere.model.I_C_Invoice;
 import org.compiere.model.MDocType;
 import org.compiere.model.ModelValidator;
 import org.compiere.model.PO;
+import org.compiere.process.DocAction;
 import org.compiere.util.Env;
+import org.compiere.util.Msg;
 import org.compiere.util.Util;
+import org.python.modules.newmodule;
 import org.spin.model.MWHAllocation;
 import org.spin.model.MWHDefinition;
+import org.spin.model.MWHSetting;
 
 /**
  * Withholding Management Class for Setting Engine
@@ -77,17 +82,17 @@ public class WithholdingEngine {
 	/**
 	 * 	Fire Document Validation.
 	 * 	Call docValidate method of added validators
-	 *	@param po persistent objects
+	 *	@param document persistent objects
 	 *	@param documentTiming see ModelValidator.TIMING_ constants
      *	@return error message or null
 	 */
-	public String fireDocValidate(PO po, int documentTiming, int documentTypeId) {
-		if (po == null
+	public String fireDocValidate(DocAction document, int documentTiming, int documentTypeId) {
+		if (document == null
 				|| documentTypeId <= 0) {
 			return null;
 		}
 		//	Get Document Type
-		MDocType documentType = MDocType.get(po.getCtx(), documentTypeId);
+		MDocType documentType = MDocType.get(document.getCtx(), documentTypeId);
 		if(documentType == null) {
 			return null;
 		}
@@ -96,43 +101,43 @@ public class WithholdingEngine {
 		processMessage = new HashMap<String, String>();
 		//	Apply Listener
 		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId)
-			.forEach(withholding -> processWithholding(withholding, po, ModelValidator.documentEventValidators[documentTiming]));
+			.forEach(withholding -> processWithholding(withholding, document, ModelValidator.documentEventValidators[documentTiming]));
 		//	default
 		return errorMessage.toString();
 	}
 	
 	/**
 	 * Fire for document and get document type from PO object
-	 * @param po
+	 * @param document
 	 * @param documentTiming
 	 * @return
 	 */
-	public String fireDocValidate(PO po, int documentTiming) {
-		if(po == null) {
+	public String fireDocValidate(DocAction document, int documentTiming) {
+		if(document == null) {
 			return null;
 		}
 		//	Validate for Document Type Target
-		int documentTypeId = po.get_ValueAsInt(I_C_Invoice.COLUMNNAME_C_DocTypeTarget_ID);
+		int documentTypeId = ((PO)document).get_ValueAsInt(I_C_Invoice.COLUMNNAME_C_DocTypeTarget_ID);
 		if(documentTypeId <= 0) {
-			documentTypeId = po.get_ValueAsInt(I_C_DocType.COLUMNNAME_C_DocType_ID);
+			documentTypeId = ((PO)document).get_ValueAsInt(I_C_DocType.COLUMNNAME_C_DocType_ID);
 		}
-		return fireDocValidate(po, documentTiming, documentTypeId);
+		return fireDocValidate(document, documentTiming, documentTypeId);
 	}
 	
 	/**
 	 * 	Fire Model Change.
 	 * 	Call modelChange method of added validators
-	 *	@param po persistent objects
+	 *	@param document persistent objects
 	 *	@param changeType ModelValidator.TYPE_*
 	 *	@return error message or NULL for no veto
 	 */
-	public String fireModelChange(PO po, int changeType, int documentTypeId) {
-		if (po == null
+	public String fireModelChange(DocAction document, int changeType, int documentTypeId) {
+		if (document == null
 				|| documentTypeId <= 0) {
 			return null;
 		}
 		//	Get Document Type
-		MDocType documentType = MDocType.get(po.getCtx(), documentTypeId);
+		MDocType documentType = MDocType.get(document.getCtx(), documentTypeId);
 		if(documentType == null) {
 			return null;
 		}
@@ -141,7 +146,7 @@ public class WithholdingEngine {
 		processMessage = new HashMap<String, String>();
 		//	Apply Listener
 		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId)
-			.forEach(withholding -> processWithholding(withholding, po, ModelValidator.tableEventValidators[changeType]));
+			.forEach(withholding -> processWithholding(withholding, document, ModelValidator.tableEventValidators[changeType]));
 		//	default
 		return errorMessage.toString();
 	}
@@ -152,8 +157,10 @@ public class WithholdingEngine {
 	 * @param po
 	 * @param docTiming
 	 */
-	private void processWithholding(MWHDefinition withholdingDefinition, PO po, String eventModelValidator) {
-		withholdingDefinition.getSettingList(po.get_TableName(), eventModelValidator)
+	private void processWithholding(MWHDefinition withholdingDefinition, DocAction document, String eventModelValidator) {
+		withholdingDefinition.getSettingList(((PO)document).get_TableName(), eventModelValidator)
+			.stream()
+			.sorted(Comparator.comparing(MWHSetting::getSeqNo))
 			.forEach(setting -> {
 				try {
 					AbstractWithholdingSetting settingRunningImplementation = setting.getSettingInstance();
@@ -161,11 +168,12 @@ public class WithholdingEngine {
 					if(settingRunningImplementation == null) {
 						throw new AdempiereException("@WH_Setting_ID@ @WithholdingClassName@ @NotFound@");
 					}
+					//	Set default values
+					settingRunningImplementation.setWithholdingDefinition(withholdingDefinition);
+					settingRunningImplementation.setDocument(document);
+					settingRunningImplementation.setTransactionName(document.get_TrxName());
 					//	Verify if document is valid
 					if(settingRunningImplementation.isValid()) {
-						settingRunningImplementation.setWithholdingDefinition(withholdingDefinition);
-						settingRunningImplementation.setParameter(AbstractWithholdingSetting.PO, po);
-						settingRunningImplementation.setTransactionName(po.get_TrxName());
 						//	Run It
 						String runMessage = settingRunningImplementation.run();
 						if(!Util.isEmpty(runMessage)) {
@@ -179,11 +187,15 @@ public class WithholdingEngine {
 						for(Entry<String, Object> entry : settingRunningImplementation.getReturnValues().entrySet()) {
 							returnValues.put(entry.getKey(), entry.getValue());
 						}
-						createAllocation(settingRunningImplementation);
+						//	Validate amount
+						if(settingRunningImplementation.getWithholdingAmount() != null
+								&& settingRunningImplementation.getWithholdingAmount().compareTo(Env.ZERO) > 0) {
+							createAllocation(settingRunningImplementation);
+						}
 					}
 					//	Add message
 					if(!Util.isEmpty(settingRunningImplementation.getProcessMessage())) {
-						processMessage.put(po.get_TableName() + "_" + po.get_ID(), settingRunningImplementation.getProcessMessage());
+						processMessage.put(setting.getWH_Setting_ID() + "|" + document.get_ID(), settingRunningImplementation.getProcessMessage());
 					}
 				} catch(Exception e) {
 					errorMessage.append(e);
@@ -193,22 +205,35 @@ public class WithholdingEngine {
 	
 	/**
 	 * Create Allocation for processed setting
-	 * @param settingRunningImplementation
+	 * @param withholdingRunning
 	 */
-	private void createAllocation(AbstractWithholdingSetting settingRunningImplementation) {
-		List<WithholdingLine> processedLines = settingRunningImplementation.getWithholdingLines();
-		if(processedLines == null
-				|| processedLines.size() == 0) {
-			// Nothing here
-			return;
+	private void createAllocation(AbstractWithholdingSetting withholdingRunning) {
+		MWHAllocation allocation = new MWHAllocation(withholdingRunning.getCtx(), 0, withholdingRunning.getTransactionName());
+		allocation.setDateDoc(new Timestamp(System.currentTimeMillis()));
+		allocation.setA_Base_Amount(withholdingRunning.getBaseAmount());
+		allocation.setWithholdingAmt(withholdingRunning.getWithholdingAmount());
+		allocation.setWH_Definition_ID(withholdingRunning.getDefinition().getWH_Definition_ID());
+		allocation.setWH_Setting_ID(withholdingRunning.getSetting().getWH_Setting_ID());
+		allocation.setC_DocType_ID();
+		//	Description
+		if(!Util.isEmpty(withholdingRunning.getProcessDescription())) {
+			allocation.setDescription(Msg.parseTranslation(withholdingRunning.getCtx(), withholdingRunning.getProcessDescription()));
 		}
-		//	Process each line
-		processedLines.forEach(withholdingLine -> {
-			MWHAllocation allocation = new MWHAllocation(settingRunningImplementation.getCtx(), 0, settingRunningImplementation.getTransactionName());
-			allocation.setA_Base_Amount(withholdingLine.getBaseAmount());
-			allocation.setWithholdingAmt(withholdingLine.getWithholdingAmount());
-			//	Save
-			allocation.saveEx();
+		//	Add additional references
+		//	Note that not exist validation for types
+		withholdingRunning.getReturnValues().entrySet().forEach(value -> {
+			if(allocation.get_ColumnIndex(value.getKey()) > 0) {
+				if(value.getValue() != null) {
+					allocation.set_ValueOfColumn(value.getKey(), value.getValue());
+				}
+			}
 		});
+		//	Save
+		allocation.setDocStatus(MWHAllocation.DOCSTATUS_Drafted);
+		allocation.saveEx();
+		//	Complete
+		if(allocation.processIt(MWHAllocation.ACTION_Complete)) {
+			throw new AdempiereException(allocation.getProcessMsg());
+		}
 	}
 }
