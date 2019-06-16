@@ -232,10 +232,10 @@ public interface I_WH_Log
     /** Column name WH_Withholding_ID */
     public static final String COLUMNNAME_WH_Withholding_ID = "WH_Withholding_ID";
 
-	/** Set Withholding Generated	  */
+	/** Set Withholding Allocation	  */
 	public void setWH_Withholding_ID (int WH_Withholding_ID);
 
-	/** Get Withholding Generated	  */
+	/** Get Withholding Allocation	  */
 	public int getWH_Withholding_ID();
 
 	public org.spin.model.I_WH_Withholding getWH_Withholding() throws RuntimeException;

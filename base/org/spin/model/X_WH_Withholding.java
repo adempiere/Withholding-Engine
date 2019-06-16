@@ -34,7 +34,7 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190613L;
+	private static final long serialVersionUID = 20190616L;
 
     /** Standard Constructor */
     public X_WH_Withholding (Properties ctx, int WH_Withholding_ID, String trxName)
@@ -60,6 +60,7 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 			setWH_Setting_ID (0);
 			setWH_Withholding_ID (0);
 			setWithholdingAmt (Env.ZERO);
+			setWithholdingRate (Env.ZERO);
         } */
     }
 
@@ -559,8 +560,8 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	/** Set Withholding Generated.
-		@param WH_Withholding_ID Withholding Generated	  */
+	/** Set Withholding Allocation.
+		@param WH_Withholding_ID Withholding Allocation	  */
 	public void setWH_Withholding_ID (int WH_Withholding_ID)
 	{
 		if (WH_Withholding_ID < 1) 
@@ -569,8 +570,8 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 			set_ValueNoCheck (COLUMNNAME_WH_Withholding_ID, Integer.valueOf(WH_Withholding_ID));
 	}
 
-	/** Get Withholding Generated.
-		@return Withholding Generated	  */
+	/** Get Withholding Allocation.
+		@return Withholding Allocation	  */
 	public int getWH_Withholding_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_WH_Withholding_ID);
@@ -591,6 +592,26 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	public BigDecimal getWithholdingAmt () 
 	{
 		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_WithholdingAmt);
+		if (bd == null)
+			 return Env.ZERO;
+		return bd;
+	}
+
+	/** Set Withholding Rate.
+		@param WithholdingRate 
+		Withholding Rate applied to Document
+	  */
+	public void setWithholdingRate (BigDecimal WithholdingRate)
+	{
+		set_Value (COLUMNNAME_WithholdingRate, WithholdingRate);
+	}
+
+	/** Get Withholding Rate.
+		@return Withholding Rate applied to Document
+	  */
+	public BigDecimal getWithholdingRate () 
+	{
+		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_WithholdingRate);
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;

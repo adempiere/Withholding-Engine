@@ -249,11 +249,11 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction {
 			+ ") AND DocBaseType = ? "
 			+ " AND IsActive = 'Y' "
 			+ "ORDER BY AD_Org_ID, IsDefault DESC";
-		int documentTypeId = DB.getSQLValue(null, sql, getAD_Client_ID(), "WHA");
+		int documentTypeId = DB.getSQLValue(null, sql, getAD_Client_ID(), "WHH");
 		if (documentTypeId <= 0) {
-			log.severe ("Not found for AD_Client_ID=" + getAD_Client_ID () + ", DocBaseType=WHA");
+			log.severe ("Not found for AD_Client_ID=" + getAD_Client_ID () + ", DocBaseType=WHH");
 		} else {
-			log.fine("(APS) - " + "WHA");
+			log.fine("(APS) - " + "WHH");
 			setC_DocType_ID(documentTypeId);
 		}
 	}	//	setC_DocTypeTarget_ID

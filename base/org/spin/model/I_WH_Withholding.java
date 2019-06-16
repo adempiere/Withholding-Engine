@@ -343,10 +343,10 @@ public interface I_WH_Withholding
     /** Column name WH_Withholding_ID */
     public static final String COLUMNNAME_WH_Withholding_ID = "WH_Withholding_ID";
 
-	/** Set Withholding Generated	  */
+	/** Set Withholding Allocation	  */
 	public void setWH_Withholding_ID (int WH_Withholding_ID);
 
-	/** Get Withholding Generated	  */
+	/** Get Withholding Allocation	  */
 	public int getWH_Withholding_ID();
 
     /** Column name WithholdingAmt */
@@ -357,4 +357,17 @@ public interface I_WH_Withholding
 
 	/** Get Withholding Amt	  */
 	public BigDecimal getWithholdingAmt();
+
+    /** Column name WithholdingRate */
+    public static final String COLUMNNAME_WithholdingRate = "WithholdingRate";
+
+	/** Set Withholding Rate.
+	  * Withholding Rate applied to Document
+	  */
+	public void setWithholdingRate (BigDecimal WithholdingRate);
+
+	/** Get Withholding Rate.
+	  * Withholding Rate applied to Document
+	  */
+	public BigDecimal getWithholdingRate();
 }

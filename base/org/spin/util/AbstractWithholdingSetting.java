@@ -39,6 +39,7 @@ public abstract class AbstractWithholdingSetting {
 		this.setting = setting;
 		this.ctx = setting.getCtx();
 		this.baseAmount = Env.ZERO;
+		this.withholdingRate = Env.ZERO;
 		this.withholdingAmount = Env.ZERO;
 	}
 	
@@ -62,6 +63,8 @@ public abstract class AbstractWithholdingSetting {
 	private BigDecimal baseAmount;
 	/**	Withholding Amount	*/
 	private BigDecimal withholdingAmount;
+	/**	Withholding Rate	*/
+	private BigDecimal withholdingRate;
 	/**	Document	*/
 	private DocAction document;
 	/**	Logger							*/
@@ -114,7 +117,7 @@ public abstract class AbstractWithholdingSetting {
 		if(processLog.length() > 0) {
 			processLog.append(Env.NL);
 		}
-		processLog.append(message);
+		processLog.append("- ").append(message);
 	}
 	
 	/**
@@ -274,6 +277,22 @@ public abstract class AbstractWithholdingSetting {
 	 */
 	public void setWithholdingAmount(BigDecimal withholdingAmount) {
 		this.withholdingAmount = withholdingAmount;
+	}
+	
+	/**
+	 * Get Calculated Withholding Rate
+	 * @return
+	 */
+	public BigDecimal getWithholdingRate() {
+		return withholdingRate;
+	}
+
+	/**
+	 * Set Withholding Rate
+	 * @param withholdingRate
+	 */
+	public void setWithholdingRate(BigDecimal withholdingRate) {
+		this.withholdingRate = withholdingRate;
 	}
 	
 	/**

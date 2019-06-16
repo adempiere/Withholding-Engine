@@ -215,6 +215,7 @@ public class WithholdingEngine {
 		withholding.setDateDoc(new Timestamp(System.currentTimeMillis()));
 		withholding.setA_Base_Amount(withholdingRunning.getBaseAmount());
 		withholding.setWithholdingAmt(withholdingRunning.getWithholdingAmount());
+		withholding.setWithholdingRate(withholdingRunning.getWithholdingRate());
 		withholding.setWH_Definition_ID(withholdingRunning.getDefinition().getWH_Definition_ID());
 		withholding.setWH_Setting_ID(withholdingRunning.getSetting().getWH_Setting_ID());
 		withholding.setC_DocType_ID();

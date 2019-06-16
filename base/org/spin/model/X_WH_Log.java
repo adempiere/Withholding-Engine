@@ -31,7 +31,7 @@ public class X_WH_Log extends PO implements I_WH_Log, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190613L;
+	private static final long serialVersionUID = 20190616L;
 
     /** Standard Constructor */
     public X_WH_Log (Properties ctx, int WH_Log_ID, String trxName)
@@ -305,8 +305,8 @@ public class X_WH_Log extends PO implements I_WH_Log, I_Persistent
 		return (org.spin.model.I_WH_Withholding)MTable.get(getCtx(), org.spin.model.I_WH_Withholding.Table_Name)
 			.getPO(getWH_Withholding_ID(), get_TrxName());	}
 
-	/** Set Withholding Generated.
-		@param WH_Withholding_ID Withholding Generated	  */
+	/** Set Withholding Allocation.
+		@param WH_Withholding_ID Withholding Allocation	  */
 	public void setWH_Withholding_ID (int WH_Withholding_ID)
 	{
 		if (WH_Withholding_ID < 1) 
@@ -315,8 +315,8 @@ public class X_WH_Log extends PO implements I_WH_Log, I_Persistent
 			set_Value (COLUMNNAME_WH_Withholding_ID, Integer.valueOf(WH_Withholding_ID));
 	}
 
-	/** Get Withholding Generated.
-		@return Withholding Generated	  */
+	/** Get Withholding Allocation.
+		@return Withholding Allocation	  */
 	public int getWH_Withholding_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_WH_Withholding_ID);
