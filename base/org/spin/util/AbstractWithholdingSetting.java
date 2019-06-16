@@ -18,15 +18,21 @@
 package org.spin.util;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import org.adempiere.exceptions.AdempiereException;
 import org.compiere.process.DocAction;
 import org.compiere.util.CLogger;
 import org.compiere.util.Env;
+import org.compiere.util.Msg;
+import org.compiere.util.Util;
 import org.spin.model.MWHDefinition;
+import org.spin.model.MWHLog;
 import org.spin.model.MWHSetting;
+import org.spin.model.MWHWithholding;
 
 /**
  * Abstract class for handle all withholding document
@@ -83,6 +89,8 @@ public abstract class AbstractWithholdingSetting {
 	 */
 	public void setDocument(DocAction document) {
 		this.document = document;
+		setTransactionName(document.get_TrxName());
+		clearValues();
 	}
 	
 	/**
@@ -338,5 +346,94 @@ public abstract class AbstractWithholdingSetting {
 	 * @return
 	 */
 	public abstract String run();
+	
+	/**
+	 * Create Withholding and clear values
+	 */
+	protected void saveResult() {
+		if(getWithholdingAmount() != null
+				&& getWithholdingAmount().compareTo(Env.ZERO) > 0) {
+			createWithholding();
+		} else {
+			createLog();
+		}
+	}
+	
+	/**
+	 * Create Allocation for processed setting
+	 * @param clearValues
+	 */
+	private void createWithholding() {
+		MWHWithholding withholding = new MWHWithholding(getCtx(), 0, getTransactionName());
+		withholding.setDateDoc(new Timestamp(System.currentTimeMillis()));
+		withholding.setA_Base_Amount(getBaseAmount());
+		withholding.setWithholdingAmt(getWithholdingAmount());
+		withholding.setWithholdingRate(getWithholdingRate());
+		withholding.setWH_Definition_ID(getDefinition().getWH_Definition_ID());
+		withholding.setWH_Setting_ID(getSetting().getWH_Setting_ID());
+		withholding.setC_DocType_ID();
+		//	Description
+		if(!Util.isEmpty(getProcessDescription())) {
+			withholding.setDescription(Msg.parseTranslation(getCtx(), getProcessDescription()));
+		}
+		//	Add additional references
+		//	Note that not exist validation for types
+		getReturnValues().entrySet().forEach(value -> {
+			if(withholding.get_ColumnIndex(value.getKey()) > 0) {
+				if(value.getValue() != null) {
+					withholding.set_ValueOfColumn(value.getKey(), value.getValue());
+				}
+			}
+		});
+		//	Save
+		withholding.setDocStatus(MWHWithholding.DOCSTATUS_Drafted);
+		withholding.saveEx();
+		//	Complete
+		if(withholding.processIt(MWHWithholding.ACTION_Complete)) {
+			throw new AdempiereException(withholding.getProcessMsg());
+		}
+		//	
+		clearValues();
+	}
+	
+	/**
+	 * Clear all values
+	 */
+	private void clearValues() {
+		baseAmount = Env.ZERO;
+		withholdingRate = Env.ZERO;
+		withholdingAmount = Env.ZERO;
+		returnValues = new HashMap<String, Object>();
+		processLog = new StringBuffer();
+		processDescription = new StringBuffer();
+	}
+	
+	/**
+	 * Create Event Log
+	 * @param clearValues
+	 */
+	private void createLog() {
+		if(Util.isEmpty(getProcessLog())) {
+			return;
+		}
+		MWHLog log = new MWHLog(getCtx(), 0, getTransactionName());
+		log.setWH_Definition_ID(getDefinition().getWH_Definition_ID());
+		log.setWH_Setting_ID(getSetting().getWH_Setting_ID());
+		//	Description
+		log.setComments(Msg.parseTranslation(getCtx(), getProcessLog()));
+		//	Add additional references
+		//	Note that not exist validation for types
+		getReturnValues().entrySet().forEach(value -> {
+			if(log.get_ColumnIndex(value.getKey()) > 0) {
+				if(value.getValue() != null) {
+					log.set_ValueOfColumn(value.getKey(), value.getValue());
+				}
+			}
+		});
+		//	Save
+		log.saveEx();
+		//	Clear values
+		clearValues();
+	}
 	
 }	//	PaymentExport ???? WTF

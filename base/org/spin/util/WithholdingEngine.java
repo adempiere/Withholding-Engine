@@ -16,7 +16,6 @@
  *****************************************************************************/
 package org.spin.util;
 
-import java.sql.Timestamp;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -29,11 +28,8 @@ import org.compiere.model.ModelValidator;
 import org.compiere.model.PO;
 import org.compiere.process.DocAction;
 import org.compiere.util.Env;
-import org.compiere.util.Msg;
 import org.compiere.util.Util;
-import org.spin.model.MWHWithholding;
 import org.spin.model.MWHDefinition;
-import org.spin.model.MWHLog;
 import org.spin.model.MWHSetting;
 
 /**
@@ -171,7 +167,6 @@ public class WithholdingEngine {
 					//	Set default values
 					settingRunningImplementation.setWithholdingDefinition(withholdingDefinition);
 					settingRunningImplementation.setDocument(document);
-					settingRunningImplementation.setTransactionName(document.get_TrxName());
 					//	Verify if document is valid
 					if(settingRunningImplementation.isValid()) {
 						//	Run It
@@ -188,82 +183,16 @@ public class WithholdingEngine {
 							returnValues.put(entry.getKey(), entry.getValue());
 						}
 						//	Validate amount
-						if(settingRunningImplementation.getWithholdingAmount() != null
-								&& settingRunningImplementation.getWithholdingAmount().compareTo(Env.ZERO) > 0) {
-							createWithholding(settingRunningImplementation);
-						} else {
-							createLog(settingRunningImplementation);
-						}
+						settingRunningImplementation.saveResult();
 					}
 					//	Add message
 					if(!Util.isEmpty(settingRunningImplementation.getProcessLog())) {
 						processLog.put(setting.getWH_Setting_ID() + "|" + document.get_ID(), settingRunningImplementation.getProcessLog());
-						createLog(settingRunningImplementation);
+						settingRunningImplementation.saveResult();
 					}
 				} catch(Exception e) {
 					errorMessage.append(e);
 				}
 			});
-	}
-	
-	/**
-	 * Create Allocation for processed setting
-	 * @param withholdingRunning
-	 */
-	private void createWithholding(AbstractWithholdingSetting withholdingRunning) {
-		MWHWithholding withholding = new MWHWithholding(withholdingRunning.getCtx(), 0, withholdingRunning.getTransactionName());
-		withholding.setDateDoc(new Timestamp(System.currentTimeMillis()));
-		withholding.setA_Base_Amount(withholdingRunning.getBaseAmount());
-		withholding.setWithholdingAmt(withholdingRunning.getWithholdingAmount());
-		withholding.setWithholdingRate(withholdingRunning.getWithholdingRate());
-		withholding.setWH_Definition_ID(withholdingRunning.getDefinition().getWH_Definition_ID());
-		withholding.setWH_Setting_ID(withholdingRunning.getSetting().getWH_Setting_ID());
-		withholding.setC_DocType_ID();
-		//	Description
-		if(!Util.isEmpty(withholdingRunning.getProcessDescription())) {
-			withholding.setDescription(Msg.parseTranslation(withholdingRunning.getCtx(), withholdingRunning.getProcessDescription()));
-		}
-		//	Add additional references
-		//	Note that not exist validation for types
-		withholdingRunning.getReturnValues().entrySet().forEach(value -> {
-			if(withholding.get_ColumnIndex(value.getKey()) > 0) {
-				if(value.getValue() != null) {
-					withholding.set_ValueOfColumn(value.getKey(), value.getValue());
-				}
-			}
-		});
-		//	Save
-		withholding.setDocStatus(MWHWithholding.DOCSTATUS_Drafted);
-		withholding.saveEx();
-		//	Complete
-		if(withholding.processIt(MWHWithholding.ACTION_Complete)) {
-			throw new AdempiereException(withholding.getProcessMsg());
-		}
-	}
-	
-	/**
-	 * Create Event Log
-	 * @param withholdingRunning
-	 */
-	private void createLog(AbstractWithholdingSetting withholdingRunning) {
-		if(Util.isEmpty(withholdingRunning.getProcessLog())) {
-			return;
-		}
-		MWHLog log = new MWHLog(withholdingRunning.getCtx(), 0, withholdingRunning.getTransactionName());
-		log.setWH_Definition_ID(withholdingRunning.getDefinition().getWH_Definition_ID());
-		log.setWH_Setting_ID(withholdingRunning.getSetting().getWH_Setting_ID());
-		//	Description
-		log.setComments(Msg.parseTranslation(withholdingRunning.getCtx(), withholdingRunning.getProcessLog()));
-		//	Add additional references
-		//	Note that not exist validation for types
-		withholdingRunning.getReturnValues().entrySet().forEach(value -> {
-			if(log.get_ColumnIndex(value.getKey()) > 0) {
-				if(value.getValue() != null) {
-					log.set_ValueOfColumn(value.getKey(), value.getValue());
-				}
-			}
-		});
-		//	Save
-		log.saveEx();
 	}
 }
