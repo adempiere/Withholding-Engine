@@ -369,7 +369,7 @@
         <Data AD_Column_ID="109" Column="AD_Column_ID">93561</Data>
         <Data AD_Column_ID="126" Column="IsIdentifier">false</Data>
         <Data AD_Column_ID="111" Column="Name">Beneficiary</Data>
-        <Data AD_Column_ID="124" Column="IsMandatory">true</Data>
+        <Data AD_Column_ID="124" Column="IsMandatory">false</Data>
         <Data AD_Column_ID="125" Column="IsTranslated">false</Data>
         <Data AD_Column_ID="117" Column="DefaultValue" isNewNull="true"/>
         <Data AD_Column_ID="1179" Column="VFormat" isNewNull="true"/>
@@ -382,7 +382,7 @@
         <Data AD_Column_ID="50218" Column="MandatoryLogic" isNewNull="true"/>
         <Data AD_Column_ID="110" Column="Version">0</Data>
         <Data AD_Column_ID="13448" Column="ColumnSQL" isNewNull="true"/>
-        <Data AD_Column_ID="116" Column="ColumnName">Beneficiary</Data>
+        <Data AD_Column_ID="116" Column="ColumnName">C_BPartner_ID</Data>
         <Data AD_Column_ID="113" Column="Help">The Beneficiary indicates the Business Partner to whom payment will be made.  This field is only displayed if the Paid to Third Party checkbox is selected.</Data>
         <Data AD_Column_ID="3360" Column="IsUpdateable">true</Data>
         <Data AD_Column_ID="1692" Column="Callout" isNewNull="true"/>
@@ -399,7 +399,7 @@
         <Data AD_Column_ID="59702" Column="AD_Chart_ID" isNewNull="true"/>
         <Data AD_Column_ID="114" Column="AD_Table_ID">54645</Data>
         <Data AD_Column_ID="550" Column="CreatedBy">100</Data>
-        <Data AD_Column_ID="2608" Column="AD_Element_ID">847</Data>
+        <Data AD_Column_ID="2608" Column="AD_Element_ID">187</Data>
         <Data AD_Column_ID="227" Column="AD_Reference_Value_ID">138</Data>
         <Data AD_Column_ID="115" Column="AD_Val_Rule_ID" isNewNull="true"/>
         <Data AD_Column_ID="118" Column="FieldLength">10</Data>
@@ -482,7 +482,7 @@
         <Data AD_Column_ID="109" Column="AD_Column_ID">93562</Data>
         <Data AD_Column_ID="126" Column="IsIdentifier">false</Data>
         <Data AD_Column_ID="111" Column="Name">Charge</Data>
-        <Data AD_Column_ID="124" Column="IsMandatory">true</Data>
+        <Data AD_Column_ID="124" Column="IsMandatory">false</Data>
         <Data AD_Column_ID="125" Column="IsTranslated">false</Data>
         <Data AD_Column_ID="117" Column="DefaultValue" isNewNull="true"/>
         <Data AD_Column_ID="1179" Column="VFormat" isNewNull="true"/>
