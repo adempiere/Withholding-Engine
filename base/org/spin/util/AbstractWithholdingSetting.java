@@ -43,7 +43,7 @@ public abstract class AbstractWithholdingSetting {
 	
 	public AbstractWithholdingSetting(MWHSetting setting) {
 		this.setting = setting;
-		this.ctx = setting.getCtx();
+		this.context = setting.getCtx();
 		this.baseAmount = Env.ZERO;
 		this.withholdingRate = Env.ZERO;
 		this.withholdingAmount = Env.ZERO;
@@ -58,7 +58,7 @@ public abstract class AbstractWithholdingSetting {
 	/**	Return Value */
 	private HashMap<String, Object> returnValues = new HashMap<String, Object>();
 	/**	Context	*/
-	private Properties ctx;
+	private Properties context;
 	/**	Transaction Name	*/
 	private String transactionName;
 	/**	Process Message	*/
@@ -79,8 +79,16 @@ public abstract class AbstractWithholdingSetting {
 	 * Get Context
 	 * @return
 	 */
-	public Properties getCtx() {
-		return ctx;
+	public Properties getContext() {
+		return context;
+	}
+	
+	/**
+	 * Set context
+	 * @param context
+	 */
+	private void setContext(Properties context) {
+		this.context = context;
 	}
 	
 	/**
@@ -90,6 +98,7 @@ public abstract class AbstractWithholdingSetting {
 	public void setDocument(DocAction document) {
 		this.document = document;
 		setTransactionName(document.get_TrxName());
+		setContext(document.getCtx());
 		clearValues();
 	}
 	
@@ -364,7 +373,7 @@ public abstract class AbstractWithholdingSetting {
 	 * @param clearValues
 	 */
 	private void createWithholding() {
-		MWHWithholding withholding = new MWHWithholding(getCtx(), 0, getTransactionName());
+		MWHWithholding withholding = new MWHWithholding(getContext(), 0, getTransactionName());
 		withholding.setDateDoc(new Timestamp(System.currentTimeMillis()));
 		withholding.setA_Base_Amount(getBaseAmount());
 		withholding.setWithholdingAmt(getWithholdingAmount());
@@ -374,7 +383,7 @@ public abstract class AbstractWithholdingSetting {
 		withholding.setC_DocType_ID();
 		//	Description
 		if(!Util.isEmpty(getProcessDescription())) {
-			withholding.setDescription(Msg.parseTranslation(getCtx(), getProcessDescription()));
+			withholding.setDescription(Msg.parseTranslation(getContext(), getProcessDescription()));
 		}
 		//	Add additional references
 		//	Note that not exist validation for types
@@ -416,11 +425,11 @@ public abstract class AbstractWithholdingSetting {
 		if(Util.isEmpty(getProcessLog())) {
 			return;
 		}
-		MWHLog log = new MWHLog(getCtx(), 0, getTransactionName());
+		MWHLog log = new MWHLog(getContext(), 0, getTransactionName());
 		log.setWH_Definition_ID(getDefinition().getWH_Definition_ID());
 		log.setWH_Setting_ID(getSetting().getWH_Setting_ID());
 		//	Description
-		log.setComments(Msg.parseTranslation(getCtx(), getProcessLog()));
+		log.setComments(Msg.parseTranslation(getContext(), getProcessLog()));
 		//	Add additional references
 		//	Note that not exist validation for types
 		getReturnValues().entrySet().forEach(value -> {

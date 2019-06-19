@@ -169,7 +169,7 @@ public class MWHType extends X_WH_Type {
 	 * @return
 	 */
 	private List<MWHSetting> getApplicability(String eventType, int tableId, String eventModelValidator) {
-		String key = eventType + "|" + tableId + "|" + (Util.isEmpty(eventModelValidator)? "": eventModelValidator);
+		String key = getWH_Type_ID() + "|" + eventType + "|" + tableId + "|" + (Util.isEmpty(eventModelValidator)? "": eventModelValidator);
 		List<MWHSetting> applicabilityList = wihholdingSettingCacheValues.get(key);
 		if(applicabilityList != null) {
 			return applicabilityList;
