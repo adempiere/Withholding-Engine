@@ -301,6 +301,18 @@ public abstract class AbstractWithholdingSetting {
 	 * @return
 	 */
 	public BigDecimal getWithholdingRate() {
+		return getWithholdingRate(false);
+	}
+	
+	/**
+	 * Return rate 
+	 * @param converted: Apply (withholdingRate / 100)
+	 * @return
+	 */
+	public BigDecimal getWithholdingRate(boolean converted) {
+		if(converted) {
+			return withholdingRate.divide(Env.ONEHUNDRED);
+		}
 		return withholdingRate;
 	}
 
@@ -360,11 +372,18 @@ public abstract class AbstractWithholdingSetting {
 	 * Create Withholding and clear values
 	 */
 	protected void saveResult() {
-		if(getWithholdingAmount() != null
-				&& getWithholdingAmount().compareTo(Env.ZERO) > 0) {
-			createWithholding();
-		} else {
-			createLog();
+		try {
+			if(getWithholdingAmount() != null
+					&& getWithholdingAmount().compareTo(Env.ZERO) > 0) {
+				createWithholding();
+			} else {
+				createLog();
+			}
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			//	Clear Values
+			clearValues();
 		}
 	}
 	
@@ -398,11 +417,9 @@ public abstract class AbstractWithholdingSetting {
 		withholding.setDocStatus(MWHWithholding.DOCSTATUS_Drafted);
 		withholding.saveEx();
 		//	Complete
-		if(withholding.processIt(MWHWithholding.ACTION_Complete)) {
+		if(!withholding.processIt(MWHWithholding.ACTION_Complete)) {
 			throw new AdempiereException(withholding.getProcessMsg());
 		}
-		//	
-		clearValues();
 	}
 	
 	/**
@@ -441,8 +458,6 @@ public abstract class AbstractWithholdingSetting {
 		});
 		//	Save
 		log.saveEx();
-		//	Clear values
-		clearValues();
 	}
 	
 }	//	PaymentExport ???? WTF
