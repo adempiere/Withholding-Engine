@@ -12,8 +12,8 @@ If you want to use it you should implement your custom class with specific locat
 - Set for your Client model validator class **org.spin.model.Withholding**
 
 ## License
-Copyright (C) 2003-2018 E.R.P. Consultores y Asociados, C.A. All Rights Reserved.
-Código disponible con licencia GNU/GPLv3.
+Copyright (C) 2003-2019 E.R.P. Consultores y Asociados, C.A. All Rights Reserved.
+This code have licence GNU/GPLv2 or later.
 
 ## Contact
  - Yamel Senih ysenih@erpya.com E.R.P. Consultores y Asociados, C.A.
