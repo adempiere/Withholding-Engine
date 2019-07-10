@@ -34,7 +34,7 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190616L;
+	private static final long serialVersionUID = 20190710L;
 
     /** Standard Constructor */
     public X_WH_Withholding (Properties ctx, int WH_Withholding_ID, String trxName)
@@ -595,6 +595,34 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;
+	}
+
+	public org.compiere.model.I_C_Invoice getWithholdingDeclaration() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_Invoice)MTable.get(getCtx(), org.compiere.model.I_C_Invoice.Table_Name)
+			.getPO(getWithholdingDeclaration_ID(), get_TrxName());	}
+
+	/** Set Withholding Declaration.
+		@param WithholdingDeclaration_ID 
+		Withholding Declaration reference
+	  */
+	public void setWithholdingDeclaration_ID (int WithholdingDeclaration_ID)
+	{
+		if (WithholdingDeclaration_ID < 1) 
+			set_Value (COLUMNNAME_WithholdingDeclaration_ID, null);
+		else 
+			set_Value (COLUMNNAME_WithholdingDeclaration_ID, Integer.valueOf(WithholdingDeclaration_ID));
+	}
+
+	/** Get Withholding Declaration.
+		@return Withholding Declaration reference
+	  */
+	public int getWithholdingDeclaration_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_WithholdingDeclaration_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	/** Set Withholding Rate.

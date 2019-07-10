@@ -31,7 +31,7 @@ public class X_WH_Type extends PO implements I_WH_Type, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190616L;
+	private static final long serialVersionUID = 20190710L;
 
     /** Standard Constructor */
     public X_WH_Type (Properties ctx, int WH_Type_ID, String trxName)
@@ -39,7 +39,6 @@ public class X_WH_Type extends PO implements I_WH_Type, I_Persistent
       super (ctx, WH_Type_ID, trxName);
       /** if (WH_Type_ID == 0)
         {
-			setAD_View_ID (0);
 			setName (null);
 			setValue (null);
 			setWH_Type_ID (0);
@@ -97,6 +96,62 @@ public class X_WH_Type extends PO implements I_WH_Type, I_Persistent
 	public int getAD_View_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_AD_View_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_C_DocType getDeclarationCreditDocType() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_DocType)MTable.get(getCtx(), org.compiere.model.I_C_DocType.Table_Name)
+			.getPO(getDeclarationCreditDocType_ID(), get_TrxName());	}
+
+	/** Set Declaration Credit Document Type.
+		@param DeclarationCreditDocType_ID 
+		Declaration Credit Document Type
+	  */
+	public void setDeclarationCreditDocType_ID (int DeclarationCreditDocType_ID)
+	{
+		if (DeclarationCreditDocType_ID < 1) 
+			set_Value (COLUMNNAME_DeclarationCreditDocType_ID, null);
+		else 
+			set_Value (COLUMNNAME_DeclarationCreditDocType_ID, Integer.valueOf(DeclarationCreditDocType_ID));
+	}
+
+	/** Get Declaration Credit Document Type.
+		@return Declaration Credit Document Type
+	  */
+	public int getDeclarationCreditDocType_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_DeclarationCreditDocType_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_C_DocType getDeclarationDebitDocType() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_DocType)MTable.get(getCtx(), org.compiere.model.I_C_DocType.Table_Name)
+			.getPO(getDeclarationDebitDocType_ID(), get_TrxName());	}
+
+	/** Set Declaration Debit Document Type.
+		@param DeclarationDebitDocType_ID 
+		Declaration Debit Document Type
+	  */
+	public void setDeclarationDebitDocType_ID (int DeclarationDebitDocType_ID)
+	{
+		if (DeclarationDebitDocType_ID < 1) 
+			set_Value (COLUMNNAME_DeclarationDebitDocType_ID, null);
+		else 
+			set_Value (COLUMNNAME_DeclarationDebitDocType_ID, Integer.valueOf(DeclarationDebitDocType_ID));
+	}
+
+	/** Get Declaration Debit Document Type.
+		@return Declaration Debit Document Type
+	  */
+	public int getDeclarationDebitDocType_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_DeclarationDebitDocType_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

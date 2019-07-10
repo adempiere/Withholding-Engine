@@ -63,20 +63,20 @@ public interface I_WH_Definition
 	  */
 	public int getAD_Org_ID();
 
-    /** Column name Beneficiary */
-    public static final String COLUMNNAME_Beneficiary = "Beneficiary";
+    /** Column name C_BPartner_ID */
+    public static final String COLUMNNAME_C_BPartner_ID = "C_BPartner_ID";
 
-	/** Set Beneficiary.
-	  * Business Partner to whom payment is made
+	/** Set Business Partner .
+	  * Identifies a Business Partner
 	  */
-	public void setBeneficiary (int Beneficiary);
+	public void setC_BPartner_ID (int C_BPartner_ID);
 
-	/** Get Beneficiary.
-	  * Business Partner to whom payment is made
+	/** Get Business Partner .
+	  * Identifies a Business Partner
 	  */
-	public int getBeneficiary();
+	public int getC_BPartner_ID();
 
-	public org.compiere.model.I_C_BPartner getBenefici() throws RuntimeException;
+	public org.compiere.model.I_C_BPartner getC_BPartner() throws RuntimeException;
 
     /** Column name C_Charge_ID */
     public static final String COLUMNNAME_C_Charge_ID = "C_Charge_ID";

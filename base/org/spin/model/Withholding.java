@@ -103,7 +103,9 @@ public class Withholding implements ModelValidator {
 					withholdingList.stream()
 						.filter(withholding -> withholding.getDocStatus().equals(MWHWithholding.STATUS_Completed))
 						.forEach(withholding -> {
-							withholding.processIt(MWHWithholding.ACTION_Reverse_Correct);
+							if(!withholding.processIt(MWHWithholding.ACTION_Reverse_Correct)) {
+								throw new AdempiereException(withholding.getProcessMsg());
+							}
 							withholding.saveEx();
 					});
 				}

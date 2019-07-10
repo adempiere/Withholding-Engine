@@ -31,7 +31,7 @@ public class X_WH_Log extends PO implements I_WH_Log, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190616L;
+	private static final long serialVersionUID = 20190710L;
 
     /** Standard Constructor */
     public X_WH_Log (Properties ctx, int WH_Log_ID, String trxName)

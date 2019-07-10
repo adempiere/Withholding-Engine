@@ -30,7 +30,7 @@ public class X_WH_Definition extends PO implements I_WH_Definition, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190616L;
+	private static final long serialVersionUID = 20190710L;
 
     /** Standard Constructor */
     public X_WH_Definition (Properties ctx, int WH_Definition_ID, String trxName)
@@ -38,8 +38,6 @@ public class X_WH_Definition extends PO implements I_WH_Definition, I_Persistent
       super (ctx, WH_Definition_ID, trxName);
       /** if (WH_Definition_ID == 0)
         {
-			setBeneficiary (0);
-			setC_Charge_ID (0);
 			setC_DocType_ID (0);
 			setName (null);
 			setWH_Definition_ID (0);
@@ -75,26 +73,29 @@ public class X_WH_Definition extends PO implements I_WH_Definition, I_Persistent
       return sb.toString();
     }
 
-	public org.compiere.model.I_C_BPartner getBenefici() throws RuntimeException
+	public org.compiere.model.I_C_BPartner getC_BPartner() throws RuntimeException
     {
 		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
-			.getPO(getBeneficiary(), get_TrxName());	}
+			.getPO(getC_BPartner_ID(), get_TrxName());	}
 
-	/** Set Beneficiary.
-		@param Beneficiary 
-		Business Partner to whom payment is made
+	/** Set Business Partner .
+		@param C_BPartner_ID 
+		Identifies a Business Partner
 	  */
-	public void setBeneficiary (int Beneficiary)
+	public void setC_BPartner_ID (int C_BPartner_ID)
 	{
-		set_Value (COLUMNNAME_Beneficiary, Integer.valueOf(Beneficiary));
+		if (C_BPartner_ID < 1) 
+			set_Value (COLUMNNAME_C_BPartner_ID, null);
+		else 
+			set_Value (COLUMNNAME_C_BPartner_ID, Integer.valueOf(C_BPartner_ID));
 	}
 
-	/** Get Beneficiary.
-		@return Business Partner to whom payment is made
+	/** Get Business Partner .
+		@return Identifies a Business Partner
 	  */
-	public int getBeneficiary () 
+	public int getC_BPartner_ID () 
 	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_Beneficiary);
+		Integer ii = (Integer)get_Value(COLUMNNAME_C_BPartner_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

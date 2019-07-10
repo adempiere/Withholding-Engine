@@ -358,6 +358,21 @@ public interface I_WH_Withholding
 	/** Get Withholding Amt	  */
 	public BigDecimal getWithholdingAmt();
 
+    /** Column name WithholdingDeclaration_ID */
+    public static final String COLUMNNAME_WithholdingDeclaration_ID = "WithholdingDeclaration_ID";
+
+	/** Set Withholding Declaration.
+	  * Withholding Declaration reference
+	  */
+	public void setWithholdingDeclaration_ID (int WithholdingDeclaration_ID);
+
+	/** Get Withholding Declaration.
+	  * Withholding Declaration reference
+	  */
+	public int getWithholdingDeclaration_ID();
+
+	public org.compiere.model.I_C_Invoice getWithholdingDeclaration() throws RuntimeException;
+
     /** Column name WithholdingRate */
     public static final String COLUMNNAME_WithholdingRate = "WithholdingRate";
 

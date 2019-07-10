@@ -94,6 +94,36 @@ public interface I_WH_Type
 	  */
 	public int getCreatedBy();
 
+    /** Column name DeclarationCreditDocType_ID */
+    public static final String COLUMNNAME_DeclarationCreditDocType_ID = "DeclarationCreditDocType_ID";
+
+	/** Set Declaration Credit Document Type.
+	  * Declaration Credit Document Type
+	  */
+	public void setDeclarationCreditDocType_ID (int DeclarationCreditDocType_ID);
+
+	/** Get Declaration Credit Document Type.
+	  * Declaration Credit Document Type
+	  */
+	public int getDeclarationCreditDocType_ID();
+
+	public org.compiere.model.I_C_DocType getDeclarationCreditDocType() throws RuntimeException;
+
+    /** Column name DeclarationDebitDocType_ID */
+    public static final String COLUMNNAME_DeclarationDebitDocType_ID = "DeclarationDebitDocType_ID";
+
+	/** Set Declaration Debit Document Type.
+	  * Declaration Debit Document Type
+	  */
+	public void setDeclarationDebitDocType_ID (int DeclarationDebitDocType_ID);
+
+	/** Get Declaration Debit Document Type.
+	  * Declaration Debit Document Type
+	  */
+	public int getDeclarationDebitDocType_ID();
+
+	public org.compiere.model.I_C_DocType getDeclarationDebitDocType() throws RuntimeException;
+
     /** Column name Description */
     public static final String COLUMNNAME_Description = "Description";
 

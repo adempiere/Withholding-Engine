@@ -22,10 +22,13 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Properties;
+
+import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.*;
 import org.compiere.process.DocAction;
 import org.compiere.process.DocumentEngine;
 import org.compiere.util.DB;
+import org.compiere.util.Msg;
 
 /** Generated Model for WH_Allocation
  *  @author Adempiere (generated) 
@@ -267,20 +270,72 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction {
 	public boolean voidIt()
 	{
 		log.info("voidIt - " + toString());
-		return closeIt();
+		// Before Void
+		m_processMsg = ModelValidationEngine.get().fireDocValidate(this,ModelValidator.TIMING_BEFORE_VOID);
+		if (m_processMsg != null)
+			return false;
+		// After Void
+		//	Declaration
+		if(getWithholdingDeclaration_ID() != 0) {
+			MInvoice declaration = (MInvoice) getWithholdingDeclaration();
+			if(!declaration.getDocStatus().equals(MInvoice.DOCSTATUS_Reversed)
+					&& !declaration.getDocStatus().equals(MInvoice.DOCSTATUS_Voided)) {
+				throw new AdempiereException("@DeclarationReferenceError@: @WithholdingDeclaration_ID@ " + declaration.getDocumentNo());
+			}
+		}
+		//	AP document
+		if(getC_Invoice_ID() != 0) {
+			MInvoice invoice = (MInvoice) getC_Invoice();
+			if(invoice.getDocStatus().equals(MInvoice.DOCSTATUS_Completed)) {
+				if(!invoice.processIt(MInvoice.ACTION_Reverse_Correct)) {
+					throw new AdempiereException(invoice.getProcessMsg());
+				}
+				invoice.saveEx();
+			}
+		}
+		//	Validate reference
+		addDescription(Msg.getMsg(getCtx(), "Voided"));
+		m_processMsg = ModelValidationEngine.get().fireDocValidate(this,ModelValidator.TIMING_AFTER_VOID);
+		if (m_processMsg != null)
+			return false;
+
+		setProcessed(true);
+        setDocAction(DOCACTION_None);
+		return true;
 	}	//	voidIt
+	
+	/**
+     *  Add to Description
+     *  @param description text
+     */
+    public void addDescription (String description) {
+        String desc = getDescription();
+        if (desc == null)
+            setDescription(description);
+        else
+            setDescription(desc + " | " + description);
+    }   //  addDescription
 	
 	/**
 	 * 	Close Document.
 	 * 	Cancel not delivered Qunatities
 	 * 	@return true if success 
 	 */
-	public boolean closeIt()
-	{
+	public boolean closeIt() {
 		log.info("closeIt - " + toString());
-
-		//	Close Not delivered Qty
+		// Before Close
+		m_processMsg = ModelValidationEngine.get().fireDocValidate(this,ModelValidator.TIMING_BEFORE_CLOSE);
+		if (m_processMsg != null)
+			return false;
+		
+		setProcessed(true);
 		setDocAction(DOCACTION_None);
+		
+		// After Close
+		m_processMsg = ModelValidationEngine.get().fireDocValidate(this,ModelValidator.TIMING_AFTER_CLOSE);
+		if (m_processMsg != null)
+			return false;
+
 		return true;
 	}	//	closeIt
 	
@@ -291,6 +346,17 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction {
 	public boolean reverseCorrectIt()
 	{
 		log.info("reverseCorrectIt - " + toString());
+		// Before reverseCorrect
+		m_processMsg = ModelValidationEngine.get().fireDocValidate(this,ModelValidator.TIMING_BEFORE_REVERSECORRECT);
+		if (m_processMsg != null)
+			return false;
+		//	Void It
+		voidIt();
+		// After reverseCorrect
+		m_processMsg = ModelValidationEngine.get().fireDocValidate(this,ModelValidator.TIMING_AFTER_REVERSECORRECT);
+		if (m_processMsg != null)
+			return false;
+
 		return false;
 	}	//	reverseCorrectionIt
 	
@@ -301,6 +367,17 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction {
 	public boolean reverseAccrualIt()
 	{
 		log.info("reverseAccrualIt - " + toString());
+		// Before reverseAccrual
+		m_processMsg = ModelValidationEngine.get().fireDocValidate(this,ModelValidator.TIMING_BEFORE_REVERSEACCRUAL);
+		if (m_processMsg != null)
+			return false;
+		//	Void It
+		voidIt();
+		// After reverseAccrual
+		m_processMsg = ModelValidationEngine.get().fireDocValidate(this,ModelValidator.TIMING_AFTER_REVERSEACCRUAL);
+		if (m_processMsg != null)
+			return false;
+
 		return false;
 	}	//	reverseAccrualIt
 	
@@ -311,10 +388,18 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction {
 	public boolean reActivateIt()
 	{
 		log.info("reActivateIt - " + toString());
+		// Before reActivate
+		m_processMsg = ModelValidationEngine.get().fireDocValidate(this,ModelValidator.TIMING_BEFORE_REACTIVATE);
+		if (m_processMsg != null)
+			return false;
+		// After reActivate
+		m_processMsg = ModelValidationEngine.get().fireDocValidate(this,ModelValidator.TIMING_AFTER_REACTIVATE);
+		if (m_processMsg != null)
+			return false;
+		
+		setDocAction(DOCACTION_Complete);
 		setProcessed(false);
-		if (reverseCorrectIt())
-			return true;
-		return false;
+		return true;
 	}	//	reActivateIt
 	
 	
@@ -377,14 +462,44 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction {
 	/**
 	 * Get Withholding list from invoice
 	 * @param context
+	 * @param sourceInvoiceId
+	 * @param transactionName
+	 * @return
+	 */
+	public static List<MWHWithholding> getWithholdingFromInvoice(Properties context, int sourceInvoiceId, String transactionName) {
+		return new Query(context, I_WH_Withholding.Table_Name, I_WH_Withholding.COLUMNNAME_SourceInvoice_ID + " = ?", transactionName)
+			.setClient_ID()
+			.setParameters(sourceInvoiceId)
+			.setOnlyActiveRecords(true)
+			.<MWHWithholding>list();
+	}
+	
+	/**
+	 * Get Withholding source list from invoice
+	 * @param context
 	 * @param invoiceId
 	 * @param transactionName
 	 * @return
 	 */
-	public static List<MWHWithholding> getWithholdingFromInvoice(Properties context, int invoiceId, String transactionName) {
-		return new Query(context, I_WH_Withholding.Table_Name, I_WH_Withholding.COLUMNNAME_SourceInvoice_ID + " = ?", transactionName)
+	public static List<MWHWithholding> getWithholdingSourceFromInvoice(Properties context, int invoiceId, String transactionName) {
+		return new Query(context, I_WH_Withholding.Table_Name, I_WH_Withholding.COLUMNNAME_C_Invoice_ID + " = ?", transactionName)
 			.setClient_ID()
 			.setParameters(invoiceId)
+			.setOnlyActiveRecords(true)
+			.<MWHWithholding>list();
+	}
+	
+	/**
+	 * Get Withholding source list from declaration
+	 * @param context
+	 * @param withholdingDeclarationId
+	 * @param transactionName
+	 * @return
+	 */
+	public static List<MWHWithholding> getWithholdingSourceFromDeclaration(Properties context, int withholdingDeclarationId, String transactionName) {
+		return new Query(context, I_WH_Withholding.Table_Name, I_WH_Withholding.COLUMNNAME_WithholdingDeclaration_ID + " = ?", transactionName)
+			.setClient_ID()
+			.setParameters(withholdingDeclarationId)
 			.setOnlyActiveRecords(true)
 			.<MWHWithholding>list();
 	}
