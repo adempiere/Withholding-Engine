@@ -15,12 +15,16 @@
  ************************************************************************************/
 package org.spin.model;
 
+import java.util.List;
+
+import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.MClient;
 import org.compiere.model.MInvoice;
 import org.compiere.model.ModelValidationEngine;
 import org.compiere.model.ModelValidator;
 import org.compiere.model.PO;
 import org.compiere.util.CLogger;
+import org.compiere.util.Env;
 import org.spin.util.WithholdingEngine;
 
 /**
@@ -74,6 +78,35 @@ public class Withholding implements ModelValidator {
 			MInvoice invoice = (MInvoice) po;
 			if(!invoice.isReversal()) {
 				error = WithholdingEngine.get().fireDocValidate(invoice, timing);
+			}
+			//	For Reverse Correct
+			if(timing == TIMING_BEFORE_REVERSECORRECT
+					|| timing == TIMING_BEFORE_REVERSEACCRUAL
+					|| timing == TIMING_BEFORE_VOID) {
+				if(!invoice.isReversal()) {
+					StringBuffer errorMessage = new StringBuffer();
+					List<MWHWithholding> withholdingList = MWHWithholding.getWithholdingFromInvoice(invoice.getCtx(), invoice.getC_Invoice_ID(), invoice.get_TrxName());
+					//	Validate
+					withholdingList.stream()
+						.filter(withholding -> withholding.getDocStatus().equals(MWHWithholding.STATUS_Completed) && withholding.getC_Invoice_ID() != 0)
+						.forEach(withholding -> {
+							if(errorMessage.length() > 0) {
+								errorMessage.append(Env.NL);
+							}
+							errorMessage.append("@WH_Withholding_ID@ ").append(withholding.getDocumentNo()).append(" @C_Invoice_ID@ ").append(withholding.getC_Invoice().getDocumentNo());
+						});
+					//	Throw if exist documents
+					if(errorMessage.length() > 0) {
+						throw new AdempiereException("@WithholdingReferenceError@: " + errorMessage);
+					}
+					//	Else
+					withholdingList.stream()
+						.filter(withholding -> withholding.getDocStatus().equals(MWHWithholding.STATUS_Completed))
+						.forEach(withholding -> {
+							withholding.processIt(MWHWithholding.ACTION_Reverse_Correct);
+							withholding.saveEx();
+					});
+				}
 			}
 		}	
 		//

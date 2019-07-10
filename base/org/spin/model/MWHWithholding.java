@@ -20,6 +20,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Properties;
 import org.compiere.model.*;
 import org.compiere.process.DocAction;
@@ -372,6 +373,21 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction {
 	//	return pl.getC_Currency_ID();
 		return 0;
 	}	//	getC_Currency_ID
+	
+	/**
+	 * Get Withholding list from invoice
+	 * @param context
+	 * @param invoiceId
+	 * @param transactionName
+	 * @return
+	 */
+	public static List<MWHWithholding> getWithholdingFromInvoice(Properties context, int invoiceId, String transactionName) {
+		return new Query(context, I_WH_Withholding.Table_Name, I_WH_Withholding.COLUMNNAME_SourceInvoice_ID + " = ?", transactionName)
+			.setClient_ID()
+			.setParameters(invoiceId)
+			.setOnlyActiveRecords(true)
+			.<MWHWithholding>list();
+	}
 
     @Override
     public String toString()
