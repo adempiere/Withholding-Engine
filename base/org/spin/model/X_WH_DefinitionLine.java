@@ -30,7 +30,7 @@ public class X_WH_DefinitionLine extends PO implements I_WH_DefinitionLine, I_Pe
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190710L;
+	private static final long serialVersionUID = 20190813L;
 
     /** Standard Constructor */
     public X_WH_DefinitionLine (Properties ctx, int WH_DefinitionLine_ID, String trxName)

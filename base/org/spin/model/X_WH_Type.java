@@ -31,7 +31,7 @@ public class X_WH_Type extends PO implements I_WH_Type, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190710L;
+	private static final long serialVersionUID = 20190813L;
 
     /** Standard Constructor */
     public X_WH_Type (Properties ctx, int WH_Type_ID, String trxName)
@@ -251,6 +251,62 @@ public class X_WH_Type extends PO implements I_WH_Type, I_Persistent
 	public int getWH_Type_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_WH_Type_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_C_DocType getWithholdingCreditDocType() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_DocType)MTable.get(getCtx(), org.compiere.model.I_C_DocType.Table_Name)
+			.getPO(getWithholdingCreditDocType_ID(), get_TrxName());	}
+
+	/** Set Withholding Credit Document Type.
+		@param WithholdingCreditDocType_ID 
+		Withholding Credit Document Type
+	  */
+	public void setWithholdingCreditDocType_ID (int WithholdingCreditDocType_ID)
+	{
+		if (WithholdingCreditDocType_ID < 1) 
+			set_Value (COLUMNNAME_WithholdingCreditDocType_ID, null);
+		else 
+			set_Value (COLUMNNAME_WithholdingCreditDocType_ID, Integer.valueOf(WithholdingCreditDocType_ID));
+	}
+
+	/** Get Withholding Credit Document Type.
+		@return Withholding Credit Document Type
+	  */
+	public int getWithholdingCreditDocType_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_WithholdingCreditDocType_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_C_DocType getWithholdingDebitDocType() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_DocType)MTable.get(getCtx(), org.compiere.model.I_C_DocType.Table_Name)
+			.getPO(getWithholdingDebitDocType_ID(), get_TrxName());	}
+
+	/** Set Withholding Debit Document Type.
+		@param WithholdingDebitDocType_ID 
+		Withholding Debit Document Type
+	  */
+	public void setWithholdingDebitDocType_ID (int WithholdingDebitDocType_ID)
+	{
+		if (WithholdingDebitDocType_ID < 1) 
+			set_Value (COLUMNNAME_WithholdingDebitDocType_ID, null);
+		else 
+			set_Value (COLUMNNAME_WithholdingDebitDocType_ID, Integer.valueOf(WithholdingDebitDocType_ID));
+	}
+
+	/** Get Withholding Debit Document Type.
+		@return Withholding Debit Document Type
+	  */
+	public int getWithholdingDebitDocType_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_WithholdingDebitDocType_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

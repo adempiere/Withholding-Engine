@@ -217,4 +217,34 @@ public interface I_WH_Type
 	  * Indicates the types of national tax withholdings
 	  */
 	public int getWH_Type_ID();
+
+    /** Column name WithholdingCreditDocType_ID */
+    public static final String COLUMNNAME_WithholdingCreditDocType_ID = "WithholdingCreditDocType_ID";
+
+	/** Set Withholding Credit Document Type.
+	  * Withholding Credit Document Type
+	  */
+	public void setWithholdingCreditDocType_ID (int WithholdingCreditDocType_ID);
+
+	/** Get Withholding Credit Document Type.
+	  * Withholding Credit Document Type
+	  */
+	public int getWithholdingCreditDocType_ID();
+
+	public org.compiere.model.I_C_DocType getWithholdingCreditDocType() throws RuntimeException;
+
+    /** Column name WithholdingDebitDocType_ID */
+    public static final String COLUMNNAME_WithholdingDebitDocType_ID = "WithholdingDebitDocType_ID";
+
+	/** Set Withholding Debit Document Type.
+	  * Withholding Debit Document Type
+	  */
+	public void setWithholdingDebitDocType_ID (int WithholdingDebitDocType_ID);
+
+	/** Get Withholding Debit Document Type.
+	  * Withholding Debit Document Type
+	  */
+	public int getWithholdingDebitDocType_ID();
+
+	public org.compiere.model.I_C_DocType getWithholdingDebitDocType() throws RuntimeException;
 }

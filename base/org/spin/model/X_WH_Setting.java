@@ -31,7 +31,7 @@ public class X_WH_Setting extends PO implements I_WH_Setting, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190710L;
+	private static final long serialVersionUID = 20190813L;
 
     /** Standard Constructor */
     public X_WH_Setting (Properties ctx, int WH_Setting_ID, String trxName)

@@ -34,7 +34,7 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190710L;
+	private static final long serialVersionUID = 20190813L;
 
     /** Standard Constructor */
     public X_WH_Withholding (Properties ctx, int WH_Withholding_ID, String trxName)
@@ -107,6 +107,34 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;
+	}
+
+	public org.compiere.model.I_C_BPartner getC_BPartner() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
+			.getPO(getC_BPartner_ID(), get_TrxName());	}
+
+	/** Set Business Partner .
+		@param C_BPartner_ID 
+		Identifies a Business Partner
+	  */
+	public void setC_BPartner_ID (int C_BPartner_ID)
+	{
+		if (C_BPartner_ID < 1) 
+			set_Value (COLUMNNAME_C_BPartner_ID, null);
+		else 
+			set_Value (COLUMNNAME_C_BPartner_ID, Integer.valueOf(C_BPartner_ID));
+	}
+
+	/** Get Business Partner .
+		@return Identifies a Business Partner
+	  */
+	public int getC_BPartner_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_C_BPartner_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 
 	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException
@@ -383,6 +411,30 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	public boolean isDeclared () 
 	{
 		Object oo = get_Value(COLUMNNAME_IsDeclared);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
+	/** Set Simulation.
+		@param IsSimulation 
+		Performing the function is only simulated
+	  */
+	public void setIsSimulation (boolean IsSimulation)
+	{
+		set_Value (COLUMNNAME_IsSimulation, Boolean.valueOf(IsSimulation));
+	}
+
+	/** Get Simulation.
+		@return Performing the function is only simulated
+	  */
+	public boolean isSimulation () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsSimulation);
 		if (oo != null) 
 		{
 			 if (oo instanceof Boolean) 

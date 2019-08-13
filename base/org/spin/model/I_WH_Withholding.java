@@ -72,6 +72,21 @@ public interface I_WH_Withholding
 	  */
 	public int getAD_Org_ID();
 
+    /** Column name C_BPartner_ID */
+    public static final String COLUMNNAME_C_BPartner_ID = "C_BPartner_ID";
+
+	/** Set Business Partner .
+	  * Identifies a Business Partner
+	  */
+	public void setC_BPartner_ID (int C_BPartner_ID);
+
+	/** Get Business Partner .
+	  * Identifies a Business Partner
+	  */
+	public int getC_BPartner_ID();
+
+	public org.compiere.model.I_C_BPartner getC_BPartner() throws RuntimeException;
+
     /** Column name C_DocType_ID */
     public static final String COLUMNNAME_C_DocType_ID = "C_DocType_ID";
 
@@ -236,6 +251,19 @@ public interface I_WH_Withholding
 	  * Show if a withholding has been declared
 	  */
 	public boolean isDeclared();
+
+    /** Column name IsSimulation */
+    public static final String COLUMNNAME_IsSimulation = "IsSimulation";
+
+	/** Set Simulation.
+	  * Performing the function is only simulated
+	  */
+	public void setIsSimulation (boolean IsSimulation);
+
+	/** Get Simulation.
+	  * Performing the function is only simulated
+	  */
+	public boolean isSimulation();
 
     /** Column name Processed */
     public static final String COLUMNNAME_Processed = "Processed";

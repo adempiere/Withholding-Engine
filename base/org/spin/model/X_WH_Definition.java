@@ -30,7 +30,7 @@ public class X_WH_Definition extends PO implements I_WH_Definition, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190710L;
+	private static final long serialVersionUID = 20190813L;
 
     /** Standard Constructor */
     public X_WH_Definition (Properties ctx, int WH_Definition_ID, String trxName)
