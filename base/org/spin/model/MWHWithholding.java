@@ -26,6 +26,7 @@ import java.util.Properties;
 import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.*;
 import org.compiere.process.DocAction;
+import org.compiere.process.DocOptions;
 import org.compiere.process.DocumentEngine;
 import org.compiere.util.DB;
 import org.compiere.util.Msg;
@@ -33,7 +34,7 @@ import org.compiere.util.Msg;
 /** Generated Model for WH_Allocation
  *  @author Adempiere (generated) 
  *  @version Release 3.9.2 - $Id$ */
-public class MWHWithholding extends X_WH_Withholding implements DocAction {
+public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOptions {
 
 	/**
 	 *
@@ -504,6 +505,20 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction {
 			.<MWHWithholding>list();
 	}
 
+	@Override
+	public int customizeValidActions(String docStatus, Object processing,
+			String orderType, String isSOTrx, int AD_Table_ID,
+			String[] docAction, String[] options, int index) {
+		//	Valid Document Action
+		if (AD_Table_ID == Table_ID){
+			if (docStatus.equals(DocumentEngine.STATUS_Completed)) {
+				options[index++] = DocumentEngine.ACTION_Void;
+			}
+		}
+		//	Default
+		return index;
+	}
+	
     @Override
     public String toString()
     {
