@@ -93,21 +93,6 @@ public interface I_WH_Definition
 
 	public org.compiere.model.I_C_Charge getC_Charge() throws RuntimeException;
 
-    /** Column name C_DocType_ID */
-    public static final String COLUMNNAME_C_DocType_ID = "C_DocType_ID";
-
-	/** Set Document Type.
-	  * Document type or rules
-	  */
-	public void setC_DocType_ID (int C_DocType_ID);
-
-	/** Get Document Type.
-	  * Document type or rules
-	  */
-	public int getC_DocType_ID();
-
-	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException;
-
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
 
@@ -123,6 +108,36 @@ public interface I_WH_Definition
 	  * User who created this records
 	  */
 	public int getCreatedBy();
+
+    /** Column name DeclarationCreditDocType_ID */
+    public static final String COLUMNNAME_DeclarationCreditDocType_ID = "DeclarationCreditDocType_ID";
+
+	/** Set Declaration Credit Document Type.
+	  * Declaration Credit Document Type
+	  */
+	public void setDeclarationCreditDocType_ID (int DeclarationCreditDocType_ID);
+
+	/** Get Declaration Credit Document Type.
+	  * Declaration Credit Document Type
+	  */
+	public int getDeclarationCreditDocType_ID();
+
+	public org.compiere.model.I_C_DocType getDeclarationCreditDocType() throws RuntimeException;
+
+    /** Column name DeclarationDebitDocType_ID */
+    public static final String COLUMNNAME_DeclarationDebitDocType_ID = "DeclarationDebitDocType_ID";
+
+	/** Set Declaration Debit Document Type.
+	  * Declaration Debit Document Type
+	  */
+	public void setDeclarationDebitDocType_ID (int DeclarationDebitDocType_ID);
+
+	/** Get Declaration Debit Document Type.
+	  * Declaration Debit Document Type
+	  */
+	public int getDeclarationDebitDocType_ID();
+
+	public org.compiere.model.I_C_DocType getDeclarationDebitDocType() throws RuntimeException;
 
     /** Column name Description */
     public static final String COLUMNNAME_Description = "Description";
@@ -219,4 +234,34 @@ public interface I_WH_Definition
 	public int getWH_Type_ID();
 
 	public org.spin.model.I_WH_Type getWH_Type() throws RuntimeException;
+
+    /** Column name WithholdingCreditDocType_ID */
+    public static final String COLUMNNAME_WithholdingCreditDocType_ID = "WithholdingCreditDocType_ID";
+
+	/** Set Withholding Credit Document Type.
+	  * Withholding Credit Document Type
+	  */
+	public void setWithholdingCreditDocType_ID (int WithholdingCreditDocType_ID);
+
+	/** Get Withholding Credit Document Type.
+	  * Withholding Credit Document Type
+	  */
+	public int getWithholdingCreditDocType_ID();
+
+	public org.compiere.model.I_C_DocType getWithholdingCreditDocType() throws RuntimeException;
+
+    /** Column name WithholdingDebitDocType_ID */
+    public static final String COLUMNNAME_WithholdingDebitDocType_ID = "WithholdingDebitDocType_ID";
+
+	/** Set Withholding Debit Document Type.
+	  * Withholding Debit Document Type
+	  */
+	public void setWithholdingDebitDocType_ID (int WithholdingDebitDocType_ID);
+
+	/** Get Withholding Debit Document Type.
+	  * Withholding Debit Document Type
+	  */
+	public int getWithholdingDebitDocType_ID();
+
+	public org.compiere.model.I_C_DocType getWithholdingDebitDocType() throws RuntimeException;
 }

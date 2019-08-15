@@ -34,7 +34,7 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190813L;
+	private static final long serialVersionUID = 20190815L;
 
     /** Standard Constructor */
     public X_WH_Withholding (Properties ctx, int WH_Withholding_ID, String trxName)

@@ -158,7 +158,7 @@ public class MWHDefinition extends X_WH_Definition {
 
 	@Override
 	public String toString() {
-		return "MWHDefinition [getC_Charge_ID()=" + getC_Charge_ID() + ", getC_DocType_ID()=" + getC_DocType_ID()
+		return "MWHDefinition [getC_Charge_ID()=" + getC_Charge_ID()
 				+ ", getName()=" + getName() + ", getWH_Definition_ID()=" + getWH_Definition_ID() + "]";
 	}
 }
