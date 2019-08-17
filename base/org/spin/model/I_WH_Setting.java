@@ -93,21 +93,6 @@ public interface I_WH_Setting
 
 	public org.compiere.model.I_C_Charge getC_Charge() throws RuntimeException;
 
-    /** Column name C_DocType_ID */
-    public static final String COLUMNNAME_C_DocType_ID = "C_DocType_ID";
-
-	/** Set Document Type.
-	  * Document type or rules
-	  */
-	public void setC_DocType_ID (int C_DocType_ID);
-
-	/** Get Document Type.
-	  * Document type or rules
-	  */
-	public int getC_DocType_ID();
-
-	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException;
-
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
 
@@ -282,4 +267,34 @@ public interface I_WH_Setting
 	  * Java Classname
 	  */
 	public String getWithholdingClassName();
+
+    /** Column name WithholdingCreditDocType_ID */
+    public static final String COLUMNNAME_WithholdingCreditDocType_ID = "WithholdingCreditDocType_ID";
+
+	/** Set Withholding Credit Document Type.
+	  * Withholding Credit Document Type
+	  */
+	public void setWithholdingCreditDocType_ID (int WithholdingCreditDocType_ID);
+
+	/** Get Withholding Credit Document Type.
+	  * Withholding Credit Document Type
+	  */
+	public int getWithholdingCreditDocType_ID();
+
+	public org.compiere.model.I_C_DocType getWithholdingCreditDocType() throws RuntimeException;
+
+    /** Column name WithholdingDebitDocType_ID */
+    public static final String COLUMNNAME_WithholdingDebitDocType_ID = "WithholdingDebitDocType_ID";
+
+	/** Set Withholding Debit Document Type.
+	  * Withholding Debit Document Type
+	  */
+	public void setWithholdingDebitDocType_ID (int WithholdingDebitDocType_ID);
+
+	/** Get Withholding Debit Document Type.
+	  * Withholding Debit Document Type
+	  */
+	public int getWithholdingDebitDocType_ID();
+
+	public org.compiere.model.I_C_DocType getWithholdingDebitDocType() throws RuntimeException;
 }

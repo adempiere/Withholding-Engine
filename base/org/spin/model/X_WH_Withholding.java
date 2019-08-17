@@ -34,7 +34,7 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190815L;
+	private static final long serialVersionUID = 20190817L;
 
     /** Standard Constructor */
     public X_WH_Withholding (Properties ctx, int WH_Withholding_ID, String trxName)
@@ -494,8 +494,8 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return (org.compiere.model.I_C_Invoice)MTable.get(getCtx(), org.compiere.model.I_C_Invoice.Table_Name)
 			.getPO(getSourceInvoice_ID(), get_TrxName());	}
 
-	/** Set Source Invoice .
-		@param SourceInvoice_ID Source Invoice 	  */
+	/** Set Source Invoice.
+		@param SourceInvoice_ID Source Invoice	  */
 	public void setSourceInvoice_ID (int SourceInvoice_ID)
 	{
 		if (SourceInvoice_ID < 1) 
@@ -504,8 +504,8 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 			set_Value (COLUMNNAME_SourceInvoice_ID, Integer.valueOf(SourceInvoice_ID));
 	}
 
-	/** Get Source Invoice .
-		@return Source Invoice 	  */
+	/** Get Source Invoice.
+		@return Source Invoice	  */
 	public int getSourceInvoice_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_SourceInvoice_ID);
@@ -534,6 +534,56 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	public int getSourceInvoiceLine_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_SourceInvoiceLine_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_C_Order getSourceOrder() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_Order)MTable.get(getCtx(), org.compiere.model.I_C_Order.Table_Name)
+			.getPO(getSourceOrder_ID(), get_TrxName());	}
+
+	/** Set Source Order.
+		@param SourceOrder_ID Source Order	  */
+	public void setSourceOrder_ID (int SourceOrder_ID)
+	{
+		if (SourceOrder_ID < 1) 
+			set_Value (COLUMNNAME_SourceOrder_ID, null);
+		else 
+			set_Value (COLUMNNAME_SourceOrder_ID, Integer.valueOf(SourceOrder_ID));
+	}
+
+	/** Get Source Order.
+		@return Source Order	  */
+	public int getSourceOrder_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_SourceOrder_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_C_OrderLine getSourceOrderLine() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_OrderLine)MTable.get(getCtx(), org.compiere.model.I_C_OrderLine.Table_Name)
+			.getPO(getSourceOrderLine_ID(), get_TrxName());	}
+
+	/** Set Source Order Line.
+		@param SourceOrderLine_ID Source Order Line	  */
+	public void setSourceOrderLine_ID (int SourceOrderLine_ID)
+	{
+		if (SourceOrderLine_ID < 1) 
+			set_Value (COLUMNNAME_SourceOrderLine_ID, null);
+		else 
+			set_Value (COLUMNNAME_SourceOrderLine_ID, Integer.valueOf(SourceOrderLine_ID));
+	}
+
+	/** Get Source Order Line.
+		@return Source Order Line	  */
+	public int getSourceOrderLine_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_SourceOrderLine_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();

@@ -138,10 +138,10 @@ public interface I_WH_Log
     /** Column name SourceInvoice_ID */
     public static final String COLUMNNAME_SourceInvoice_ID = "SourceInvoice_ID";
 
-	/** Set Source Invoice 	  */
+	/** Set Source Invoice	  */
 	public void setSourceInvoice_ID (int SourceInvoice_ID);
 
-	/** Get Source Invoice 	  */
+	/** Get Source Invoice	  */
 	public int getSourceInvoice_ID();
 
 	public org.compiere.model.I_C_Invoice getSourceInvoice() throws RuntimeException;

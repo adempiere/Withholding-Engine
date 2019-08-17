@@ -31,7 +31,7 @@ public class X_WH_Setting extends PO implements I_WH_Setting, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190815L;
+	private static final long serialVersionUID = 20190817L;
 
     /** Standard Constructor */
     public X_WH_Setting (Properties ctx, int WH_Setting_ID, String trxName)
@@ -129,34 +129,6 @@ public class X_WH_Setting extends PO implements I_WH_Setting, I_Persistent
 	public int getC_Charge_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_C_Charge_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
-	}
-
-	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException
-    {
-		return (org.compiere.model.I_C_DocType)MTable.get(getCtx(), org.compiere.model.I_C_DocType.Table_Name)
-			.getPO(getC_DocType_ID(), get_TrxName());	}
-
-	/** Set Document Type.
-		@param C_DocType_ID 
-		Document type or rules
-	  */
-	public void setC_DocType_ID (int C_DocType_ID)
-	{
-		if (C_DocType_ID < 0) 
-			set_Value (COLUMNNAME_C_DocType_ID, null);
-		else 
-			set_Value (COLUMNNAME_C_DocType_ID, Integer.valueOf(C_DocType_ID));
-	}
-
-	/** Get Document Type.
-		@return Document type or rules
-	  */
-	public int getC_DocType_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_C_DocType_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
@@ -415,5 +387,61 @@ public class X_WH_Setting extends PO implements I_WH_Setting, I_Persistent
 	public String getWithholdingClassName () 
 	{
 		return (String)get_Value(COLUMNNAME_WithholdingClassName);
+	}
+
+	public org.compiere.model.I_C_DocType getWithholdingCreditDocType() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_DocType)MTable.get(getCtx(), org.compiere.model.I_C_DocType.Table_Name)
+			.getPO(getWithholdingCreditDocType_ID(), get_TrxName());	}
+
+	/** Set Withholding Credit Document Type.
+		@param WithholdingCreditDocType_ID 
+		Withholding Credit Document Type
+	  */
+	public void setWithholdingCreditDocType_ID (int WithholdingCreditDocType_ID)
+	{
+		if (WithholdingCreditDocType_ID < 1) 
+			set_Value (COLUMNNAME_WithholdingCreditDocType_ID, null);
+		else 
+			set_Value (COLUMNNAME_WithholdingCreditDocType_ID, Integer.valueOf(WithholdingCreditDocType_ID));
+	}
+
+	/** Get Withholding Credit Document Type.
+		@return Withholding Credit Document Type
+	  */
+	public int getWithholdingCreditDocType_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_WithholdingCreditDocType_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
+	}
+
+	public org.compiere.model.I_C_DocType getWithholdingDebitDocType() throws RuntimeException
+    {
+		return (org.compiere.model.I_C_DocType)MTable.get(getCtx(), org.compiere.model.I_C_DocType.Table_Name)
+			.getPO(getWithholdingDebitDocType_ID(), get_TrxName());	}
+
+	/** Set Withholding Debit Document Type.
+		@param WithholdingDebitDocType_ID 
+		Withholding Debit Document Type
+	  */
+	public void setWithholdingDebitDocType_ID (int WithholdingDebitDocType_ID)
+	{
+		if (WithholdingDebitDocType_ID < 1) 
+			set_Value (COLUMNNAME_WithholdingDebitDocType_ID, null);
+		else 
+			set_Value (COLUMNNAME_WithholdingDebitDocType_ID, Integer.valueOf(WithholdingDebitDocType_ID));
+	}
+
+	/** Get Withholding Debit Document Type.
+		@return Withholding Debit Document Type
+	  */
+	public int getWithholdingDebitDocType_ID () 
+	{
+		Integer ii = (Integer)get_Value(COLUMNNAME_WithholdingDebitDocType_ID);
+		if (ii == null)
+			 return 0;
+		return ii.intValue();
 	}
 }

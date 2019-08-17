@@ -290,10 +290,10 @@ public interface I_WH_Withholding
     /** Column name SourceInvoice_ID */
     public static final String COLUMNNAME_SourceInvoice_ID = "SourceInvoice_ID";
 
-	/** Set Source Invoice 	  */
+	/** Set Source Invoice	  */
 	public void setSourceInvoice_ID (int SourceInvoice_ID);
 
-	/** Get Source Invoice 	  */
+	/** Get Source Invoice	  */
 	public int getSourceInvoice_ID();
 
 	public org.compiere.model.I_C_Invoice getSourceInvoice() throws RuntimeException;
@@ -308,6 +308,28 @@ public interface I_WH_Withholding
 	public int getSourceInvoiceLine_ID();
 
 	public org.compiere.model.I_C_InvoiceLine getSourceInvoiceLine() throws RuntimeException;
+
+    /** Column name SourceOrder_ID */
+    public static final String COLUMNNAME_SourceOrder_ID = "SourceOrder_ID";
+
+	/** Set Source Order	  */
+	public void setSourceOrder_ID (int SourceOrder_ID);
+
+	/** Get Source Order	  */
+	public int getSourceOrder_ID();
+
+	public org.compiere.model.I_C_Order getSourceOrder() throws RuntimeException;
+
+    /** Column name SourceOrderLine_ID */
+    public static final String COLUMNNAME_SourceOrderLine_ID = "SourceOrderLine_ID";
+
+	/** Set Source Order Line	  */
+	public void setSourceOrderLine_ID (int SourceOrderLine_ID);
+
+	/** Get Source Order Line	  */
+	public int getSourceOrderLine_ID();
+
+	public org.compiere.model.I_C_OrderLine getSourceOrderLine() throws RuntimeException;
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

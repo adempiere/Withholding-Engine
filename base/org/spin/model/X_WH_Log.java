@@ -31,7 +31,7 @@ public class X_WH_Log extends PO implements I_WH_Log, I_Persistent
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190815L;
+	private static final long serialVersionUID = 20190817L;
 
     /** Standard Constructor */
     public X_WH_Log (Properties ctx, int WH_Log_ID, String trxName)
@@ -151,8 +151,8 @@ public class X_WH_Log extends PO implements I_WH_Log, I_Persistent
 		return (org.compiere.model.I_C_Invoice)MTable.get(getCtx(), org.compiere.model.I_C_Invoice.Table_Name)
 			.getPO(getSourceInvoice_ID(), get_TrxName());	}
 
-	/** Set Source Invoice .
-		@param SourceInvoice_ID Source Invoice 	  */
+	/** Set Source Invoice.
+		@param SourceInvoice_ID Source Invoice	  */
 	public void setSourceInvoice_ID (int SourceInvoice_ID)
 	{
 		if (SourceInvoice_ID < 1) 
@@ -161,8 +161,8 @@ public class X_WH_Log extends PO implements I_WH_Log, I_Persistent
 			set_Value (COLUMNNAME_SourceInvoice_ID, Integer.valueOf(SourceInvoice_ID));
 	}
 
-	/** Get Source Invoice .
-		@return Source Invoice 	  */
+	/** Get Source Invoice.
+		@return Source Invoice	  */
 	public int getSourceInvoice_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_SourceInvoice_ID);
