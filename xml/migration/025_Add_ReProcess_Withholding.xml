@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="D" Name="Add process for re-process withholding" ReleaseNo="3.9.3" SeqNo="500100">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="284" Action="I" Record_ID="54261" Table="AD_Process">
+        <Data AD_Column_ID="4374" Column="AD_ReportView_ID" isNewNull="true"/>
+        <Data AD_Column_ID="84383" Column="UUID">660ea190-c120-11e9-996e-0242ac110002</Data>
+        <Data AD_Column_ID="4656" Column="Classname">org.spin.process.WithholdingReProcess</Data>
+        <Data AD_Column_ID="2811" Column="Help">This process allows re-generate withholding from AP Invoices for add to declaration party</Data>
+        <Data AD_Column_ID="12458" Column="IsBetaFunctionality">false</Data>
+        <Data AD_Column_ID="3371" Column="IsReport">false</Data>
+        <Data AD_Column_ID="6653" Column="Statistic_Seconds">0</Data>
+        <Data AD_Column_ID="6652" Column="Statistic_Count">0</Data>
+        <Data AD_Column_ID="2808" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="2806" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="2804" Column="IsActive">true</Data>
+        <Data AD_Column_ID="50181" Column="ShowHelp">Y</Data>
+        <Data AD_Column_ID="2809" Column="Name">Withholding Re-Process</Data>
+        <Data AD_Column_ID="2810" Column="Description">Re-Process a Withholding generated from a AP Document</Data>
+        <Data AD_Column_ID="4023" Column="Value">WithholdingReProcess</Data>
+        <Data AD_Column_ID="11563" Column="WorkflowValue" isNewNull="true"/>
+        <Data AD_Column_ID="5790" Column="AccessLevel">3</Data>
+        <Data AD_Column_ID="14084" Column="IsServerProcess">false</Data>
+        <Data AD_Column_ID="78843" Column="GenerateClass">N</Data>
+        <Data AD_Column_ID="7752" Column="AD_PrintFormat_ID" isNewNull="true"/>
+        <Data AD_Column_ID="2801" Column="AD_Process_ID">54261</Data>
+        <Data AD_Column_ID="2802" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="2803" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="11834" Column="AD_Workflow_ID" isNewNull="true"/>
+        <Data AD_Column_ID="2813" Column="ProcedureName" isNewNull="true"/>
+        <Data AD_Column_ID="63488" Column="AD_Browse_ID" isNewNull="true"/>
+        <Data AD_Column_ID="6485" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="50182" Column="JasperReport" isNewNull="true"/>
+        <Data AD_Column_ID="2805" Column="Created">2019-08-17 14:54:09.753</Data>
+        <Data AD_Column_ID="2807" Column="Updated">2019-08-17 14:54:09.753</Data>
+        <Data AD_Column_ID="56515" Column="AD_Form_ID" isNewNull="true"/>
+        <Data AD_Column_ID="4214" Column="IsDirectPrint">false</Data>
+        <Data AD_Column_ID="57920" Column="CopyFromProcess">N</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="287" Action="I" Record_ID="0" Table="AD_Process_Trl">
+        <Data AD_Column_ID="2847" Column="IsActive">true</Data>
+        <Data AD_Column_ID="2850" Column="Updated">2019-08-17 14:54:11.008</Data>
+        <Data AD_Column_ID="2848" Column="Created">2019-08-17 14:54:11.008</Data>
+        <Data AD_Column_ID="2853" Column="Description">Re-Process a Withholding generated from a AP Document</Data>
+        <Data AD_Column_ID="2854" Column="Help">This process allows re-generate withholding from AP Invoices for add to declaration party</Data>
+        <Data AD_Column_ID="2855" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="2852" Column="Name">Withholding Re-Process</Data>
+        <Data AD_Column_ID="2846" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="2845" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="2851" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="2844" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="2843" Column="AD_Process_ID">54261</Data>
+        <Data AD_Column_ID="2849" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84387" Column="UUID">664015f4-c120-11e9-996e-0242ac110002</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="287" Action="U" Record_ID="0" Table="AD_Process_Trl">
+        <Data AD_Column_ID="2853" Column="Description" oldValue="Re-Process a Withholding generated from a AP Document">Re-Procesar Retención de un Documento</Data>
+        <Data AD_Column_ID="2854" Column="Help" oldValue="This process allows re-generate withholding from AP Invoices for add to declaration party">Este proceso permite re-procesar un documento para generar la retención</Data>
+        <Data AD_Column_ID="2852" Column="Name" oldValue="Withholding Re-Process">Re-Procesar Retención</Data>
+        <Data AD_Column_ID="2844" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+        <Data AD_Column_ID="2843" Column="AD_Process_ID" oldValue="54261">54261</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="53660" Action="I" Record_ID="318" Table="AD_Table_Process">
+        <Data AD_Column_ID="69641" Column="IsActive">true</Data>
+        <Data AD_Column_ID="69642" Column="Created">2019-08-17 14:56:52.496</Data>
+        <Data AD_Column_ID="69643" Column="Updated">2019-08-17 14:56:52.496</Data>
+        <Data AD_Column_ID="69648" Column="AD_Table_ID">318</Data>
+        <Data AD_Column_ID="69647" Column="AD_Process_ID">54261</Data>
+        <Data AD_Column_ID="69640" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="69649" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="69639" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="69645" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="69644" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84427" Column="UUID">c682013e-c120-11e9-996e-0242ac110002</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="53660" Action="I" Record_ID="259" Table="AD_Table_Process">
+        <Data AD_Column_ID="69641" Column="IsActive">true</Data>
+        <Data AD_Column_ID="69642" Column="Created">2019-08-17 14:57:07.006</Data>
+        <Data AD_Column_ID="69643" Column="Updated">2019-08-17 14:57:07.006</Data>
+        <Data AD_Column_ID="69648" Column="AD_Table_ID">259</Data>
+        <Data AD_Column_ID="69647" Column="AD_Process_ID">54261</Data>
+        <Data AD_Column_ID="69640" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="69649" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="69639" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="69645" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="69644" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84427" Column="UUID">cf278e12-c120-11e9-996e-0242ac110002</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="109" Action="I" Record_ID="53640" Table="AD_Message">
+        <Data AD_Column_ID="588" Column="IsActive">true</Data>
+        <Data AD_Column_ID="589" Column="Created">2019-08-17 15:04:40.749</Data>
+        <Data AD_Column_ID="198" Column="MsgText">Record is not a valid document for withholding</Data>
+        <Data AD_Column_ID="591" Column="Updated">2019-08-17 15:04:40.749</Data>
+        <Data AD_Column_ID="197" Column="MsgType">E</Data>
+        <Data AD_Column_ID="6766" Column="Value">RecordIsNotADocument</Data>
+        <Data AD_Column_ID="199" Column="MsgTip" isNewNull="true"/>
+        <Data AD_Column_ID="392" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="391" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="7716" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="6765" Column="AD_Message_ID">53640</Data>
+        <Data AD_Column_ID="590" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="592" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="84346" Column="UUID">de04dccc-c121-11e9-82b1-0242ac110002</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="119" Action="I" Record_ID="0" Table="AD_Message_Trl">
+        <Data AD_Column_ID="609" Column="Created">2019-08-17 15:04:41.853</Data>
+        <Data AD_Column_ID="611" Column="Updated">2019-08-17 15:04:41.853</Data>
+        <Data AD_Column_ID="608" Column="IsActive">true</Data>
+        <Data AD_Column_ID="344" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="342" Column="MsgText">Record is not a valid document for withholding</Data>
+        <Data AD_Column_ID="343" Column="MsgTip" isNewNull="true"/>
+        <Data AD_Column_ID="1192" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="1193" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="610" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="341" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="6767" Column="AD_Message_ID">53640</Data>
+        <Data AD_Column_ID="612" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="84347" Column="UUID">de4353e4-c121-11e9-82b1-0242ac110002</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="119" Action="U" Record_ID="0" Table="AD_Message_Trl">
+        <Data AD_Column_ID="342" Column="MsgText" oldValue="Record is not a valid document for withholding">El registro no es un documento válido para retener</Data>
+        <Data AD_Column_ID="341" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+        <Data AD_Column_ID="6767" Column="AD_Message_ID" oldValue="53640">53640</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
