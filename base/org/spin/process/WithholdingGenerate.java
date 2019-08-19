@@ -99,8 +99,8 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 	 */
 	private void generateWHDoc(MWHWithholding withholding) {
 		
-		if (!withholding.isProcessed()
-				|| withholding.get_ValueAsBoolean("IsSimulation"))
+		if (withholding.isProcessed()
+				|| !withholding.get_ValueAsBoolean("IsSimulation"))
 			return ;
 		
 		if (withholding.getC_Invoice_ID() > 0) {
