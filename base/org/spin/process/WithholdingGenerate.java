@@ -17,93 +17,301 @@
 
 package org.spin.process;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.concurrent.atomic.AtomicReference;
 
+import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.MInvoice;
 import org.compiere.model.MInvoiceLine;
+import org.compiere.model.Query;
+import org.compiere.process.SvrProcess;
 import org.compiere.util.Env;
+import org.spin.model.MWHDefinition;
 import org.spin.model.MWHSetting;
 import org.spin.model.MWHWithholding;
-import org.spin.model.X_WH_Withholding;
-import org.syntax.jedit.InputHandler.end;
 
 /**
  * Withholding Generate process
  * @author Yamel Senih, ysenih@erpya.com , http://www.erpya.com
+ * @contributor Carlos Parada, cParada@erpya.com, http://www.erpya.com
  */
 public class WithholdingGenerate extends WithholdingGenerateAbstract {
 
+	private ArrayList<Withholding> withholdingDocList = new ArrayList<Withholding> ();
 	protected void prepare() {
 		super.prepare();
 	}
 
 	@Override
 	protected String doIt() throws Exception {
-		HashMap<Integer,BigDecimal> withHoldingByBPartner = new HashMap<Integer, BigDecimal>();
-		HashMap<Integer,Integer> withHoldingBySourceInvoice = new HashMap<Integer, Integer>();
-		BigDecimal totalWithholdingAmt = BigDecimal.ZERO;
-//		Create New Invoice
-		MInvoice invoice = new MInvoice(Env.getCtx(), 0, get_TrxName());
-		int chargeID = 0;
-		int bpartnerId = 0;
-//		Get Selections
-		for(int key : getSelectionKeys()) {			
-			
-			BigDecimal withholdingAmt = getSelectionAsBigDecimal(key, "WH_WithholdingAmt");
-			int withHoldingID = getSelectionAsInt(key, "WH_WH_Withholding_ID");
-			int sourceInvoiceId = getSelectionAsInt(key, "WH_SourceInvoice_ID");
-			int withholdingDefinitionId = getSelectionAsInt(key, "WH_WH_Definition_ID");
-			int withholdingTypeId = getSelectionAsInt(key, "WHD_WH_Type_ID");
-			bpartnerId = getSelectionAsInt(key, "WH_C_BPartner_ID");
-			
-//			Store WitholdingID and Witholding and Amt
-			withHoldingByBPartner.put(withHoldingID,withholdingAmt);
-			withHoldingBySourceInvoice.put(withHoldingID,sourceInvoiceId);
-			MWHWithholding  withHolding = new MWHWithholding(getCtx(), withHoldingID, get_TrxName());
-			int withHoldingSettingID = withHolding.get_ValueAsInt("WH_Setting_ID");
-			MWHSetting withholdingSetting = new MWHSetting(Env.getCtx(), withHoldingSettingID, get_TrxName());
-// 			Obtain Charge And Document type
-			
-			chargeID = withholdingSetting.getC_Charge_ID();
-			invoice.setC_DocTypeTarget_ID(withholdingSetting.getC_DocType_ID());	
-
-		}
-		invoice.setC_BPartner_ID(bpartnerId);
-		invoice.setIsSOTrx(false);
-//		Calculates Total Amount
-		totalWithholdingAmt = withHoldingByBPartner.values().stream().reduce(BigDecimal.ZERO, (p, q) -> p.add(q));
 		
-		invoice.setGrandTotal(totalWithholdingAmt);	
-		invoice.save();
-//		Create Invoice Line
-		int invoiceID = invoice.getC_Invoice_ID();
-		//		Creates Lines for Invoice
-		int qty = 1;
-		for (Entry<Integer,BigDecimal> withHoldingmap : withHoldingByBPartner.entrySet()) {
-			int withHoldingAffected = withHoldingmap.getKey();
-			//			Set Amt from Witholding on invoices
-			MInvoiceLine invoiceLine = new MInvoiceLine(invoice);
-		    if (withHoldingBySourceInvoice.containsKey(withHoldingAffected)) {
-		    	invoiceLine.set_ValueOfColumn("InvoiceToAllocate_ID",withHoldingBySourceInvoice.get(withHoldingAffected) );
-		    }
-			invoiceLine.setC_Charge_ID(chargeID);
-			invoiceLine.setPriceEntered(withHoldingmap.getValue());
-			invoiceLine.setPriceActual(withHoldingmap.getValue());
-			invoiceLine.setQty(qty);
-			invoiceLine.save();				
-//			Set References from generated invoices on Witholding
-			MWHWithholding  withHolding = new MWHWithholding(getCtx(), withHoldingAffected, get_TrxName());
-			withHolding.setC_Invoice_ID(invoiceID);
-			withHolding.save();
-
-		}	
-
-
-		return "";
+		if (isSelection()) {
+			getSelectionValues()
+				.entrySet()
+				.stream()
+				.forEach(list -> {
+					MWHWithholding withholding = new MWHWithholding(getCtx(), list.getKey(), get_TrxName());
+					generateWHDoc(withholding);
+				});
+			processWHDoc();
+		}else {
+			StringBuffer whereClause = new StringBuffer();
+			ArrayList<Object> params = new ArrayList<Object>();
+			
+			whereClause.append("AD_Client_ID = ? ");
+			params.add(getAD_Client_ID());
+			
+			if (getParameterAsInt("AD_Org_ID") > 0) {
+				whereClause.append(" AND AD_Org_ID = ? ");
+				params.add(getParameterAsInt("AD_Org_ID"));
+			}
+			
+			if (getParameterAsInt("C_BPartner_ID") > 0) {
+				whereClause.append(" AND C_BPartner_ID = ? ");
+				params.add(getParameterAsInt("C_BPartner_ID"));
+			}
+			
+			if (getParameterAsInt("C_Invoice_ID") > 0) {
+				whereClause.append(" AND SourceInvoice_ID = ? ");
+				params.add(getParameterAsInt("C_Invoice_ID"));
+			}
+			
+			if (getParameterAsInt("WH_Type_ID") > 0) {
+				whereClause.append(" AND WH_Type_ID = ? ");
+				params.add(getParameterAsInt("WH_Type_ID"));
+			}
+			
+			new Query(getCtx(), MWHWithholding.Table_Name, whereClause.toString(), get_TrxName())
+					.setParameters(params)
+					.list()
+					.forEach( withholding -> {
+						generateWHDoc((MWHWithholding) withholding);
+					});
+			processWHDoc();
+		}
+		
+		return "@OK@";
 	}
+	
+	/**
+	 * Generate Withholding Document
+	 * @param withholding
+	 */
+	private void generateWHDoc(MWHWithholding withholding) {
+		
+		if (!withholding.isProcessed()
+				|| withholding.get_ValueAsBoolean("IsSimulation"))
+			return ;
+		
+		if (withholding.getC_Invoice_ID() > 0) {
+			MInvoice whDoc = (MInvoice) withholding.getC_Invoice();
+			if (whDoc.getDocStatus().equals(MInvoice.DOCSTATUS_Completed)
+					|| whDoc.getDocStatus().equals(MInvoice.DOCSTATUS_Closed)
+						|| whDoc.getDocStatus().equals(MInvoice.DOCSTATUS_InProgress)
+							|| whDoc.getDocStatus().equals(MInvoice.DOCSTATUS_Invalid))
+				addLog("@DocumentNo@ : " + whDoc.getDocumentNo() + " | @IsGenerated@ | @DocStatus@ : " + whDoc.getDocStatusName());
+			return;
+		}
+		MInvoice invoiceTo = null;
+		MInvoiceLine invoiceLineTo = null;
+		
+		
+		AtomicReference<Integer> Curr_WH_Definition_ID = new AtomicReference<Integer>();
+		AtomicReference<Integer> Curr_WH_Setting_ID = new AtomicReference<Integer>();
+		AtomicReference<Integer> Curr_C_BPartner_ID = new AtomicReference<Integer>();
+		
+		
+		if (withholding.get_ID() > 0 ) {
+			Curr_WH_Definition_ID.set(withholding.getWH_Definition_ID());
+			Curr_WH_Setting_ID.set(withholding.getWH_Setting_ID());
+			Curr_C_BPartner_ID.set(withholding.getC_BPartner_ID());
+			MWHDefinition whDefinition = (MWHDefinition)withholding.getWH_Definition();
+			MWHSetting whSetting = (MWHSetting)withholding.getWH_Setting();
+			MInvoice invoiceFrom = (MInvoice) withholding.getSourceInvoice();
+			
+			Withholding withholldingDoc = withholdingDocList.//get().
+					stream()
+															.filter(wh ->(wh.getC_BPartner_ID()==Curr_C_BPartner_ID.get()
+																					&& wh.getWH_Definition_ID()==Curr_WH_Definition_ID.get() 
+																						&& wh.getWH_Setting_ID() == Curr_WH_Setting_ID.get()))
+															.findFirst()
+															.orElse(null);
+			
+			if (withholldingDoc==null) {
+				
+				
+				withholldingDoc = new Withholding(withholding.getWH_Definition_ID(), withholding.getWH_Setting_ID(), withholding.getC_BPartner_ID(), this);
+				
+				
+				invoiceTo = new MInvoice(getCtx(), 0, get_TrxName());
+				invoiceTo.setAD_Org_ID(invoiceFrom.getAD_Org_ID());
+				invoiceTo.setC_BPartner_ID(invoiceFrom.getC_BPartner_ID());
+				invoiceTo.setC_BPartner_Location_ID(invoiceFrom.getC_BPartner_Location_ID());
+				invoiceTo.setM_PriceList_ID(invoiceFrom.getM_PriceList_ID());
+				invoiceTo.setIsSOTrx(invoiceFrom.isSOTrx());
+				invoiceTo.setDateInvoiced(getParameterAsTimestamp("DateDoc"));
+				invoiceTo.setDateAcct(getParameterAsTimestamp("DateDoc"));
+				int C_DocType_ID =  withholding.getWHDocType();
+				if (C_DocType_ID > 0)
+					invoiceTo.setC_DocTypeTarget_ID(C_DocType_ID);
+				else
+					throw new AdempiereException("@NotFound@ @WithholdingDebitDocType_ID@");
+				
+				invoiceTo.saveEx();
+				
+			}
+			
+			if (invoiceTo==null)
+				invoiceTo = withholldingDoc.getInvoice();
+			
+			invoiceLineTo = new MInvoiceLine(invoiceTo);
+			if (whSetting.getC_Charge_ID()> 0)
+				invoiceLineTo.setC_Charge_ID(whSetting.getC_Charge_ID());
+			else if (whDefinition.getC_Charge_ID()> 0)
+				invoiceLineTo.setC_Charge_ID(whDefinition.getC_Charge_ID());
+			else 
+				new AdempiereException("@NotFound@ @C_Charge_ID@");
+			
+			invoiceLineTo.set_ValueOfColumn("InvoiceToAllocate_ID", invoiceFrom.getC_Invoice_ID());
+			invoiceLineTo.setQty(Env.ONE);
+			invoiceLineTo.setPrice(withholding.getWithholdingAmt());
+			invoiceLineTo.saveEx();
+			
+			withholding.setC_Invoice_ID(invoiceLineTo.getC_Invoice_ID());
+			withholding.setC_InvoiceLine_ID(invoiceLineTo.getC_InvoiceLine_ID());
+			withholding.saveEx();
+			
+			if (withholldingDoc.getInvoice()==null)
+				withholldingDoc.setInvoice(invoiceTo);
+			
+			withholldingDoc.addWithHolding(withholding);
+			withholdingDocList
+			//.get()
+			.add(withholldingDoc);
+		}
+	}
+	/**
+	 * Process Document
+	 */
+	private void processWHDoc() {
+		withholdingDocList//.get()
+		.stream().forEach( withholding -> {
+			withholding.process();
+		});
+	}
+}
+
+/**
+ * 
+ * @author Carlos Parada, cParada@erpya.com, http://www.erpya.com
+ *
+ */
+class Withholding{
+	private int WH_Definition_ID = 0;
+	private int WH_Setting_ID = 0;
+	private int C_BPartner_ID = 0;
+	private MInvoice invoice = null;
+	private MInvoiceLine invoiceLine = null;
+	private ArrayList<MWHWithholding> withholding = new ArrayList<MWHWithholding>();
+	private SvrProcess process = null;
+	
+	/**
+	 * Constructor
+	 * @param WH_Definition_ID
+	 * @param WH_Setting_ID
+	 * @param C_BPartner_ID
+	 * @param process
+	 */
+	public Withholding(int WH_Definition_ID, int WH_Setting_ID, int C_BPartner_ID, SvrProcess process) {
+		this.WH_Definition_ID = WH_Definition_ID;
+		this.WH_Setting_ID = WH_Setting_ID;
+		this.C_BPartner_ID = C_BPartner_ID;
+		this.process = process;
+	}
+	
+	/**
+	 * Get Withholpding Definition
+	 * @return
+	 */
+	public int getWH_Definition_ID() {
+		return WH_Definition_ID;
+	}
+	
+	/**
+	 * Get Withholding Setting 
+	 * @return
+	 */
+	public int getWH_Setting_ID() {
+		return WH_Setting_ID;
+	}
+	
+	/**
+	 * Get Business Partner
+	 * @return
+	 */
+	public int getC_BPartner_ID() {
+		return C_BPartner_ID;
+	}
+	
+	/**
+	 * Get Invoice
+	 * @return
+	 */
+	public MInvoice getInvoice() {
+		return invoice;
+	}
+	
+	/**
+	 * Get WithHolding
+	 * @return
+	 */
+	public ArrayList<MWHWithholding> getWithholding() {
+		return withholding;
+	}
+	
+	/**
+	 * Set Invoice
+	 * @param invoice
+	 */
+	public void setInvoice(MInvoice invoice) {
+		this.invoice = invoice;
+	}
+	
+	/**
+	 * Get Invoice Line
+	 * @return
+	 */
+	public MInvoiceLine getInvoiceLine() {
+		return invoiceLine;
+	}
+	
+	/**
+	 * Set Invoice
+	 * @param invoiceLine
+	 */
+	public void setInvoiceLine(MInvoiceLine invoiceLine) {
+		this.invoiceLine = invoiceLine;
+	}
+	
+	/**
+	 * Add Withholding
+	 * @param withholding
+	 */
+	public void addWithHolding(MWHWithholding withholding) {
+		this.withholding.add(withholding);
+	}
+	
+	/**
+	 * Process Document
+	 */
+	public void process() {
+		if (invoice!=null
+				&& !invoice.isProcessed()) {
+			invoice.processIt(MInvoice.DOCACTION_Complete);
+			invoice.saveEx();
+			if (process!=null)
+				process.addLog("@DocumentNo@ : " + invoice.getDocumentNo());
+		}
+	}
+	
 }
