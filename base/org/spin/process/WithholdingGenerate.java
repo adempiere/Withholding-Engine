@@ -99,8 +99,8 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 	 */
 	private void generateWHDoc(MWHWithholding withholding) {
 		
-		if (withholding.isProcessed()
-				|| !withholding.get_ValueAsBoolean("IsSimulation"))
+		if (!withholding.isProcessed()
+				|| withholding.get_ValueAsBoolean("IsSimulation"))
 			return ;
 		
 		if (withholding.getC_Invoice_ID() > 0) {
@@ -108,9 +108,10 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 			if (whDoc.getDocStatus().equals(MInvoice.DOCSTATUS_Completed)
 					|| whDoc.getDocStatus().equals(MInvoice.DOCSTATUS_Closed)
 						|| whDoc.getDocStatus().equals(MInvoice.DOCSTATUS_InProgress)
-							|| whDoc.getDocStatus().equals(MInvoice.DOCSTATUS_Invalid))
+							|| whDoc.getDocStatus().equals(MInvoice.DOCSTATUS_Invalid)) {
 				addLog("@DocumentNo@ : " + whDoc.getDocumentNo() + " | @IsGenerated@ | @DocStatus@ : " + whDoc.getDocStatusName());
-			return;
+				return;
+			}
 		}
 		MInvoice invoiceTo = null;
 		MInvoiceLine invoiceLineTo = null;
@@ -129,8 +130,7 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 			MWHSetting whSetting = (MWHSetting)withholding.getWH_Setting();
 			MInvoice invoiceFrom = (MInvoice) withholding.getSourceInvoice();
 			
-			Withholding withholldingDoc = withholdingDocList.//get().
-					stream()
+			Withholding withholldingDoc = withholdingDocList.stream()
 															.filter(wh ->(wh.getC_BPartner_ID()==Curr_C_BPartner_ID.get()
 																					&& wh.getWH_Definition_ID()==Curr_WH_Definition_ID.get() 
 																						&& wh.getWH_Setting_ID() == Curr_WH_Setting_ID.get()))
@@ -185,17 +185,14 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 				withholldingDoc.setInvoice(invoiceTo);
 			
 			withholldingDoc.addWithHolding(withholding);
-			withholdingDocList
-			//.get()
-			.add(withholldingDoc);
+			withholdingDocList.add(withholldingDoc);
 		}
 	}
 	/**
 	 * Process Document
 	 */
 	private void processWHDoc() {
-		withholdingDocList//.get()
-		.stream().forEach( withholding -> {
+		withholdingDocList.stream().forEach( withholding -> {
 			withholding.process();
 		});
 	}
