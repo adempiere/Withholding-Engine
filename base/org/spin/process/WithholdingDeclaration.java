@@ -19,9 +19,14 @@ package org.spin.process;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+
+import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.MInvoice;
+import org.compiere.model.MInvoiceLine;
 import org.compiere.model.Query;
+import org.compiere.process.SvrProcess;
 import org.compiere.util.Env;
+import org.spin.model.MWHDefinition;
 import org.spin.model.MWHType;
 import org.spin.model.MWHWithholding;
 
@@ -101,7 +106,7 @@ public class WithholdingDeclaration extends WithholdingDeclarationAbstract
 													.findFirst()
 													.orElse(null);
 			if (declaration==null) {
-				declaration = new Declaration((MWHType)withholding.getWH_Setting().getWH_Type(), invoiceWH.getGrandTotal(true));
+				declaration = new Declaration((MWHType)withholding.getWH_Setting().getWH_Type(),(MWHDefinition)withholding.getWH_Definition(), invoiceWH.getGrandTotal(true), this);
 				m_Declarations.add(declaration);
 			}
 			else
@@ -115,19 +120,26 @@ public class WithholdingDeclaration extends WithholdingDeclarationAbstract
 	 * Process Document
 	 */
 	private void processWHDoc() {
-		System.out.println(m_Declarations);
+		m_Declarations.forEach(declaration -> {
+			declaration.process();
+		});
 	}
 }
 
 class Declaration {
 	
 	private MWHType m_WHType = null;
+	private MWHDefinition m_WHDefinition = null;
 	private BigDecimal m_Amt = Env.ZERO;
 	private ArrayList<MInvoice> m_InvoicesWH = new ArrayList<MInvoice>();
+	private SvrProcess process = null;
+	private MInvoice m_Declaration = null;
 	
-	public Declaration(MWHType m_WHType, BigDecimal m_Amt) {
+	public Declaration(MWHType m_WHType, MWHDefinition m_WHDefinition, BigDecimal m_Amt,SvrProcess process) {
 		this.m_WHType = m_WHType;
 		this.m_Amt = m_Amt;
+		this.process = process;
+		this.m_WHDefinition = m_WHDefinition;
 	}
 
 	public MWHType getM_WHType() {
@@ -157,16 +169,57 @@ class Declaration {
 	
 	public void process() {
 		if (m_Amt!=null
-				&& m_Amt.compareTo(Env.ZERO) != 0) {
-			if (m_Amt.compareTo(Env.ZERO) > 0) {
-				//Credit document
-			}else {
-				//Debit Document
-			}
+				&& m_InvoicesWH!=null
+					&& m_InvoicesWH.size() > 0) {
+			if (m_Amt.compareTo(Env.ZERO) > 0) 
+				GenerateDeclaration(false);
+			else 
+				GenerateDeclaration(true);
+			
+			setDeclaration();
 				
 		}
 	}
 	
+	private void GenerateDeclaration(boolean isCredit) {
+		m_Declaration = new MInvoice(process.getCtx(), 0, process.get_TrxName());
+		m_Declaration.setC_BPartner_ID(m_WHDefinition.getC_BPartner_ID());
+		if (isCredit)
+			m_Declaration.setC_DocTypeTarget_ID(m_WHDefinition.getDeclarationCreditDocType_ID());
+		else
+			m_Declaration.setC_DocTypeTarget_ID(m_WHDefinition.getDeclarationCreditDocType_ID());
+		
+		if (m_Declaration.getC_DocTypeTarget_ID()==0)
+			throw new AdempiereException("@Invalid@ @" + (isCredit ? MWHDefinition.COLUMNNAME_DeclarationCreditDocType_ID : MWHDefinition.COLUMNNAME_DeclarationDebitDocType_ID) + "@");
+		
+		m_Declaration.setDateInvoiced(process.getParameterAsTimestamp("DateDoc"));
+		m_Declaration.setDateAcct(process.getParameterAsTimestamp("DateDoc"));
+		m_Declaration.saveEx();
+		
+		MInvoiceLine declarationLine = new MInvoiceLine(m_Declaration);
+		declarationLine.setC_Charge_ID(m_WHDefinition.getC_Charge_ID());
+		declarationLine.setQty(Env.ONE);
+		declarationLine.setPrice(m_Amt);
+		declarationLine.saveEx();
+		
+		m_Declaration.processIt(MInvoice.ACTION_Complete);
+		m_Declaration.saveEx();
+	}
+	
+	private void setDeclaration() {
+		for (MInvoice mInvoice : m_InvoicesWH) {
+			new Query(process.getCtx(), 
+						MWHWithholding.Table_Name, 
+						"C_Invoice_ID = ? ", 
+						process.get_TrxName())
+				.setParameters(mInvoice.getC_Invoice_ID())
+				.list()
+				.forEach(wh ->{
+					wh.set_ValueOfColumn("WithholdingDeclaration_ID", m_Declaration.getC_Invoice_ID());
+					wh.saveEx();
+				});
+		}
+	}
 	@Override
 	public String toString() {
 		return "WHType = " + (m_WHType ==null ? ""  :m_WHType.toString())
