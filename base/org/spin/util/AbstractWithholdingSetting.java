@@ -417,9 +417,11 @@ public abstract class AbstractWithholdingSetting {
 		withholding.setDocStatus(MWHWithholding.DOCSTATUS_Drafted);
 		withholding.saveEx();
 		//	Complete
-		if(!withholding.processIt(MWHWithholding.ACTION_Complete)) {
+		if(withholding.processIt(MWHWithholding.ACTION_Complete)) 
+			withholding.saveEx();
+		else
 			throw new AdempiereException(withholding.getProcessMsg());
-		}
+		
 	}
 	
 	/**
