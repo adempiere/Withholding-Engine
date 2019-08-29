@@ -24,6 +24,8 @@ import java.util.Map.Entry;
 import java.util.Properties;
 
 import org.adempiere.exceptions.AdempiereException;
+import org.compiere.model.MInvoice;
+import org.compiere.model.MOrder;
 import org.compiere.process.DocAction;
 import org.compiere.util.CLogger;
 import org.compiere.util.Env;
@@ -400,6 +402,17 @@ public abstract class AbstractWithholdingSetting {
 		withholding.setWH_Definition_ID(getDefinition().getWH_Definition_ID());
 		withholding.setWH_Setting_ID(getSetting().getWH_Setting_ID());
 		withholding.setC_DocType_ID();
+		
+		if (document!=null) {
+			if (document instanceof MInvoice) {
+				withholding.setSourceInvoice_ID(document.get_ID());
+				withholding.setC_BPartner_ID(((MInvoice) document).getC_BPartner_ID());
+			}else if (document instanceof MOrder) {
+				withholding.setSourceOrder_ID(document.get_ID());
+				withholding.setC_BPartner_ID(((MOrder) document).getC_BPartner_ID());
+			}
+		}
+		
 		//	Description
 		if(!Util.isEmpty(getProcessDescription())) {
 			withholding.setDescription(Msg.parseTranslation(getContext(), getProcessDescription()));
