@@ -284,6 +284,14 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 				throw new AdempiereException("@DeclarationReferenceError@: @WithholdingDeclaration_ID@ " + declaration.getDocumentNo());
 			}
 		}
+		//	Withholding
+		if(getC_Invoice_ID() != 0) {
+			MInvoice withholdingDoc = (MInvoice) getC_Invoice();
+			if(!withholdingDoc.getDocStatus().equals(MInvoice.DOCSTATUS_Reversed)
+					&& !withholdingDoc.getDocStatus().equals(MInvoice.DOCSTATUS_Voided)) {
+				throw new AdempiereException("@WithholdingReferenceError@: @C_Invoice_ID@ " + withholdingDoc.getDocumentNo());
+			}
+		}
 		//	AP document
 		if(getC_Invoice_ID() != 0) {
 			MInvoice invoice = (MInvoice) getC_Invoice();

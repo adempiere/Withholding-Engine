@@ -62,6 +62,10 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 			whereClause.append("AD_Client_ID = ? ");
 			params.add(getAD_Client_ID());
 			
+			whereClause.append("AND DocStatus IN (?,?) ");
+			params.add(MWHWithholding.DOCSTATUS_Completed);
+			params.add(MWHWithholding.DOCSTATUS_Closed);
+			
 			if (getParameterAsInt("AD_Org_ID") > 0) {
 				whereClause.append(" AND AD_Org_ID = ? ");
 				params.add(getParameterAsInt("AD_Org_ID"));
@@ -78,7 +82,7 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 			}
 			
 			if (getParameterAsInt("WH_Type_ID") > 0) {
-				whereClause.append(" AND WH_Type_ID = ? ");
+				whereClause.append(" AND EXISTS (SELECT 1 FROM WH_Definition whd WHERE whd.WH_Definition_ID = WH_Withholding.WH_Definition_ID AND whd.WH_Type_ID = ?) ");
 				params.add(getParameterAsInt("WH_Type_ID"));
 			}
 			
@@ -161,7 +165,7 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 				invoiceTo.saveEx();
 				
 				
-//				Get Document No
+				//	Get Document No
 				int docNo = Integer.parseInt(invoiceTo.getDocumentNo());
 				//	Format Date
 				String format = "yyyyMM";

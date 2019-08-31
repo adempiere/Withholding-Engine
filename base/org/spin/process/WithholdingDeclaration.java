@@ -95,22 +95,24 @@ public class WithholdingDeclaration extends WithholdingDeclarationAbstract
 	
 	private void addWHDoc(MInvoice invoiceWH) {
 		
-		MWHWithholding withholding = new Query(getCtx(), MWHWithholding.Table_Name, "C_Invoice_ID = ?", get_TrxName())
+		MWHWithholding withholding = new Query(getCtx(), MWHWithholding.Table_Name, "C_Invoice_ID = ? AND IsSimulation = 'N' AND IsDeclared = 'N'", get_TrxName())
 										.setParameters(invoiceWH.getC_Invoice_ID())
 										.first();
 		
 		if (withholding!=null
 				&& withholding.get_ID() > 0) {
+			
 			Declaration declaration = m_Declarations.stream()
 													.filter(dec -> dec.getM_WHType_ID()==withholding.getWH_Setting().getWH_Type_ID())
 													.findFirst()
 													.orElse(null);
+			BigDecimal amt = (invoiceWH.getGrandTotal(true).compareTo(Env.ZERO)>0 ? invoiceWH.getTotalLines(): invoiceWH.getTotalLines().negate());
 			if (declaration==null) {
-				declaration = new Declaration((MWHType)withholding.getWH_Setting().getWH_Type(),(MWHDefinition)withholding.getWH_Definition(), invoiceWH.getGrandTotal(true), this);
+				declaration = new Declaration((MWHType)withholding.getWH_Setting().getWH_Type(),(MWHDefinition)withholding.getWH_Definition(), amt , this);
 				m_Declarations.add(declaration);
 			}
 			else
-				declaration.addAmt(invoiceWH.getGrandTotal(true));
+				declaration.addAmt(amt);
 			
 			declaration.addInvoice(invoiceWH);
 		}
@@ -185,21 +187,22 @@ class Declaration {
 		m_Declaration = new MInvoice(process.getCtx(), 0, process.get_TrxName());
 		m_Declaration.setC_BPartner_ID(m_WHDefinition.getC_BPartner_ID());
 		if (isCredit)
-			m_Declaration.setC_DocTypeTarget_ID(m_WHDefinition.getDeclarationCreditDocType_ID());
+			m_Declaration.setC_DocTypeTarget_ID(m_WHType.getDeclarationCreditDocType_ID());
 		else
-			m_Declaration.setC_DocTypeTarget_ID(m_WHDefinition.getDeclarationCreditDocType_ID());
+			m_Declaration.setC_DocTypeTarget_ID(m_WHType.getDeclarationCreditDocType_ID());
 		
 		if (m_Declaration.getC_DocTypeTarget_ID()==0)
-			throw new AdempiereException("@Invalid@ @" + (isCredit ? MWHDefinition.COLUMNNAME_DeclarationCreditDocType_ID : MWHDefinition.COLUMNNAME_DeclarationDebitDocType_ID) + "@");
+			throw new AdempiereException("@Invalid@ @" + (isCredit ? MWHType.COLUMNNAME_DeclarationCreditDocType_ID : MWHType.COLUMNNAME_DeclarationDebitDocType_ID) + "@");
 		
 		m_Declaration.setDateInvoiced(process.getParameterAsTimestamp("DateDoc"));
 		m_Declaration.setDateAcct(process.getParameterAsTimestamp("DateDoc"));
+		m_Declaration.setIsSOTrx(m_Declaration.getC_DocTypeTarget().isSOTrx());
 		m_Declaration.saveEx();
 		
 		MInvoiceLine declarationLine = new MInvoiceLine(m_Declaration);
 		declarationLine.setC_Charge_ID(m_WHDefinition.getC_Charge_ID());
 		declarationLine.setQty(Env.ONE);
-		declarationLine.setPrice(m_Amt);
+		declarationLine.setPrice(m_Amt.abs());
 		declarationLine.saveEx();
 		
 		m_Declaration.processIt(MInvoice.ACTION_Complete);
