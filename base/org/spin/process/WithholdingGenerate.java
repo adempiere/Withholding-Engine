@@ -17,7 +17,6 @@
 
 package org.spin.process;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -163,20 +162,6 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 					throw new AdempiereException("@NotFound@ @WithholdingDebitDocType_ID@");
 				
 				invoiceTo.saveEx();
-				
-				
-				//	Get Document No
-				int docNo = Integer.parseInt(invoiceTo.getDocumentNo());
-				//	Format Date
-				String format = "yyyyMM";
-				SimpleDateFormat sdf = new SimpleDateFormat(format);
-				String prefix = sdf.format(invoiceTo.getDateInvoiced().getTime());
-				if(prefix == null)
-					prefix = "";
-				//	Set New Document No
-				invoiceTo.setDocumentNo(prefix + String.format("%1$" + 8 + "s", docNo).replace(" ", "0"));
-				invoiceTo.save();
-				
 			}
 			
 			if (invoiceTo==null)
@@ -190,7 +175,6 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 			else 
 				new AdempiereException("@NotFound@ @C_Charge_ID@");
 			
-			invoiceLineTo.set_ValueOfColumn("InvoiceToAllocate_ID", invoiceFrom.getC_Invoice_ID());
 			invoiceLineTo.setQty(Env.ONE);
 			invoiceLineTo.setPrice(withholding.getWithholdingAmt());
 			invoiceLineTo.saveEx();
