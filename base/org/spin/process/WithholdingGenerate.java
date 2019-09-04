@@ -161,6 +161,7 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 				else
 					throw new AdempiereException("@NotFound@ @WithholdingDebitDocType_ID@");
 				
+				invoiceTo.setC_DocType_ID(invoiceTo.getC_DocTypeTarget_ID());
 				invoiceTo.saveEx();
 			}
 			
