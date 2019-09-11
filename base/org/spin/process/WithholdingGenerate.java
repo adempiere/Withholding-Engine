@@ -133,20 +133,17 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 			MWHDefinition whDefinition = (MWHDefinition)withholding.getWH_Definition();
 			MWHSetting whSetting = (MWHSetting)withholding.getWH_Setting();
 			MInvoice invoiceFrom = (MInvoice) withholding.getSourceInvoice();
-			
-			Withholding withholldingDoc = withholdingDocList.stream()
-															.filter(wh ->(wh.getC_BPartner_ID()==Curr_C_BPartner_ID.get()
-																					&& wh.getWH_Definition_ID()==Curr_WH_Definition_ID.get() 
-																						&& wh.getWH_Setting_ID() == Curr_WH_Setting_ID.get()))
-															.findFirst()
-															.orElse(null);
-			
+			Withholding withholldingDoc  = null;
+			if (!withholding.isManual())
+				withholldingDoc = withholdingDocList.stream()
+									.filter(wh ->(wh.getC_BPartner_ID()==Curr_C_BPartner_ID.get()
+													&& wh.getWH_Definition_ID()==Curr_WH_Definition_ID.get() 
+														&& wh.getWH_Setting_ID() == Curr_WH_Setting_ID.get()))
+									.findFirst()
+									.orElse(null);
+
 			if (withholldingDoc==null) {
-				
-				
 				withholldingDoc = new Withholding(withholding.getWH_Definition_ID(), withholding.getWH_Setting_ID(), withholding.getC_BPartner_ID(), this);
-				
-				
 				invoiceTo = new MInvoice(getCtx(), 0, get_TrxName());
 				invoiceTo.setAD_Org_ID(invoiceFrom.getAD_Org_ID());
 				invoiceTo.setC_BPartner_ID(invoiceFrom.getC_BPartner_ID());
