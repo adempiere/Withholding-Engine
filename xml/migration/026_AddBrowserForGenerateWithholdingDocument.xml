@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="WHH" Name="Add Browser for Withholding Generate Invoice" ReleaseNo="3.9.3" SeqNo="500110">
+  <Migration EntityType="D" Name="Add Browser for Withholding Generate Invoice" ReleaseNo="" SeqNo="500110">
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="53230" Action="I" Record_ID="50155" Table="AD_View">
         <Data AD_Column_ID="58068" Column="IsActive">true</Data>

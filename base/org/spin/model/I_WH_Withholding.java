@@ -239,19 +239,6 @@ public interface I_WH_Withholding
 	  */
 	public boolean isApproved();
 
-    /** Column name IsCumulativeWithholding */
-    public static final String COLUMNNAME_IsCumulativeWithholding = "IsCumulativeWithholding";
-
-	/** Set Cumulative Withholding.
-	  * Cumulative Withholding, calculated over old documents
-	  */
-	public void setIsCumulativeWithholding (boolean IsCumulativeWithholding);
-
-	/** Get Cumulative Withholding.
-	  * Cumulative Withholding, calculated over old documents
-	  */
-	public boolean isCumulativeWithholding();
-
     /** Column name IsDeclared */
     public static final String COLUMNNAME_IsDeclared = "IsDeclared";
 
@@ -264,19 +251,6 @@ public interface I_WH_Withholding
 	  * Show if a withholding has been declared
 	  */
 	public boolean isDeclared();
-
-    /** Column name IsManual */
-    public static final String COLUMNNAME_IsManual = "IsManual";
-
-	/** Set Manual.
-	  * This is a manual process
-	  */
-	public void setIsManual (boolean IsManual);
-
-	/** Get Manual.
-	  * This is a manual process
-	  */
-	public boolean isManual();
 
     /** Column name IsSimulation */
     public static final String COLUMNNAME_IsSimulation = "IsSimulation";
@@ -357,19 +331,6 @@ public interface I_WH_Withholding
 
 	public org.compiere.model.I_C_OrderLine getSourceOrderLine() throws RuntimeException;
 
-    /** Column name Subtrahend */
-    public static final String COLUMNNAME_Subtrahend = "Subtrahend";
-
-	/** Set Subtrahend.
-	  * Subtrahend for Withholding
-	  */
-	public void setSubtrahend (BigDecimal Subtrahend);
-
-	/** Get Subtrahend.
-	  * Subtrahend for Withholding
-	  */
-	public BigDecimal getSubtrahend();
-
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";
 
@@ -429,17 +390,6 @@ public interface I_WH_Withholding
 
 	public org.spin.model.I_WH_Setting getWH_Setting() throws RuntimeException;
 
-    /** Column name WHThirdParty_ID */
-    public static final String COLUMNNAME_WHThirdParty_ID = "WHThirdParty_ID";
-
-	/** Set Withholding Third Party	  */
-	public void setWHThirdParty_ID (int WHThirdParty_ID);
-
-	/** Get Withholding Third Party	  */
-	public int getWHThirdParty_ID();
-
-	public org.compiere.model.I_C_BPartner getWHThirdParty() throws RuntimeException;
-
     /** Column name WH_Withholding_ID */
     public static final String COLUMNNAME_WH_Withholding_ID = "WH_Withholding_ID";
 
@@ -485,26 +435,4 @@ public interface I_WH_Withholding
 	  * Withholding Rate applied to Document
 	  */
 	public BigDecimal getWithholdingRate();
-
-    /** Column name WithholdingRentalRate_ID */
-    public static final String COLUMNNAME_WithholdingRentalRate_ID = "WithholdingRentalRate_ID";
-
-	/** Set Withholding Rental Rate	  */
-	public void setWithholdingRentalRate_ID (int WithholdingRentalRate_ID);
-
-	/** Get Withholding Rental Rate	  */
-	public int getWithholdingRentalRate_ID();
-
-	public org.erpya.lve.model.I_LVE_ListVersion getWithholdingRentalRate() throws RuntimeException;
-
-    /** Column name WithholdingVariableRate_ID */
-    public static final String COLUMNNAME_WithholdingVariableRate_ID = "WithholdingVariableRate_ID";
-
-	/** Set Withholding Retal Variable Rate	  */
-	public void setWithholdingVariableRate_ID (int WithholdingVariableRate_ID);
-
-	/** Get Withholding Retal Variable Rate	  */
-	public int getWithholdingVariableRate_ID();
-
-	public org.erpya.lve.model.I_LVE_ListLine getWithholdingVariableRate() throws RuntimeException;
 }

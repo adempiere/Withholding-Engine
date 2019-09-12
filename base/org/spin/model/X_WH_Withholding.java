@@ -34,7 +34,7 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190911L;
+	private static final long serialVersionUID = 20190817L;
 
     /** Standard Constructor */
     public X_WH_Withholding (Properties ctx, int WH_Withholding_ID, String trxName)
@@ -396,30 +396,6 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return false;
 	}
 
-	/** Set Cumulative Withholding.
-		@param IsCumulativeWithholding 
-		Cumulative Withholding, calculated over old documents
-	  */
-	public void setIsCumulativeWithholding (boolean IsCumulativeWithholding)
-	{
-		set_Value (COLUMNNAME_IsCumulativeWithholding, Boolean.valueOf(IsCumulativeWithholding));
-	}
-
-	/** Get Cumulative Withholding.
-		@return Cumulative Withholding, calculated over old documents
-	  */
-	public boolean isCumulativeWithholding () 
-	{
-		Object oo = get_Value(COLUMNNAME_IsCumulativeWithholding);
-		if (oo != null) 
-		{
-			 if (oo instanceof Boolean) 
-				 return ((Boolean)oo).booleanValue(); 
-			return "Y".equals(oo);
-		}
-		return false;
-	}
-
 	/** Set Is Declared.
 		@param IsDeclared 
 		Show if a withholding has been declared
@@ -435,30 +411,6 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	public boolean isDeclared () 
 	{
 		Object oo = get_Value(COLUMNNAME_IsDeclared);
-		if (oo != null) 
-		{
-			 if (oo instanceof Boolean) 
-				 return ((Boolean)oo).booleanValue(); 
-			return "Y".equals(oo);
-		}
-		return false;
-	}
-
-	/** Set Manual.
-		@param IsManual 
-		This is a manual process
-	  */
-	public void setIsManual (boolean IsManual)
-	{
-		set_Value (COLUMNNAME_IsManual, Boolean.valueOf(IsManual));
-	}
-
-	/** Get Manual.
-		@return This is a manual process
-	  */
-	public boolean isManual () 
-	{
-		Object oo = get_Value(COLUMNNAME_IsManual);
 		if (oo != null) 
 		{
 			 if (oo instanceof Boolean) 
@@ -637,26 +589,6 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	/** Set Subtrahend.
-		@param Subtrahend 
-		Subtrahend for Withholding
-	  */
-	public void setSubtrahend (BigDecimal Subtrahend)
-	{
-		set_Value (COLUMNNAME_Subtrahend, Subtrahend);
-	}
-
-	/** Get Subtrahend.
-		@return Subtrahend for Withholding
-	  */
-	public BigDecimal getSubtrahend () 
-	{
-		BigDecimal bd = (BigDecimal)get_Value(COLUMNNAME_Subtrahend);
-		if (bd == null)
-			 return Env.ZERO;
-		return bd;
-	}
-
 	/** Set Immutable Universally Unique Identifier.
 		@param UUID 
 		Immutable Universally Unique Identifier
@@ -725,31 +657,6 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	public int getWH_Setting_ID () 
 	{
 		Integer ii = (Integer)get_Value(COLUMNNAME_WH_Setting_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
-	}
-
-	public org.compiere.model.I_C_BPartner getWHThirdParty() throws RuntimeException
-    {
-		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
-			.getPO(getWHThirdParty_ID(), get_TrxName());	}
-
-	/** Set Withholding Third Party.
-		@param WHThirdParty_ID Withholding Third Party	  */
-	public void setWHThirdParty_ID (int WHThirdParty_ID)
-	{
-		if (WHThirdParty_ID < 1) 
-			set_Value (COLUMNNAME_WHThirdParty_ID, null);
-		else 
-			set_Value (COLUMNNAME_WHThirdParty_ID, Integer.valueOf(WHThirdParty_ID));
-	}
-
-	/** Get Withholding Third Party.
-		@return Withholding Third Party	  */
-	public int getWHThirdParty_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_WHThirdParty_ID);
 		if (ii == null)
 			 return 0;
 		return ii.intValue();
@@ -838,55 +745,5 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		if (bd == null)
 			 return Env.ZERO;
 		return bd;
-	}
-
-	public org.erpya.lve.model.I_LVE_ListVersion getWithholdingRentalRate() throws RuntimeException
-    {
-		return (org.erpya.lve.model.I_LVE_ListVersion)MTable.get(getCtx(), org.erpya.lve.model.I_LVE_ListVersion.Table_Name)
-			.getPO(getWithholdingRentalRate_ID(), get_TrxName());	}
-
-	/** Set Withholding Rental Rate.
-		@param WithholdingRentalRate_ID Withholding Rental Rate	  */
-	public void setWithholdingRentalRate_ID (int WithholdingRentalRate_ID)
-	{
-		if (WithholdingRentalRate_ID < 1) 
-			set_Value (COLUMNNAME_WithholdingRentalRate_ID, null);
-		else 
-			set_Value (COLUMNNAME_WithholdingRentalRate_ID, Integer.valueOf(WithholdingRentalRate_ID));
-	}
-
-	/** Get Withholding Rental Rate.
-		@return Withholding Rental Rate	  */
-	public int getWithholdingRentalRate_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_WithholdingRentalRate_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
-	}
-
-	public org.erpya.lve.model.I_LVE_ListLine getWithholdingVariableRate() throws RuntimeException
-    {
-		return (org.erpya.lve.model.I_LVE_ListLine)MTable.get(getCtx(), org.erpya.lve.model.I_LVE_ListLine.Table_Name)
-			.getPO(getWithholdingVariableRate_ID(), get_TrxName());	}
-
-	/** Set Withholding Retal Variable Rate.
-		@param WithholdingVariableRate_ID Withholding Retal Variable Rate	  */
-	public void setWithholdingVariableRate_ID (int WithholdingVariableRate_ID)
-	{
-		if (WithholdingVariableRate_ID < 1) 
-			set_Value (COLUMNNAME_WithholdingVariableRate_ID, null);
-		else 
-			set_Value (COLUMNNAME_WithholdingVariableRate_ID, Integer.valueOf(WithholdingVariableRate_ID));
-	}
-
-	/** Get Withholding Retal Variable Rate.
-		@return Withholding Retal Variable Rate	  */
-	public int getWithholdingVariableRate_ID () 
-	{
-		Integer ii = (Integer)get_Value(COLUMNNAME_WithholdingVariableRate_ID);
-		if (ii == null)
-			 return 0;
-		return ii.intValue();
 	}
 }
