@@ -156,6 +156,16 @@ public class MWHDefinition extends X_WH_Definition {
 		return withholdingType.getApplicability(tableName, eventModelValidator);
 	}
 
+	/**
+	 * Get from event type
+	 * @param eventType
+	 * @return
+	 */
+	public List<MWHSetting> getSettingList(String eventType) {
+		MWHType withholdingType = MWHType.getById(getCtx(), getWH_Type_ID(), get_TrxName());
+		return withholdingType.getApplicability(eventType);
+	}
+	
 	@Override
 	public String toString() {
 		return "MWHDefinition [getC_Charge_ID()=" + getC_Charge_ID()

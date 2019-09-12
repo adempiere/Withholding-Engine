@@ -31,6 +31,7 @@ import org.compiere.util.Env;
 import org.compiere.util.Util;
 import org.spin.model.MWHDefinition;
 import org.spin.model.MWHSetting;
+import org.spin.model.MWHType;
 
 /**
  * Withholding Management Class for Setting Engine
@@ -146,53 +147,163 @@ public class WithholdingEngine {
 		//	default
 		return errorMessage.toString();
 	}
-	
+	/**
+	 * Process Withholding Event Model Validation Document
+	 * @param withholdingDefinition
+	 * @param document
+	 * @param eventModelValidator
+	 */
+	private void processWithholding(MWHDefinition withholdingDefinition, DocAction document, String eventModelValidator) {
+		processWithholding(withholdingDefinition, document, eventModelValidator, null, false);
+	}
 	/**
 	 * Process withholding
 	 * @param withholdingDefinition
 	 * @param po
 	 * @param docTiming
 	 */
-	private void processWithholding(MWHDefinition withholdingDefinition, DocAction document, String eventModelValidator) {
-		withholdingDefinition.getSettingList(((PO)document).get_TableName(), eventModelValidator)
-			.stream()
-			.sorted(Comparator.comparing(MWHSetting::getSeqNo))
-			.forEach(setting -> {
-				try {
-					AbstractWithholdingSetting settingRunningImplementation = setting.getSettingInstance();
-					//	Validate Null Value
-					if(settingRunningImplementation == null) {
-						throw new AdempiereException("@WH_Setting_ID@ @WithholdingClassName@ @NotFound@");
+	private void processWithholding(MWHDefinition withholdingDefinition, DocAction document, String eventModelValidator, HashMap<String, Object> parameters, boolean eventProcess) {
+		if (!eventProcess) {
+			withholdingDefinition.getSettingList(((PO)document).get_TableName(), eventModelValidator)
+				.stream()
+				.sorted(Comparator.comparing(MWHSetting::getSeqNo))
+				.forEach(setting -> {
+					processWithholding(setting, withholdingDefinition, document, eventModelValidator);
+				});
+		}else {
+			withholdingDefinition.getSettingList(eventModelValidator)
+				.stream()
+				.sorted(Comparator.comparing(MWHSetting::getSeqNo))
+				.forEach(setting -> {
+					processWithholding(setting, withholdingDefinition, document, eventModelValidator, parameters);
+				});
+		}
+	}
+	
+	/**
+	 * Process Withholding
+	 * @param setting
+	 * @param withholdingDefinition
+	 * @param document
+	 * @param eventModelValidator
+	 */
+	private void processWithholding(MWHSetting setting,MWHDefinition withholdingDefinition, DocAction document, String eventModelValidator) {
+		processWithholding(setting, withholdingDefinition, document, eventModelValidator, null);
+	}
+	
+	/**
+	 * Process Withholding
+	 * @param setting
+	 * @param withholdingDefinition
+	 * @param document
+	 * @param eventModelValidator
+	 */
+	private void processWithholding(MWHSetting setting,MWHDefinition withholdingDefinition, DocAction document, String eventModelValidator, HashMap<String, Object> parameters) {
+		try {
+			AbstractWithholdingSetting settingRunningImplementation = setting.getSettingInstance();
+			//	Validate Null Value
+			if(settingRunningImplementation == null) {
+				throw new AdempiereException("@WH_Setting_ID@ @WithholdingClassName@ @NotFound@");
+			}
+			if (parameters !=null)
+				settingRunningImplementation.setParameters(parameters);
+			//	Set default values
+			settingRunningImplementation.setWithholdingDefinition(withholdingDefinition);
+			settingRunningImplementation.setDocument(document);
+			//	Verify if document is valid
+			if(settingRunningImplementation.isValid()) {
+				//	Run It
+				String runMessage = settingRunningImplementation.run();
+				if(!Util.isEmpty(runMessage)) {
+					//	Add new line
+					if(errorMessage.length() > 0) {
+						errorMessage.append(Env.NL);
 					}
-					//	Set default values
-					settingRunningImplementation.setWithholdingDefinition(withholdingDefinition);
-					settingRunningImplementation.setDocument(document);
-					//	Verify if document is valid
-					if(settingRunningImplementation.isValid()) {
-						//	Run It
-						String runMessage = settingRunningImplementation.run();
-						if(!Util.isEmpty(runMessage)) {
-							//	Add new line
-							if(errorMessage.length() > 0) {
-								errorMessage.append(Env.NL);
-							}
-							errorMessage.append(runMessage);
-						}
-						//	Copy Return Value
-						for(Entry<String, Object> entry : settingRunningImplementation.getReturnValues().entrySet()) {
-							returnValues.put(entry.getKey(), entry.getValue());
-						}
-						//	Validate amount
-						settingRunningImplementation.saveResult();
-					}
-					//	Add message
-					if(!Util.isEmpty(settingRunningImplementation.getProcessLog())) {
-						processLog.put(setting.getWH_Setting_ID() + "|" + document.get_ID(), settingRunningImplementation.getProcessLog());
-						settingRunningImplementation.saveResult();
-					}
-				} catch(Exception e) {
-					errorMessage.append(e);
+					errorMessage.append(runMessage);
 				}
-			});
+				//	Copy Return Value
+				for(Entry<String, Object> entry : settingRunningImplementation.getReturnValues().entrySet()) {
+					returnValues.put(entry.getKey(), entry.getValue());
+				}
+				//	Validate amount
+				settingRunningImplementation.saveResult();
+			}
+			//	Add message
+			if(!Util.isEmpty(settingRunningImplementation.getProcessLog())) {
+				processLog.put(setting.getWH_Setting_ID() + "|" + document.get_ID(), settingRunningImplementation.getProcessLog());
+				settingRunningImplementation.saveResult();
+			}
+		} catch(Exception e) {
+			errorMessage.append(e);
+		}
+	}
+	
+	/**
+	 * Process Withholding Event Type Process
+	 * @param document
+	 * @return
+	 */
+	public String fireProcess(DocAction document, HashMap<String, Object> parameters) {
+		return fireProcess(document, null, null, null, parameters);
+	}
+	
+	/**
+	 * Process Withholding Event Type Process
+	 * @param document
+	 * @param type
+	 * @return
+	 */
+	public String fireProcess(DocAction document, MWHType type, HashMap<String, Object> parameters) {
+		return fireProcess(document, type, null, null, parameters);
+	}
+	
+	/**
+	 * Process Withholding Event Type Process
+	 * @param document
+	 * @param type
+	 * @param setting
+	 * @return
+	 */
+	public String fireProcess(DocAction document ,MWHType type, MWHSetting setting, HashMap<String, Object> parameters) {
+		return fireProcess(document, type, setting, null, parameters);
+	}
+	
+	/**
+	 * Process Withholding Event Type Process 
+	 * @param document
+	 * @param type
+	 * @param setting
+	 * @param definition
+	 * @return
+	 */
+	public String fireProcess(DocAction document ,MWHType type, MWHSetting setting, MWHDefinition definition, HashMap<String, Object> parameters) {
+		
+		if (document == null)
+			return "";
+		
+		//	Validate for Document Type Target
+		int documentTypeId = ((PO)document).get_ValueAsInt(I_C_Invoice.COLUMNNAME_C_DocTypeTarget_ID);
+		if(documentTypeId <= 0) {
+			documentTypeId = ((PO)document).get_ValueAsInt(I_C_DocType.COLUMNNAME_C_DocType_ID);
+		}
+		
+		//	flush return values
+		returnValues = new HashMap<String, Object>();
+		processLog = new HashMap<String, String>();
+		
+		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId)
+					 .stream()
+					 .filter(whDef -> ((type!=null && type.get_ID()==whDef.getWH_Type_ID()) || type ==null)
+							 			&& ((definition!=null && definition.get_ID()==whDef.get_ID()) || definition ==null))
+					 .forEach(whDef ->{
+						 if (setting != null
+								 && setting.getWH_Type_ID() == whDef.getWH_Type_ID() 
+								 	&& setting.getEventType().equals(MWHSetting.EVENTTYPE_Process))
+							 processWithholding(setting, whDef, document, MWHSetting.EVENTTYPE_Process, parameters);
+						 else if (setting == null)
+							 processWithholding(whDef, document, MWHSetting.EVENTTYPE_Process, parameters, true);
+					 });
+		
+		return errorMessage.toString();
 	}
 }
