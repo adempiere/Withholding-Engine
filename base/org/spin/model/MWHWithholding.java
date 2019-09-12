@@ -515,14 +515,16 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 	
 	public int getWHDocType() {
 		if (getSourceInvoice_ID() !=0) {
-			if (getSourceInvoice().getC_DocType().getDocBaseType().equals(MDocType.DOCBASETYPE_APInvoice)) {
+			if (getSourceInvoice().getC_DocType().getDocBaseType().equals(MDocType.DOCBASETYPE_APInvoice)
+					|| getSourceInvoice().getC_DocType().getDocBaseType().equals(MDocType.DOCBASETYPE_ARInvoice)) {
 				if (getWH_Setting().getWithholdingDebitDocType_ID()!=0)
 					return getWH_Setting().getWithholdingDebitDocType_ID();
 				if (getWH_Definition().getWithholdingDebitDocType_ID()!=0)
 					return getWH_Definition().getWithholdingDebitDocType_ID();
 				if (getWH_Setting().getWH_Type().getWithholdingDebitDocType_ID()!=0)
 					return getWH_Setting().getWH_Type().getWithholdingDebitDocType_ID();
-			}else if (getSourceInvoice().getC_DocType().getDocBaseType().equals(MDocType.DOCBASETYPE_APCreditMemo)){
+			}else if (getSourceInvoice().getC_DocType().getDocBaseType().equals(MDocType.DOCBASETYPE_APCreditMemo)
+					|| getSourceInvoice().getC_DocType().getDocBaseType().equals(MDocType.DOCBASETYPE_ARCreditMemo)){
 				if (getWH_Setting().getWithholdingCreditDocType_ID()!=0)
 					return getWH_Setting().getWithholdingCreditDocType_ID();
 				if (getWH_Definition().getWithholdingCreditDocType_ID()!=0)

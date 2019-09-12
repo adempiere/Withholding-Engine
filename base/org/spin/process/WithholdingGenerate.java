@@ -145,6 +145,9 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 			if (withholldingDoc==null) {
 				withholldingDoc = new Withholding(withholding.getWH_Definition_ID(), withholding.getWH_Setting_ID(), withholding.getC_BPartner_ID(), this);
 				invoiceTo = new MInvoice(getCtx(), 0, get_TrxName());
+				if (withholding.isManual())
+					invoiceTo.setDocumentNo(withholding.getDocumentNo());
+				
 				invoiceTo.setAD_Org_ID(invoiceFrom.getAD_Org_ID());
 				invoiceTo.setC_BPartner_ID(invoiceFrom.getC_BPartner_ID());
 				invoiceTo.setC_BPartner_Location_ID(invoiceFrom.getC_BPartner_Location_ID());
