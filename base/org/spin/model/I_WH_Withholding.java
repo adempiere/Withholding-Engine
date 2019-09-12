@@ -252,6 +252,19 @@ public interface I_WH_Withholding
 	  */
 	public boolean isDeclared();
 
+    /** Column name IsManual */
+    public static final String COLUMNNAME_IsManual = "IsManual";
+
+	/** Set Manual.
+	  * This is a manual process
+	  */
+	public void setIsManual (boolean IsManual);
+
+	/** Get Manual.
+	  * This is a manual process
+	  */
+	public boolean isManual();
+
     /** Column name IsSimulation */
     public static final String COLUMNNAME_IsSimulation = "IsSimulation";
 

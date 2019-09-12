@@ -34,7 +34,7 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 20190817L;
+	private static final long serialVersionUID = 20190911L;
 
     /** Standard Constructor */
     public X_WH_Withholding (Properties ctx, int WH_Withholding_ID, String trxName)
@@ -411,6 +411,30 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 	public boolean isDeclared () 
 	{
 		Object oo = get_Value(COLUMNNAME_IsDeclared);
+		if (oo != null) 
+		{
+			 if (oo instanceof Boolean) 
+				 return ((Boolean)oo).booleanValue(); 
+			return "Y".equals(oo);
+		}
+		return false;
+	}
+
+	/** Set Manual.
+		@param IsManual 
+		This is a manual process
+	  */
+	public void setIsManual (boolean IsManual)
+	{
+		set_Value (COLUMNNAME_IsManual, Boolean.valueOf(IsManual));
+	}
+
+	/** Get Manual.
+		@return This is a manual process
+	  */
+	public boolean isManual () 
+	{
+		Object oo = get_Value(COLUMNNAME_IsManual);
 		if (oo != null) 
 		{
 			 if (oo instanceof Boolean) 
