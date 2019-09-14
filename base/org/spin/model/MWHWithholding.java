@@ -558,4 +558,10 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
         .append(getSummary()).append("]");
       return sb.toString();
     }
+    
+    @Override
+    public void setWithholdingDeclaration_ID(int WithholdingDeclaration_ID) {
+    	setIsDeclared(WithholdingDeclaration_ID > 0);
+    	super.setWithholdingDeclaration_ID(WithholdingDeclaration_ID);
+    }
 }
