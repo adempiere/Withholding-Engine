@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="WHH" Name="Change menu translation" ReleaseNo="3.9.3" SeqNo="50160">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="116" Action="U" Record_ID="54465" Table="AD_Menu">
+        <Data AD_Column_ID="59134" Column="IsCentrallyMaintained" oldValue="true">false</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="120" Action="U" Record_ID="54465" Table="AD_Menu_Trl">
+        <Data AD_Column_ID="249" Column="IsTranslated" oldValue="false">true</Data>
+        <Data AD_Column_ID="245" Column="AD_Menu_ID" oldValue="54465">54465</Data>
+        <Data AD_Column_ID="246" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
