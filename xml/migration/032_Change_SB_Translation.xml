@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="D" Name="Change SB Translation" ReleaseNo="3.9.3" SeqNo="50170">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="53226" Action="U" Record_ID="50181" Table="AD_Browse_Trl">
+        <Data AD_Column_ID="58021" Column="AD_Browse_ID" oldValue="50181">50181</Data>
+        <Data AD_Column_ID="58023" Column="Description" oldValue="Generar Retenciones">Genera retenciones desde cálculos realizados</Data>
+        <Data AD_Column_ID="58024" Column="Help" oldValue="Generar Retenciones">Use este visor inteligenete para generar las retenciones de documentos por pagar a partir de un cálculo existente</Data>
+        <Data AD_Column_ID="58022" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="120" Action="U" Record_ID="54513" Table="AD_Menu_Trl">
+        <Data AD_Column_ID="248" Column="Description" oldValue="Generar Retenciones">Genera Retenciones desde cálculos realizados</Data>
+        <Data AD_Column_ID="245" Column="AD_Menu_ID" oldValue="54513">54513</Data>
+        <Data AD_Column_ID="246" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="53226" Action="U" Record_ID="50181" Table="AD_Browse_Trl">
+        <Data AD_Column_ID="58021" Column="AD_Browse_ID" oldValue="50181">50181</Data>
+        <Data AD_Column_ID="58023" Column="Description" oldValue="Genera retenciones desde cálculos realizados">Genera Retenciones desde cálculos realizados</Data>
+        <Data AD_Column_ID="58022" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="53226" Action="U" Record_ID="50184" Table="AD_Browse_Trl">
+        <Data AD_Column_ID="58021" Column="AD_Browse_ID" oldValue="50184">50184</Data>
+        <Data AD_Column_ID="58023" Column="Description" oldValue="Permite Generar la Declaracion de Retención">Permite Generar la Declaracion de Retenciones realizadas</Data>
+        <Data AD_Column_ID="58024" Column="Help" oldValue="Permite Generar la Declaracion de Retención">Use este visor para generar la declaración a final de período basado en todas las retenciones realizadas</Data>
+        <Data AD_Column_ID="58022" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+        <Data AD_Column_ID="58026" Column="Name" oldValue="Smart Browser Para Generar Declaracion de Retención">Generar Declaracion de Retenciones</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="120" Action="U" Record_ID="54521" Table="AD_Menu_Trl">
+        <Data AD_Column_ID="247" Column="Name" oldValue="Smart Browser Para Generar Declaracion de Retención">Generar Declaracion de Retenciones</Data>
+        <Data AD_Column_ID="248" Column="Description" oldValue="Permite Generar la Declaracion de Retención">Permite Generar la Declaracion de Retenciones realizadas</Data>
+        <Data AD_Column_ID="245" Column="AD_Menu_ID" oldValue="54521">54521</Data>
+        <Data AD_Column_ID="246" Column="AD_Language" oldValue="es_MX">es_MX</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
