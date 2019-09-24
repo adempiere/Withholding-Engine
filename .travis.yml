@@ -9,8 +9,12 @@ addons:
   apt:
     packages:
       gradle
-jobs:
+script:
   include:
+  - stage: Create dependences Dir
+  	script: mkdir dependences
+  - stage: Get Main ADempiere
+  	script: wget https://github.com/erpcya/adempiere/releases/download/3.9.2-rt-5.0/Adempiere_392LTS.tar.gz -O $TRAVIS_BUILD_DIR/dependences 
   - stage: Main Build
     script: ./gradlew build
 deploy:
