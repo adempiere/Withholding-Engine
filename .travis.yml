@@ -4,10 +4,6 @@ jdk:
 os:
 - linux
 sudo: required
-addons:
-  apt:
-    packages:
-      gradle
 jobs:
   include:
   - stage: Main Build
