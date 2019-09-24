@@ -13,7 +13,7 @@ before_script:
   - mkdir dependences
   - wget https://github.com/erpcya/adempiere/releases/download/3.9.2-rt-5.0/Adempiere_392LTS.tar.gz  -c -O Adempiere.tar.gz
   - tar --extract --file=Adempiere.tar.gz Adempiere/lib/Adempiere.jar
-  - mv Adempiere.jar dependences/Adempiere.jar
+  - mv Adempiere/lib/Adempiere.jar dependences/Adempiere.jar
 script: ./gradlew build
 deploy:
   provider: releases
