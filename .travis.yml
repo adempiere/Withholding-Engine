@@ -12,6 +12,7 @@ addons:
 before_script:
   - mkdir dependences
   - wget https://github.com/erpcya/adempiere/releases/download/3.9.2-rt-5.0/Adempiere_392LTS.tar.gz  -c -O dependences/Adempiere.tar.gz
+  - tar --extract --file=dependences/Adempiere_392LTS.tar.gz Adempiere/lib/Adempiere.jar
 script: ./gradlew build
 deploy:
   provider: releases
