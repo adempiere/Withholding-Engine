@@ -14,8 +14,6 @@ before_script:
   - wget https://github.com/erpcya/adempiere/releases/download/3.9.2-rt-5.0/Adempiere_392LTS.tar.gz  -c -O dependences/Adempiere.tar.gz
 script:
   include:
-  - stage: Create dependences Dir
-  	script: mkdir dependences
   - stage: Main Build
     script: ./gradlew build
 deploy:
