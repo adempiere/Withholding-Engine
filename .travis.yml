@@ -14,12 +14,9 @@ before_script:
   - wget https://github.com/erpcya/adempiere/releases/download/3.9.2-rt-5.0/Adempiere_392LTS.tar.gz  -c -O Adempiere.tar.gz
   - tar --extract --file=Adempiere.tar.gz Adempiere/lib/Adempiere.jar
   - mv Adempiere/lib/Adempiere.jar dependences/Adempiere.jar
-jobs:
-  include:
-  - stage: Build Project
-    script: ./gradlew build
-  - stage: Build Project
-  	script: ./gradlew jar
+script: 
+	./gradlew build
+	./gradlew jar
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN_KEY
