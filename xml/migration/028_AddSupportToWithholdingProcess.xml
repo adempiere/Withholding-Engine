@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Add Support to Generate Withholding Process" ReleaseNo="3.9.3" SeqNo="500130">
+  <Migration EntityType="WHH" Name="Add Support to Generate Withholding Process" ReleaseNo="3.9.3" SeqNo="500130">
     <Step SeqNo="30" StepType="AD">
       <PO AD_Table_ID="284" Action="I" Record_ID="54293" Table="AD_Process">
         <Data AD_Column_ID="4374" Column="AD_ReportView_ID" isNewNull="true"/>
