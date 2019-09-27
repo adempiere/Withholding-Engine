@@ -19,6 +19,7 @@ package org.spin.process;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.MInvoice;
@@ -44,7 +45,7 @@ public class WithholdingDeclaration extends WithholdingDeclarationAbstract
 
 	@Override
 	protected String doIt() throws Exception {
-		
+		String result;
 		if (isSelection()) {
 			getSelectionValues()
 				.entrySet()
@@ -53,7 +54,7 @@ public class WithholdingDeclaration extends WithholdingDeclarationAbstract
 					MInvoice invoice= new MInvoice(getCtx(), list.getKey(), get_TrxName());
 					addWHDoc(invoice);
 				});
-			processWHDoc();
+			result = processWHDoc();
 		}else {
 			StringBuffer whereClause = new StringBuffer();
 			ArrayList<Object> params = new ArrayList<Object>();
@@ -87,10 +88,10 @@ public class WithholdingDeclaration extends WithholdingDeclarationAbstract
 					.forEach( invoice -> {
 						addWHDoc((MInvoice) invoice);
 					});
-			processWHDoc();
+			result = processWHDoc();
 		}
 		
-		return "@OK@";
+		return result;
 	}
 	
 	private void addWHDoc(MInvoice invoiceWH) {
@@ -121,10 +122,14 @@ public class WithholdingDeclaration extends WithholdingDeclarationAbstract
 	/**
 	 * Process Document
 	 */
-	private void processWHDoc() {
+	private String processWHDoc() {
+		AtomicReference<String> result = new AtomicReference<String>();
+		result.set("");
 		m_Declarations.forEach(declaration -> {
 			declaration.process();
+			result.set(result.get() + "\n" + "@DocumentNo@  : "+ declaration.getDocumentNo());
 		});
+		return result.get();
 	}
 }
 
@@ -173,7 +178,7 @@ class Declaration {
 		if (m_Amt!=null
 				&& m_InvoicesWH!=null
 					&& m_InvoicesWH.size() > 0) {
-			if (m_Amt.compareTo(Env.ZERO) > 0) 
+			if (m_Amt.compareTo(Env.ZERO) < 0) 
 				GenerateDeclaration(false);
 			else 
 				GenerateDeclaration(true);
@@ -189,7 +194,7 @@ class Declaration {
 		if (isCredit)
 			m_Declaration.setC_DocTypeTarget_ID(m_WHType.getDeclarationCreditDocType_ID());
 		else
-			m_Declaration.setC_DocTypeTarget_ID(m_WHType.getDeclarationCreditDocType_ID());
+			m_Declaration.setC_DocTypeTarget_ID(m_WHType.getDeclarationDebitDocType_ID());
 		
 		if (m_Declaration.getC_DocTypeTarget_ID()==0)
 			throw new AdempiereException("@Invalid@ @" + (isCredit ? MWHType.COLUMNNAME_DeclarationCreditDocType_ID : MWHType.COLUMNNAME_DeclarationDebitDocType_ID) + "@");
@@ -228,6 +233,13 @@ class Declaration {
 		return "WHType = " + (m_WHType ==null ? ""  :m_WHType.toString())
 				+ "\n Amount = " + m_Amt.toString()
 				+ "\n Invoice = " + m_InvoicesWH.toString();
+	}
+	
+	public String getDocumentNo() {
+		if (m_Declaration!=null)
+			return m_Declaration.getDocumentNo();
+		
+		return "";
 	}
 	
 }
