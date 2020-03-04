@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="WHH" Name="Change menu translation" ReleaseNo="3.9.3" SeqNo="50160">
+  <Migration EntityType="WHH" Name="Change menu translation" ReleaseNo="3.9.3" SeqNo="500160">
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="116" Action="U" Record_ID="54465" Table="AD_Menu">
         <Data AD_Column_ID="59134" Column="IsCentrallyMaintained" oldValue="true">false</Data>
