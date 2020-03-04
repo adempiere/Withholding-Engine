@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Add Reference for declaration" ReleaseNo="" SeqNo="500060">
+  <Migration EntityType="D" Name="Add Reference for declaration" ReleaseNo="3.9.3" SeqNo="500060">
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="109" Action="I" Record_ID="53637" Table="AD_Message">
         <Data AD_Column_ID="588" Column="IsActive">true</Data>
