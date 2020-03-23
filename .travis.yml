@@ -22,9 +22,9 @@ jobs:
       script: ./gradlew jar
 deploy:
   provider: releases
-  api_key: $GITHUB_TOKEN_KEY
+  token: $GITHUB_TOKEN_KEY
+  skip_cleanup: true
   file: 
     - "$TRAVIS_BUILD_DIR/build/libs/Withholding.jar"
-  skip_cleanup: true
   on:
     tags: true
