@@ -27,3 +27,13 @@ jar {
                    'Implementation-Version': project.version)
     }
 }
+
+//	Create release for project
+task release(type: Zip) {
+   from 'build/libs/'
+   from 'xml/'
+   include '*'
+   include '*/*' 
+   archiveName project.name + '.zip'
+   destinationDir(file('build/release/'))
+}
