@@ -120,7 +120,7 @@ public class WithholdingSend extends WithholdingSendAbstract
 		MInvoice invoice = new MInvoice(getCtx(), Record_ID, get_TrxName());
 		
 		MUser to = (MUser)invoice.getAD_User();
-		
+		MUser from = MUser.get(getCtx(), getAD_User_ID());
 		if (to == null
 				|| (to!= null && to.get_ID()==0)) 
 			to =Arrays.asList(MUser.getOfBPartner(getCtx(), invoice.getC_BPartner_ID(), get_TrxName()))
@@ -137,7 +137,7 @@ public class WithholdingSend extends WithholdingSendAbstract
 			template.setBPartner(invoice.getC_BPartner_ID());
 			template.setUser(getAD_User_ID());
 			
-			if (client.sendEMail(to.getEMail(), template.getMailHeader(), template.getMailText(true), attachment,template.isHtml())) { 
+			if (client.sendEMail(from, to, template.getMailHeader(), template.getMailText(true), attachment,template.isHtml())) { 
 				addLog("@EMail@ @Sent@ @to@ " + to.getName());
 				return 1;
 			}else
