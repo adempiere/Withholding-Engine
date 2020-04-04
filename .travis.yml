@@ -21,7 +21,7 @@ jobs:
     - stage: Prepare Release
       script:
          - ./gradlew build 
-         - ./gradlew release
+         - ./gradlew createRelease
       on:
        tags: true
 deploy:
