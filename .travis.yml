@@ -30,5 +30,6 @@ deploy:
   skip_cleanup: true
   file: 
     - "$TRAVIS_BUILD_DIR/build/release/Withholding.zip"
+    - "$TRAVIS_BUILD_DIR/build/release/Withholding.zip.MD5"
   on:
     tags: true
