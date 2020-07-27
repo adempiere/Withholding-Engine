@@ -1,13 +1,22 @@
-plugins {
-    id 'java-library'
-}
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
 
 repositories {
-    jcenter()
-    flatDir {
-       dirs 'dependences'
+    mavenLocal()
+    mavenCentral()
+    maven {
+		url = "https://maven.pkg.github.com/erpcya/Repository"
+        credentials {
+        	username = System.properties['deploy.user'] ?: System.getenv("GITHUB_DEPLOY_USER")
+            password = System.properties['deploy.token'] ?: System.getenv("GITHUB_DEPLOY_TOKEN")
+		}
 	}
 }
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+def libraryVersion = '1.0.0'
 
 sourceSets {
     main {
@@ -18,7 +27,7 @@ sourceSets {
 }
 
 dependencies {
-    implementation name: 'Adempiere'
+    compileOnly fileTree(dir: 'dependences', include: ['*.jar'])
 }
 
 jar {
@@ -44,4 +53,42 @@ task createRelease(type: Zip) {
             ant.checksum file: file
         }
    	}
+}
+
+publishing {
+    repositories {
+        maven {
+            url = "https://maven.pkg.github.com/erpcya/Repository"
+            credentials {
+                username = System.properties['deploy.user'] ?: System.getenv("GITHUB_DEPLOY_USER")
+                password = System.properties['deploy.token'] ?: System.getenv("GITHUB_DEPLOY_TOKEN")
+            }
+        }
+    }
+    publications {
+		mavenJava(MavenPublication) {
+        	groupId 'org.erpya.adempiere.tools'
+            artifactId 'withholding'
+            version libraryVersion
+           	artifact jar
+           	pom {
+                name = 'ADempiere Withholding Engine'
+                description = 'This library have all related to Withholding Engine'
+                 url = 'https://www.erpya.com/'
+                licenses {
+                    license {
+                        name = 'GNU General Public License v3.0'
+                        url = 'https://www.gnu.org/licenses/gpl-3.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'yamelsenih'
+                        name = 'Yamel Senih'
+                        email = 'ysenih@erpya.com'
+                    }
+                }
+            }
+		}
+	}
 }
