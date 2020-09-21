@@ -17,16 +17,21 @@
 
 package org.spin.process;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.adempiere.exceptions.AdempiereException;
+import org.compiere.model.MConversionRate;
+import org.compiere.model.MCurrency;
 import org.compiere.model.MInvoice;
 import org.compiere.model.MInvoiceLine;
+import org.compiere.model.MPriceList;
 import org.compiere.model.Query;
 import org.compiere.process.SvrProcess;
 import org.compiere.util.Env;
+import org.compiere.util.Util;
 import org.spin.model.MWHDefinition;
 import org.spin.model.MWHSetting;
 import org.spin.model.MWHWithholding;
@@ -37,6 +42,13 @@ import org.spin.model.MWHWithholding;
  * @contributor Carlos Parada, cParada@erpya.com, http://www.erpya.com
  */
 public class WithholdingGenerate extends WithholdingGenerateAbstract {
+	
+	/**View Column Currency*/
+	private static String COLUMN_C_Currency_ID = "I_C_Currency_ID";
+	/**View Column Currency To*/
+	private static String COLUMN_C_Currency_ID_To = "CTO_C_Currency_ID_To";
+	/**View Column Converted Withholding Amount*/
+	private static String COLUMN_Converted_WithholdingAmt = "WH_Converted_WithholdingAmt";
 
 	private ArrayList<Withholding> withholdingDocList = new ArrayList<Withholding> ();
 	protected void prepare() {
@@ -52,7 +64,14 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 				.stream()
 				.forEach(list -> {
 					MWHWithholding withholding = new MWHWithholding(getCtx(), list.getKey(), get_TrxName());
-					generateWHDoc(withholding);
+					BigDecimal manualWithholdingAmt = Env.ZERO;
+					setCurrencyId(Optional.ofNullable((Integer)list.getValue().get(COLUMN_C_Currency_ID)).orElse(Env.ZERO.intValue()));
+					setCurrencyToId(Optional.ofNullable((Integer)list.getValue().get(COLUMN_C_Currency_ID_To)).orElse(Env.ZERO.intValue()));
+					if (withholding.isManual()) 
+						manualWithholdingAmt = Optional.ofNullable((BigDecimal)list.getValue().get(COLUMN_Converted_WithholdingAmt)).orElse(Env.ZERO);
+					
+
+					generateWHDoc(withholding, manualWithholdingAmt);
 				});
 			processWHDoc();
 		}else {
@@ -66,31 +85,36 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 			params.add(MWHWithholding.DOCSTATUS_Completed);
 			params.add(MWHWithholding.DOCSTATUS_Closed);
 			
-			if (getParameterAsInt("AD_Org_ID") > 0) {
+			if (getOrgId() > 0) {
 				whereClause.append(" AND AD_Org_ID = ? ");
-				params.add(getParameterAsInt("AD_Org_ID"));
+				params.add(getOrgId());
 			}
 			
-			if (getParameterAsInt("C_BPartner_ID") > 0) {
+			if (getBPartnerId() > 0) {
 				whereClause.append(" AND C_BPartner_ID = ? ");
-				params.add(getParameterAsInt("C_BPartner_ID"));
+				params.add(getBPartnerId());
 			}
 			
-			if (getParameterAsInt("C_Invoice_ID") > 0) {
+			if (getInvoiceId() > 0) {
 				whereClause.append(" AND SourceInvoice_ID = ? ");
-				params.add(getParameterAsInt("C_Invoice_ID"));
+				params.add(getInvoiceId());
 			}
 			
-			if (getParameterAsInt("WH_Type_ID") > 0) {
+			if (getTypeId() > 0) {
 				whereClause.append(" AND EXISTS (SELECT 1 FROM WH_Definition whd WHERE whd.WH_Definition_ID = WH_Withholding.WH_Definition_ID AND whd.WH_Type_ID = ?) ");
-				params.add(getParameterAsInt("WH_Type_ID"));
+				params.add(getTypeId());
+			}
+			
+			if (getCurrencyId() > 0) {
+				whereClause.append(" AND EXISTS (SELECT 1 FROM C_Invoice i WHERE i.C_Invoice_ID = WH_Withholding.SourceInvoice_ID AND i.C_Currency_ID = ?) ");
+				params.add(getCurrencyId());
 			}
 			
 			new Query(getCtx(), MWHWithholding.Table_Name, whereClause.toString(), get_TrxName())
 					.setParameters(params)
 					.list()
 					.forEach( withholding -> {
-						generateWHDoc((MWHWithholding) withholding);
+						generateWHDoc((MWHWithholding) withholding, Env.ZERO);
 					});
 			processWHDoc();
 		}
@@ -102,11 +126,25 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 	 * Generate Withholding Document
 	 * @param withholding
 	 */
-	private void generateWHDoc(MWHWithholding withholding) {
+	private void generateWHDoc(MWHWithholding withholding, BigDecimal manualWithholdingAmt) {
 		
 		if (!withholding.isProcessed()
-				|| withholding.get_ValueAsBoolean("IsSimulation"))
+				|| withholding.isSimulation())
 			return ;
+		
+		if (getCurrencyId()==0)
+			throw new AdempiereException("@NotFound@ @C_Currency_ID@");
+		
+		if (getCurrencyToId()==0)
+			throw new AdempiereException("@NotFound@ @C_Currency_ID_To@");
+		
+		if (isManual()) {
+			if (getBPartnerId()==0)
+				throw new AdempiereException("@NotFound@ @C_BPartner_ID@");
+			
+			if (Util.isEmpty(getDocumentNo()))
+				throw new AdempiereException("@IsEmpty@ @DocumentNo@");
+		}
 		
 		if (withholding.getC_Invoice_ID() > 0) {
 			MInvoice whDoc = (MInvoice) withholding.getC_Invoice();
@@ -139,13 +177,13 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 			MWHSetting whSetting = (MWHSetting)withholding.getWH_Setting();
 			MInvoice invoiceFrom = (MInvoice) withholding.getSourceInvoice();
 			Optional<Withholding> withholldingDoc  = Optional.empty();
-			if (!withholding.isManual())
-				withholldingDoc = withholdingDocList.stream()
-									.filter(wh ->(wh.getC_BPartner_ID()==Curr_C_BPartner_ID.get()
-													&& wh.getWH_Definition_ID()==Curr_WH_Definition_ID.get() 
-														&& wh.getWH_Setting_ID() == Curr_WH_Setting_ID.get())
-															&& wh.getC_DocType_ID() == Curr_C_DocType_ID.get())
-									.findFirst();
+			
+			withholldingDoc = withholdingDocList.stream()
+								.filter(wh ->(wh.getC_BPartner_ID()==Curr_C_BPartner_ID.get()
+												&& wh.getWH_Definition_ID()==Curr_WH_Definition_ID.get() 
+													&& wh.getWH_Setting_ID() == Curr_WH_Setting_ID.get())
+														&& wh.getC_DocType_ID() == Curr_C_DocType_ID.get())
+								.findFirst();
 
 			if (!withholldingDoc.isPresent()) 
 				withholldingDoc = Optional.ofNullable(new Withholding(withholding.getWH_Definition_ID(), withholding.getWH_Setting_ID(), withholding.getC_BPartner_ID(), withholding.getWHDocType(), this));
@@ -159,17 +197,33 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 					invoiceTo.set(whDocument.getInvoice());
 				
 				invoiceTo.get().ifPresent(invoice ->{
+					
+					AtomicReference<BigDecimal> withholdingAmt = new AtomicReference<BigDecimal>(Env.ZERO);
+					
 					if (invoice.get_ID()==0) {
 						if (withholding.isManual())
-							invoice.setDocumentNo(withholding.getDocumentNo());
+							invoice.setDocumentNo(getDocumentNo());
 						
 						invoice.setAD_Org_ID(invoiceFrom.getAD_Org_ID());
 						invoice.setC_BPartner_ID(invoiceFrom.getC_BPartner_ID());
 						invoice.setC_BPartner_Location_ID(invoiceFrom.getC_BPartner_Location_ID());
-						invoice.setM_PriceList_ID(invoiceFrom.getM_PriceList_ID());
 						invoice.setIsSOTrx(invoiceFrom.isSOTrx());
-						invoice.setDateInvoiced(getParameterAsTimestamp("DateDoc"));
-						invoice.setDateAcct(getParameterAsTimestamp("DateDoc"));
+						
+						if (getCurrencyId() != getCurrencyToId()) {
+							Optional.ofNullable(MPriceList.getDefault(getCtx(), 
+																	  invoice.isSOTrx(), 
+																	  MCurrency.get(getCtx(), getCurrencyToId()).getISO_Code()))
+									.ifPresent(priceList ->{
+										invoice.setM_PriceList_ID(priceList.getM_PriceList_ID());
+									});
+							invoice.setDateInvoiced(invoiceFrom.getDateInvoiced());
+							invoice.setDateAcct(invoiceFrom.getDateAcct());
+						}else {
+							invoice.setM_PriceList_ID(invoiceFrom.getM_PriceList_ID());
+							invoice.setDateInvoiced(getDateDoc());
+							invoice.setDateAcct(getDateDoc());
+						}
+						
 						int C_DocType_ID =  Curr_C_DocType_ID.get();
 						if (C_DocType_ID > 0)
 							invoice.setC_DocTypeTarget_ID(C_DocType_ID);
@@ -180,6 +234,24 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 						invoice.saveEx();
 					}
 					
+					if (withholding.isManual()
+							&& Optional.ofNullable(manualWithholdingAmt)
+									   .orElse(Env.ZERO).compareTo(Env.ZERO) != 0)
+						withholdingAmt.set(manualWithholdingAmt);
+					else {
+						if (getCurrencyId() != getCurrencyToId()) {
+							withholdingAmt.set(Optional.ofNullable(MConversionRate.convert(invoice.getCtx(), 
+									Optional.ofNullable(withholding.getWithholdingAmt()).orElse(Env.ZERO), 
+									getCurrencyId(), 
+									getCurrencyToId(), 
+									invoiceFrom.getDateAcct(), 
+									invoiceFrom.getC_ConversionType_ID(), 
+									invoiceFrom.getAD_Client_ID(), 
+									invoiceFrom.getAD_Org_ID())).orElse(Env.ZERO));
+						}else 
+							withholdingAmt.set(withholding.getWithholdingAmt());
+					}
+
 					invoiceLineTo.set(Optional.ofNullable(new MInvoiceLine(invoice)));
 					invoiceLineTo.get().ifPresent(invoiceLine ->{
 						if (whSetting.getC_Charge_ID()> 0)
@@ -190,7 +262,7 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 							new AdempiereException("@NotFound@ @C_Charge_ID@");
 						
 						invoiceLine.setQty(Env.ONE);
-						invoiceLine.setPrice(withholding.getWithholdingAmt());
+						invoiceLine.setPrice(Optional.ofNullable(withholdingAmt.get()).orElse(Env.ZERO));
 						invoiceLine.saveEx();
 						
 						withholding.setC_Invoice_ID(invoiceLine.getC_Invoice_ID());

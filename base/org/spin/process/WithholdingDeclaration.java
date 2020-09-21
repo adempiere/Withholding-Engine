@@ -19,11 +19,14 @@ package org.spin.process;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.adempiere.exceptions.AdempiereException;
+import org.compiere.model.MCurrency;
 import org.compiere.model.MInvoice;
 import org.compiere.model.MInvoiceLine;
+import org.compiere.model.MPriceList;
 import org.compiere.model.Query;
 import org.compiere.process.SvrProcess;
 import org.compiere.util.Env;
@@ -109,7 +112,7 @@ public class WithholdingDeclaration extends WithholdingDeclarationAbstract
 													.orElse(null);
 			BigDecimal amt = (invoiceWH.getGrandTotal(true).compareTo(Env.ZERO)>0 ? invoiceWH.getTotalLines(): invoiceWH.getTotalLines().negate());
 			if (declaration==null) {
-				declaration = new Declaration((MWHType)withholding.getWH_Setting().getWH_Type(),(MWHDefinition)withholding.getWH_Definition(), amt , this);
+				declaration = new Declaration((MWHType)withholding.getWH_Setting().getWH_Type(),(MWHDefinition)withholding.getWH_Definition(), amt , this, invoiceWH.getC_Currency_ID());
 				m_Declarations.add(declaration);
 			}
 			else
@@ -141,12 +144,14 @@ class Declaration {
 	private ArrayList<MInvoice> m_InvoicesWH = new ArrayList<MInvoice>();
 	private SvrProcess process = null;
 	private MInvoice m_Declaration = null;
+	private int C_Currency_ID = 0;
 	
-	public Declaration(MWHType m_WHType, MWHDefinition m_WHDefinition, BigDecimal m_Amt,SvrProcess process) {
+	public Declaration(MWHType m_WHType, MWHDefinition m_WHDefinition, BigDecimal m_Amt,SvrProcess process, int C_Currency_ID) {
 		this.m_WHType = m_WHType;
 		this.m_Amt = m_Amt;
 		this.process = process;
 		this.m_WHDefinition = m_WHDefinition;
+		this.C_Currency_ID = C_Currency_ID;
 	}
 
 	public MWHType getM_WHType() {
@@ -202,6 +207,13 @@ class Declaration {
 		m_Declaration.setDateInvoiced(process.getParameterAsTimestamp("DateDoc"));
 		m_Declaration.setDateAcct(process.getParameterAsTimestamp("DateDoc"));
 		m_Declaration.setIsSOTrx(m_Declaration.getC_DocTypeTarget().isSOTrx());
+		
+		Optional.ofNullable(MPriceList.getDefault(process.getCtx(), 
+												m_Declaration.isSOTrx(), 
+												MCurrency.get(process.getCtx(), C_Currency_ID).getISO_Code()))
+				.ifPresent(priceList ->{
+					m_Declaration.setM_PriceList_ID(priceList.getM_PriceList_ID());
+				});
 		m_Declaration.saveEx();
 		
 		MInvoiceLine declarationLine = new MInvoiceLine(m_Declaration);

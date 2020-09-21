@@ -22,7 +22,7 @@ import org.compiere.process.SvrProcess;
 
 /** Generated Process for (Generate Withholding Declaration)
  *  @author ADempiere (generated) 
- *  @version Release 3.9.2
+ *  @version Release 3.9.3
  */
 public abstract class WithholdingDeclarationAbstract extends SvrProcess {
 	/** Process Value 	*/
@@ -30,15 +30,20 @@ public abstract class WithholdingDeclarationAbstract extends SvrProcess {
 	/** Process Name 	*/
 	private static final String NAME_FOR_PROCESS = "Generate Withholding Declaration";
 	/** Process Id 	*/
-	private static final int ID_FOR_PROCESS = 1000002;
+	private static final int ID_FOR_PROCESS = 54301;
 	/**	Parameter Name for Document Date	*/
 	public static final String DATEDOC = "DateDoc";
+	/**	Parameter Name for Currency	*/
+	public static final String C_CURRENCY_ID = "C_Currency_ID";
 	/**	Parameter Value for Document Date	*/
 	private Timestamp dateDoc;
+	/**	Parameter Value for Currency	*/
+	private int currencyId;
 
 	@Override
 	protected void prepare() {
 		dateDoc = getParameterAsTimestamp(DATEDOC);
+		currencyId = getParameterAsInt(C_CURRENCY_ID);
 	}
 
 	/**	 Getter Parameter Value for Document Date	*/
@@ -49,6 +54,16 @@ public abstract class WithholdingDeclarationAbstract extends SvrProcess {
 	/**	 Setter Parameter Value for Document Date	*/
 	protected void setDateDoc(Timestamp dateDoc) {
 		this.dateDoc = dateDoc;
+	}
+
+	/**	 Getter Parameter Value for Currency	*/
+	protected int getCurrencyId() {
+		return currencyId;
+	}
+
+	/**	 Setter Parameter Value for Currency	*/
+	protected void setCurrencyId(int currencyId) {
+		this.currencyId = currencyId;
 	}
 
 	/**	 Getter Parameter Value for Process ID	*/

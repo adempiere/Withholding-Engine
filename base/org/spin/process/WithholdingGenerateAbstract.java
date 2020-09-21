@@ -22,7 +22,7 @@ import org.compiere.process.SvrProcess;
 
 /** Generated Process for (Withholding Generate)
  *  @author ADempiere (generated) 
- *  @version Release 3.9.2
+ *  @version Release 3.9.3
  */
 public abstract class WithholdingGenerateAbstract extends SvrProcess {
 	/** Process Value 	*/
@@ -35,6 +35,8 @@ public abstract class WithholdingGenerateAbstract extends SvrProcess {
 	public static final String AD_ORG_ID = "AD_Org_ID";
 	/**	Parameter Name for Business Partner 	*/
 	public static final String C_BPARTNER_ID = "C_BPartner_ID";
+	/**	Parameter Name for Currency	*/
+	public static final String C_CURRENCY_ID = "C_Currency_ID";
 	/**	Parameter Name for Invoice	*/
 	public static final String C_INVOICE_ID = "C_Invoice_ID";
 	/**	Parameter Name for Account Date	*/
@@ -43,10 +45,18 @@ public abstract class WithholdingGenerateAbstract extends SvrProcess {
 	public static final String WH_TYPE_ID = "WH_Type_ID";
 	/**	Parameter Name for Document Date	*/
 	public static final String DATEDOC = "DateDoc";
+	/**	Parameter Name for Currency To	*/
+	public static final String C_CURRENCY_ID_TO = "C_Currency_ID_To";
+	/**	Parameter Name for Manual	*/
+	public static final String ISMANUAL = "IsManual";
+	/**	Parameter Name for Document No	*/
+	public static final String DOCUMENTNO = "DocumentNo";
 	/**	Parameter Value for Organization	*/
 	private int orgId;
 	/**	Parameter Value for Business Partner 	*/
 	private int bPartnerId;
+	/**	Parameter Value for Currency	*/
+	private int currencyId;
 	/**	Parameter Value for Invoice	*/
 	private int invoiceId;
 	/**	Parameter Value for Account Date	*/
@@ -55,15 +65,25 @@ public abstract class WithholdingGenerateAbstract extends SvrProcess {
 	private int typeId;
 	/**	Parameter Value for Document Date	*/
 	private Timestamp dateDoc;
+	/**	Parameter Value for Currency To	*/
+	private int currencyToId;
+	/**	Parameter Value for Manual	*/
+	private boolean isManual;
+	/**	Parameter Value for Document No	*/
+	private String documentNo;
 
 	@Override
 	protected void prepare() {
 		orgId = getParameterAsInt(AD_ORG_ID);
 		bPartnerId = getParameterAsInt(C_BPARTNER_ID);
+		currencyId = getParameterAsInt(C_CURRENCY_ID);
 		invoiceId = getParameterAsInt(C_INVOICE_ID);
 		dateAcct = getParameterAsTimestamp(DATEACCT);
 		typeId = getParameterAsInt(WH_TYPE_ID);
 		dateDoc = getParameterAsTimestamp(DATEDOC);
+		currencyToId = getParameterAsInt(C_CURRENCY_ID_TO);
+		isManual = getParameterAsBoolean(ISMANUAL);
+		documentNo = getParameterAsString(DOCUMENTNO);
 	}
 
 	/**	 Getter Parameter Value for Organization	*/
@@ -84,6 +104,16 @@ public abstract class WithholdingGenerateAbstract extends SvrProcess {
 	/**	 Setter Parameter Value for Business Partner 	*/
 	protected void setBPartnerId(int bPartnerId) {
 		this.bPartnerId = bPartnerId;
+	}
+
+	/**	 Getter Parameter Value for Currency	*/
+	protected int getCurrencyId() {
+		return currencyId;
+	}
+
+	/**	 Setter Parameter Value for Currency	*/
+	protected void setCurrencyId(int currencyId) {
+		this.currencyId = currencyId;
 	}
 
 	/**	 Getter Parameter Value for Invoice	*/
@@ -124,6 +154,36 @@ public abstract class WithholdingGenerateAbstract extends SvrProcess {
 	/**	 Setter Parameter Value for Document Date	*/
 	protected void setDateDoc(Timestamp dateDoc) {
 		this.dateDoc = dateDoc;
+	}
+
+	/**	 Getter Parameter Value for Currency To	*/
+	protected int getCurrencyToId() {
+		return currencyToId;
+	}
+
+	/**	 Setter Parameter Value for Currency To	*/
+	protected void setCurrencyToId(int currencyToId) {
+		this.currencyToId = currencyToId;
+	}
+
+	/**	 Getter Parameter Value for Manual	*/
+	protected boolean isManual() {
+		return isManual;
+	}
+
+	/**	 Setter Parameter Value for Manual	*/
+	protected void setIsManual(boolean isManual) {
+		this.isManual = isManual;
+	}
+
+	/**	 Getter Parameter Value for Document No	*/
+	protected String getDocumentNo() {
+		return documentNo;
+	}
+
+	/**	 Setter Parameter Value for Document No	*/
+	protected void setDocumentNo(String documentNo) {
+		this.documentNo = documentNo;
 	}
 
 	/**	 Getter Parameter Value for Process ID	*/
