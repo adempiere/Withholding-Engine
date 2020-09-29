@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="WHH" Name="Add Description to Generated Withholding Browse" ReleaseNo="3.9.4" SeqNo="500220">
+    <Comments>Add Withholding Description to Generated Withholding Smart Browse</Comments>
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="69491" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57982" Column="SeqNo" oldValue="10">0</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="69493" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57982" Column="SeqNo" oldValue="12">0</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="69492" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57982" Column="SeqNo" oldValue="11">0</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="65523" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57982" Column="SeqNo" oldValue="0">60</Data>
+        <Data AD_Column_ID="57976" Column="IsDisplayed" oldValue="false">true</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="65514" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57982" Column="SeqNo" oldValue="60">70</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="65537" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57982" Column="SeqNo" oldValue="70">80</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="65527" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57982" Column="SeqNo" oldValue="80">90</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="65538" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57982" Column="SeqNo" oldValue="90">100</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="90" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="69490" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57982" Column="SeqNo" oldValue="100">110</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="69489" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57982" Column="SeqNo" oldValue="110">120</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="65515" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57982" Column="SeqNo" oldValue="120">130</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
