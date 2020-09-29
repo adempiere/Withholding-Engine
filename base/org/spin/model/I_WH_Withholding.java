@@ -23,7 +23,7 @@ import org.compiere.util.KeyNamePair;
 
 /** Generated Interface for WH_Withholding
  *  @author Adempiere (generated) 
- *  @version Release 3.9.2
+ *  @version Release 3.9.3
  */
 public interface I_WH_Withholding 
 {
@@ -41,15 +41,6 @@ public interface I_WH_Withholding
     BigDecimal accessLevel = BigDecimal.valueOf(3);
 
     /** Load Meta Data */
-
-    /** Column name A_Base_Amount */
-    public static final String COLUMNNAME_A_Base_Amount = "A_Base_Amount";
-
-	/** Set A_Base_Amount	  */
-	public void setA_Base_Amount (BigDecimal A_Base_Amount);
-
-	/** Get A_Base_Amount	  */
-	public BigDecimal getA_Base_Amount();
 
     /** Column name AD_Client_ID */
     public static final String COLUMNNAME_AD_Client_ID = "AD_Client_ID";
@@ -71,6 +62,15 @@ public interface I_WH_Withholding
 	  * Organizational entity within client
 	  */
 	public int getAD_Org_ID();
+
+    /** Column name A_Base_Amount */
+    public static final String COLUMNNAME_A_Base_Amount = "A_Base_Amount";
+
+	/** Set A_Base_Amount	  */
+	public void setA_Base_Amount (BigDecimal A_Base_Amount);
+
+	/** Get A_Base_Amount	  */
+	public BigDecimal getA_Base_Amount();
 
     /** Column name C_BPartner_ID */
     public static final String COLUMNNAME_C_BPartner_ID = "C_BPartner_ID";
@@ -102,6 +102,21 @@ public interface I_WH_Withholding
 
 	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException;
 
+    /** Column name C_InvoiceLine_ID */
+    public static final String COLUMNNAME_C_InvoiceLine_ID = "C_InvoiceLine_ID";
+
+	/** Set Invoice Line.
+	  * Invoice Detail Line
+	  */
+	public void setC_InvoiceLine_ID (int C_InvoiceLine_ID);
+
+	/** Get Invoice Line.
+	  * Invoice Detail Line
+	  */
+	public int getC_InvoiceLine_ID();
+
+	public org.compiere.model.I_C_InvoiceLine getC_InvoiceLine() throws RuntimeException;
+
     /** Column name C_Invoice_ID */
     public static final String COLUMNNAME_C_Invoice_ID = "C_Invoice_ID";
 
@@ -117,20 +132,20 @@ public interface I_WH_Withholding
 
 	public org.compiere.model.I_C_Invoice getC_Invoice() throws RuntimeException;
 
-    /** Column name C_InvoiceLine_ID */
-    public static final String COLUMNNAME_C_InvoiceLine_ID = "C_InvoiceLine_ID";
+    /** Column name C_Tax_ID */
+    public static final String COLUMNNAME_C_Tax_ID = "C_Tax_ID";
 
-	/** Set Invoice Line.
-	  * Invoice Detail Line
+	/** Set Tax.
+	  * Tax identifier
 	  */
-	public void setC_InvoiceLine_ID (int C_InvoiceLine_ID);
+	public void setC_Tax_ID (int C_Tax_ID);
 
-	/** Get Invoice Line.
-	  * Invoice Detail Line
+	/** Get Tax.
+	  * Tax identifier
 	  */
-	public int getC_InvoiceLine_ID();
+	public int getC_Tax_ID();
 
-	public org.compiere.model.I_C_InvoiceLine getC_InvoiceLine() throws RuntimeException;
+	public org.compiere.model.I_C_Tax getC_Tax() throws RuntimeException;
 
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
@@ -300,6 +315,17 @@ public interface I_WH_Withholding
 	/** Get Process Now	  */
 	public boolean isProcessing();
 
+    /** Column name SourceInvoiceLine_ID */
+    public static final String COLUMNNAME_SourceInvoiceLine_ID = "SourceInvoiceLine_ID";
+
+	/** Set Source Invoice Line	  */
+	public void setSourceInvoiceLine_ID (int SourceInvoiceLine_ID);
+
+	/** Get Source Invoice Line	  */
+	public int getSourceInvoiceLine_ID();
+
+	public org.compiere.model.I_C_InvoiceLine getSourceInvoiceLine() throws RuntimeException;
+
     /** Column name SourceInvoice_ID */
     public static final String COLUMNNAME_SourceInvoice_ID = "SourceInvoice_ID";
 
@@ -311,16 +337,16 @@ public interface I_WH_Withholding
 
 	public org.compiere.model.I_C_Invoice getSourceInvoice() throws RuntimeException;
 
-    /** Column name SourceInvoiceLine_ID */
-    public static final String COLUMNNAME_SourceInvoiceLine_ID = "SourceInvoiceLine_ID";
+    /** Column name SourceOrderLine_ID */
+    public static final String COLUMNNAME_SourceOrderLine_ID = "SourceOrderLine_ID";
 
-	/** Set Source Invoice Line	  */
-	public void setSourceInvoiceLine_ID (int SourceInvoiceLine_ID);
+	/** Set Source Order Line	  */
+	public void setSourceOrderLine_ID (int SourceOrderLine_ID);
 
-	/** Get Source Invoice Line	  */
-	public int getSourceInvoiceLine_ID();
+	/** Get Source Order Line	  */
+	public int getSourceOrderLine_ID();
 
-	public org.compiere.model.I_C_InvoiceLine getSourceInvoiceLine() throws RuntimeException;
+	public org.compiere.model.I_C_OrderLine getSourceOrderLine() throws RuntimeException;
 
     /** Column name SourceOrder_ID */
     public static final String COLUMNNAME_SourceOrder_ID = "SourceOrder_ID";
@@ -333,16 +359,18 @@ public interface I_WH_Withholding
 
 	public org.compiere.model.I_C_Order getSourceOrder() throws RuntimeException;
 
-    /** Column name SourceOrderLine_ID */
-    public static final String COLUMNNAME_SourceOrderLine_ID = "SourceOrderLine_ID";
+    /** Column name UUID */
+    public static final String COLUMNNAME_UUID = "UUID";
 
-	/** Set Source Order Line	  */
-	public void setSourceOrderLine_ID (int SourceOrderLine_ID);
+	/** Set Immutable Universally Unique Identifier.
+	  * Immutable Universally Unique Identifier
+	  */
+	public void setUUID (String UUID);
 
-	/** Get Source Order Line	  */
-	public int getSourceOrderLine_ID();
-
-	public org.compiere.model.I_C_OrderLine getSourceOrderLine() throws RuntimeException;
+	/** Get Immutable Universally Unique Identifier.
+	  * Immutable Universally Unique Identifier
+	  */
+	public String getUUID();
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";
@@ -359,19 +387,6 @@ public interface I_WH_Withholding
 	  * User who updated this records
 	  */
 	public int getUpdatedBy();
-
-    /** Column name UUID */
-    public static final String COLUMNNAME_UUID = "UUID";
-
-	/** Set Immutable Universally Unique Identifier.
-	  * Immutable Universally Unique Identifier
-	  */
-	public void setUUID (String UUID);
-
-	/** Get Immutable Universally Unique Identifier.
-	  * Immutable Universally Unique Identifier
-	  */
-	public String getUUID();
 
     /** Column name WH_Definition_ID */
     public static final String COLUMNNAME_WH_Definition_ID = "WH_Definition_ID";
