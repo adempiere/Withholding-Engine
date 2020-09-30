@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="D" Name="Add Relation Type for Withholding Generated Order" ReleaseNo="3.9.4" SeqNo="500240">
+    <Comments>Add Relation Type for Withholding Generated Order</Comments>
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="102" Action="I" Record_ID="54236" Table="AD_Reference">
+        <Data AD_Column_ID="556" Column="Updated">2020-09-30 10:43:01.071</Data>
+        <Data AD_Column_ID="553" Column="IsActive">true</Data>
+        <Data AD_Column_ID="554" Column="Created">2020-09-30 10:43:01.071</Data>
+        <Data AD_Column_ID="139" Column="ValidationType">T</Data>
+        <Data AD_Column_ID="132" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="54355" Column="IsOrderByValue">false</Data>
+        <Data AD_Column_ID="1180" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="130" Column="Name">RelType C_Order (Vendor) =&gt; WH_Withholding_ID Withholding</Data>
+        <Data AD_Column_ID="131" Column="Description">Withholding - Order</Data>
+        <Data AD_Column_ID="129" Column="AD_Reference_ID">54236</Data>
+        <Data AD_Column_ID="363" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="364" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="6486" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="557" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="555" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84393" Column="UUID">351452ca-fa54-4bbc-9917-ca48a8d8d638</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="126" Action="I" Record_ID="0" Table="AD_Reference_Trl">
+        <Data AD_Column_ID="280" Column="Name">RelType C_Order (Vendor) =&gt; WH_Withholding_ID Withholding</Data>
+        <Data AD_Column_ID="282" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="666" Column="IsActive">true</Data>
+        <Data AD_Column_ID="667" Column="Created">2020-09-30 10:43:02.009</Data>
+        <Data AD_Column_ID="669" Column="Updated">2020-09-30 10:43:02.009</Data>
+        <Data AD_Column_ID="668" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="283" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="281" Column="Description">Withholding - Order</Data>
+        <Data AD_Column_ID="1203" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="1202" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="670" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="279" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="278" Column="AD_Reference_ID">54236</Data>
+        <Data AD_Column_ID="84394" Column="UUID">cce8fef9-ecf2-4228-a49e-3b959a918055</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="103" Action="I" Record_ID="54236" Table="AD_Ref_Table">
+        <Data AD_Column_ID="62122" Column="IsDisplayIdentifier">false</Data>
+        <Data AD_Column_ID="559" Column="Created">2020-09-30 10:43:51.186</Data>
+        <Data AD_Column_ID="561" Column="Updated">2020-09-30 10:43:51.186</Data>
+        <Data AD_Column_ID="558" Column="IsActive">true</Data>
+        <Data AD_Column_ID="147" Column="OrderByClause" isNewNull="true"/>
+        <Data AD_Column_ID="2377" Column="IsValueDisplayed">false</Data>
+        <Data AD_Column_ID="146" Column="WhereClause">WH_Withholding.SourceOrder_ID = @C_Order_ID@</Data>
+        <Data AD_Column_ID="62120" Column="IsAlert">false</Data>
+        <Data AD_Column_ID="62121" Column="DisplaySQL" isNewNull="true"/>
+        <Data AD_Column_ID="145" Column="AD_Display">93598</Data>
+        <Data AD_Column_ID="7711" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="367" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="368" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="143" Column="AD_Table_ID">54647</Data>
+        <Data AD_Column_ID="57270" Column="AD_Window_ID" isNewNull="true"/>
+        <Data AD_Column_ID="144" Column="AD_Key">93609</Data>
+        <Data AD_Column_ID="142" Column="AD_Reference_ID">54236</Data>
+        <Data AD_Column_ID="562" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="560" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84392" Column="UUID">5a8a4206-ffe5-4ddb-a76c-96a0c23a33b0</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="102" Action="I" Record_ID="54237" Table="AD_Reference">
+        <Data AD_Column_ID="556" Column="Updated">2020-09-30 10:45:03.037</Data>
+        <Data AD_Column_ID="553" Column="IsActive">true</Data>
+        <Data AD_Column_ID="554" Column="Created">2020-09-30 10:45:03.037</Data>
+        <Data AD_Column_ID="139" Column="ValidationType">T</Data>
+        <Data AD_Column_ID="132" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="54355" Column="IsOrderByValue">false</Data>
+        <Data AD_Column_ID="1180" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="130" Column="Name">RelType C_Order (Vendor) &lt;= WH_Withholding_ID</Data>
+        <Data AD_Column_ID="131" Column="Description">Withholding Generated to Order</Data>
+        <Data AD_Column_ID="129" Column="AD_Reference_ID">54237</Data>
+        <Data AD_Column_ID="363" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="364" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="6486" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="557" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="555" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84393" Column="UUID">57ec2936-86d6-4d07-be30-083302e96629</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="126" Action="I" Record_ID="0" Table="AD_Reference_Trl">
+        <Data AD_Column_ID="280" Column="Name">RelType C_Order (Vendor) &lt;= WH_Withholding_ID</Data>
+        <Data AD_Column_ID="282" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="666" Column="IsActive">true</Data>
+        <Data AD_Column_ID="667" Column="Created">2020-09-30 10:45:03.767</Data>
+        <Data AD_Column_ID="669" Column="Updated">2020-09-30 10:45:03.767</Data>
+        <Data AD_Column_ID="668" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="283" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="281" Column="Description">Withholding Generated to Order</Data>
+        <Data AD_Column_ID="1203" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="1202" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="670" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="279" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="278" Column="AD_Reference_ID">54237</Data>
+        <Data AD_Column_ID="84394" Column="UUID">542d88fe-dbd8-4645-bc1b-9be3e9cf807d</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="103" Action="I" Record_ID="54237" Table="AD_Ref_Table">
+        <Data AD_Column_ID="559" Column="Created">2020-09-30 10:46:13.439</Data>
+        <Data AD_Column_ID="561" Column="Updated">2020-09-30 10:46:13.439</Data>
+        <Data AD_Column_ID="558" Column="IsActive">true</Data>
+        <Data AD_Column_ID="147" Column="OrderByClause" isNewNull="true"/>
+        <Data AD_Column_ID="2377" Column="IsValueDisplayed">false</Data>
+        <Data AD_Column_ID="146" Column="WhereClause">EXISTS(SELECT 1 FROM WH_Withholding l
+	WHERE l.WH_Withholding_ID = @WH_Withholding_ID@
+	AND l.SourceOrder_ID = C_Order.C_Order_ID)
+AND C_Order.IsSOTrx = 'N'</Data>
+        <Data AD_Column_ID="62120" Column="IsAlert">false</Data>
+        <Data AD_Column_ID="62121" Column="DisplaySQL" isNewNull="true"/>
+        <Data AD_Column_ID="62122" Column="IsDisplayIdentifier">false</Data>
+        <Data AD_Column_ID="145" Column="AD_Display">2169</Data>
+        <Data AD_Column_ID="7711" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="367" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="368" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="143" Column="AD_Table_ID">259</Data>
+        <Data AD_Column_ID="57270" Column="AD_Window_ID" isNewNull="true"/>
+        <Data AD_Column_ID="144" Column="AD_Key">2161</Data>
+        <Data AD_Column_ID="142" Column="AD_Reference_ID">54237</Data>
+        <Data AD_Column_ID="562" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="560" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84392" Column="UUID">62e44993-1b12-4ad0-85f5-e6477c6a0d70</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="53246" Action="I" Record_ID="50067" Table="AD_RelationType">
+        <Data AD_Column_ID="58577" Column="Description" isNewNull="true"/>
+        <Data AD_Column_ID="58587" Column="Type">I</Data>
+        <Data AD_Column_ID="58575" Column="Created">2020-09-30 10:46:24.593</Data>
+        <Data AD_Column_ID="58578" Column="IsActive">true</Data>
+        <Data AD_Column_ID="58580" Column="Updated">2020-09-30 10:46:24.593</Data>
+        <Data AD_Column_ID="58579" Column="Name">Purchase Order &lt;-&gt; Withholding Generated</Data>
+        <Data AD_Column_ID="58582" Column="AD_Reference_Source_ID">54236</Data>
+        <Data AD_Column_ID="58583" Column="AD_Reference_Target_ID">54237</Data>
+        <Data AD_Column_ID="58584" Column="IsDirected">false</Data>
+        <Data AD_Column_ID="58585" Column="Role_Source">WithholdingGenerated</Data>
+        <Data AD_Column_ID="58586" Column="Role_Target">Invoice</Data>
+        <Data AD_Column_ID="58571" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="58572" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="58574" Column="AD_RelationType_ID">50067</Data>
+        <Data AD_Column_ID="58576" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="58581" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="84396" Column="UUID">6ba0db96-f186-4922-a78e-93d3ffca0cf2</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

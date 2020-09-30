@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="D" Name="Add Relation Type for Withholding Order Log" ReleaseNo="3.9.4" SeqNo="500230">
+    <Comments>Add Relation Type for Withholding Order Log</Comments>
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="102" Action="I" Record_ID="54234" Table="AD_Reference">
+        <Data AD_Column_ID="553" Column="IsActive">true</Data>
+        <Data AD_Column_ID="554" Column="Created">2020-09-29 18:23:42.229</Data>
+        <Data AD_Column_ID="139" Column="ValidationType">T</Data>
+        <Data AD_Column_ID="132" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="54355" Column="IsOrderByValue">false</Data>
+        <Data AD_Column_ID="1180" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="130" Column="Name">RelType C_Order  =&gt; WH_Log_ID Withholding Log</Data>
+        <Data AD_Column_ID="131" Column="Description">Withholding Log &lt;= Order</Data>
+        <Data AD_Column_ID="129" Column="AD_Reference_ID">54234</Data>
+        <Data AD_Column_ID="363" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="364" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="6486" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="557" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="555" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84393" Column="UUID">7f2bc92e-fe79-4e29-b76d-5ed6e15f8db4</Data>
+        <Data AD_Column_ID="556" Column="Updated">2020-09-29 18:23:42.229</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="126" Action="I" Record_ID="0" Table="AD_Reference_Trl">
+        <Data AD_Column_ID="280" Column="Name">RelType C_Order  =&gt; WH_Log_ID Withholding Log</Data>
+        <Data AD_Column_ID="282" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="666" Column="IsActive">true</Data>
+        <Data AD_Column_ID="667" Column="Created">2020-09-29 18:23:42.871</Data>
+        <Data AD_Column_ID="669" Column="Updated">2020-09-29 18:23:42.871</Data>
+        <Data AD_Column_ID="668" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="283" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="281" Column="Description">Withholding Log &lt;= Order</Data>
+        <Data AD_Column_ID="1203" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="1202" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="670" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="279" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="278" Column="AD_Reference_ID">54234</Data>
+        <Data AD_Column_ID="84394" Column="UUID">6629fc48-0480-4eb3-93fb-482ab4db0099</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="103" Action="I" Record_ID="54234" Table="AD_Ref_Table">
+        <Data AD_Column_ID="559" Column="Created">2020-09-29 18:24:39.647</Data>
+        <Data AD_Column_ID="561" Column="Updated">2020-09-29 18:24:39.647</Data>
+        <Data AD_Column_ID="558" Column="IsActive">true</Data>
+        <Data AD_Column_ID="147" Column="OrderByClause" isNewNull="true"/>
+        <Data AD_Column_ID="2377" Column="IsValueDisplayed">false</Data>
+        <Data AD_Column_ID="146" Column="WhereClause">WH_Log.SourceOrder_ID = @C_Order_ID@</Data>
+        <Data AD_Column_ID="62120" Column="IsAlert">false</Data>
+        <Data AD_Column_ID="62121" Column="DisplaySQL" isNewNull="true"/>
+        <Data AD_Column_ID="62122" Column="IsDisplayIdentifier">false</Data>
+        <Data AD_Column_ID="145" Column="AD_Display">93678</Data>
+        <Data AD_Column_ID="7711" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="367" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="368" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="143" Column="AD_Table_ID">54651</Data>
+        <Data AD_Column_ID="57270" Column="AD_Window_ID" isNewNull="true"/>
+        <Data AD_Column_ID="144" Column="AD_Key">93676</Data>
+        <Data AD_Column_ID="142" Column="AD_Reference_ID">54234</Data>
+        <Data AD_Column_ID="562" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="560" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84392" Column="UUID">d12ec499-268a-4c6d-b5f8-7a5ea8ac66e3</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="102" Action="I" Record_ID="54235" Table="AD_Reference">
+        <Data AD_Column_ID="556" Column="Updated">2020-09-29 18:27:46.187</Data>
+        <Data AD_Column_ID="139" Column="ValidationType">T</Data>
+        <Data AD_Column_ID="132" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="54355" Column="IsOrderByValue">false</Data>
+        <Data AD_Column_ID="1180" Column="VFormat" isNewNull="true"/>
+        <Data AD_Column_ID="130" Column="Name">RelType C_Order &lt;= WH_Log_ID</Data>
+        <Data AD_Column_ID="131" Column="Description">Withholding Log to Order</Data>
+        <Data AD_Column_ID="129" Column="AD_Reference_ID">54235</Data>
+        <Data AD_Column_ID="363" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="364" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="6486" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="557" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="555" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84393" Column="UUID">bcdea250-563f-4b90-ab04-c5199fd48ac7</Data>
+        <Data AD_Column_ID="553" Column="IsActive">true</Data>
+        <Data AD_Column_ID="554" Column="Created">2020-09-29 18:27:46.187</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="126" Action="I" Record_ID="0" Table="AD_Reference_Trl">
+        <Data AD_Column_ID="280" Column="Name">RelType C_Order &lt;= WH_Log_ID</Data>
+        <Data AD_Column_ID="282" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="666" Column="IsActive">true</Data>
+        <Data AD_Column_ID="667" Column="Created">2020-09-29 18:27:46.844</Data>
+        <Data AD_Column_ID="669" Column="Updated">2020-09-29 18:27:46.844</Data>
+        <Data AD_Column_ID="668" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="283" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="281" Column="Description">Withholding Log to Order</Data>
+        <Data AD_Column_ID="1203" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="1202" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="670" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="279" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="278" Column="AD_Reference_ID">54235</Data>
+        <Data AD_Column_ID="84394" Column="UUID">dac7f67d-9e06-4133-b0b8-1032dd74cd42</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="103" Action="I" Record_ID="54235" Table="AD_Ref_Table">
+        <Data AD_Column_ID="559" Column="Created">2020-09-29 18:30:42.444</Data>
+        <Data AD_Column_ID="561" Column="Updated">2020-09-29 18:30:42.444</Data>
+        <Data AD_Column_ID="558" Column="IsActive">true</Data>
+        <Data AD_Column_ID="147" Column="OrderByClause" isNewNull="true"/>
+        <Data AD_Column_ID="2377" Column="IsValueDisplayed">false</Data>
+        <Data AD_Column_ID="146" Column="WhereClause">EXISTS(SELECT 1 FROM WH_Log l
+	WHERE l.WH_Log_ID = @WH_Log_ID@
+	AND l.SourceOrden_ID = C_Order.C_Order_ID)
+AND C_Order.IsSOTrx = 'N'</Data>
+        <Data AD_Column_ID="62120" Column="IsAlert">false</Data>
+        <Data AD_Column_ID="62121" Column="DisplaySQL" isNewNull="true"/>
+        <Data AD_Column_ID="62122" Column="IsDisplayIdentifier">false</Data>
+        <Data AD_Column_ID="145" Column="AD_Display">2169</Data>
+        <Data AD_Column_ID="7711" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="367" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="368" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="143" Column="AD_Table_ID">259</Data>
+        <Data AD_Column_ID="57270" Column="AD_Window_ID">181</Data>
+        <Data AD_Column_ID="144" Column="AD_Key">2161</Data>
+        <Data AD_Column_ID="142" Column="AD_Reference_ID">54235</Data>
+        <Data AD_Column_ID="562" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="560" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="84392" Column="UUID">6f152f7d-0828-432e-b420-0c990dce364b</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="70" StepType="AD">
+      <PO AD_Table_ID="53246" Action="I" Record_ID="50066" Table="AD_RelationType">
+        <Data AD_Column_ID="58577" Column="Description" isNewNull="true"/>
+        <Data AD_Column_ID="58579" Column="Name">Order (Purchase / Sales) &lt;-&gt; Withholding Log</Data>
+        <Data AD_Column_ID="58582" Column="AD_Reference_Source_ID">54234</Data>
+        <Data AD_Column_ID="58583" Column="AD_Reference_Target_ID">54235</Data>
+        <Data AD_Column_ID="58584" Column="IsDirected">false</Data>
+        <Data AD_Column_ID="58585" Column="Role_Source">WithholdingLog</Data>
+        <Data AD_Column_ID="58586" Column="Role_Target">Order</Data>
+        <Data AD_Column_ID="58571" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="58572" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="58574" Column="AD_RelationType_ID">50066</Data>
+        <Data AD_Column_ID="58576" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="58581" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="84396" Column="UUID">e81f6e81-ca7a-4027-ba47-3b7726e8f545</Data>
+        <Data AD_Column_ID="58587" Column="Type">I</Data>
+        <Data AD_Column_ID="58575" Column="Created">2020-09-29 18:31:15.34</Data>
+        <Data AD_Column_ID="58578" Column="IsActive">true</Data>
+        <Data AD_Column_ID="58580" Column="Updated">2020-09-29 18:31:15.34</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="80" StepType="AD">
+      <PO AD_Table_ID="53246" Action="U" Record_ID="50066" Table="AD_RelationType">
+        <Data AD_Column_ID="58579" Column="Name" oldValue="Order (Purchase / Sales) &lt;-&gt; Withholding Log">Order (Purchase) &lt;-&gt; Withholding Log</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
