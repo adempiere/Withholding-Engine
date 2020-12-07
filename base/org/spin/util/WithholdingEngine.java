@@ -291,7 +291,7 @@ public class WithholdingEngine {
 		returnValues = new HashMap<String, Object>();
 		processLog = new HashMap<String, String>();
 		
-		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId)
+		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId, document.getAD_Org_ID())
 					 .stream()
 					 .filter(whDef -> ((type!=null && type.get_ID()==whDef.getWH_Type_ID()) || type ==null)
 							 			&& ((definition!=null && definition.get_ID()==whDef.get_ID()) || definition ==null))

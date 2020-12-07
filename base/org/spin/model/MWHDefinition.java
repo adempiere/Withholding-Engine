@@ -112,6 +112,17 @@ public class MWHDefinition extends X_WH_Definition {
 	 * @return
 	 */
 	public static List<MWHDefinition> getFromDocumentType(Properties ctx, int documentTypeId) {
+		return getFromDocumentType(ctx, documentTypeId, 0);
+	}
+		
+	/**
+	 * Get from document type
+	 * @param ctx
+	 * @param documentTypeId
+	 * @param org_ID
+	 * @return
+	 */
+	public static List<MWHDefinition> getFromDocumentType(Properties ctx, int documentTypeId, int org_ID) {
 		List<MWHDefinition> definitionList = wihholdingDefinitionFromDocumentTypeCacheValues.get(documentTypeId);
 		if(definitionList != null) {
 			return definitionList;
@@ -119,11 +130,12 @@ public class MWHDefinition extends X_WH_Definition {
 		//	
 		String whereClause = new String("EXISTS(SELECT 1 FROM WH_DefinitionLine "
 				+ "WHERE C_DocType_ID = ? "
+				+ " AND AD_Org_ID IN (0,?) "
 				+ "AND WH_Definition_ID = WH_Definition.WH_Definition_ID)");
 		//	
 		definitionList = new Query(ctx, I_WH_Definition.Table_Name, whereClause, null)
 				.setClient_ID()
-				.setParameters(documentTypeId)
+				.setParameters(documentTypeId, org_ID)
 				.setOnlyActiveRecords(true)
 				.<MWHDefinition>list();
 		//	Set
