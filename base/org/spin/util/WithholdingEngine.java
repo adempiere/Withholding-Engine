@@ -97,7 +97,7 @@ public class WithholdingEngine {
 		returnValues = new HashMap<String, Object>();
 		processLog = new HashMap<String, String>();
 		//	Apply Listener
-		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId)
+		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId, document.getAD_Org_ID())
 			.forEach(withholding -> processWithholding(withholding, document, ModelValidator.documentEventValidators[documentTiming]));
 		//	default
 		return errorMessage.toString();
@@ -142,7 +142,7 @@ public class WithholdingEngine {
 		returnValues = new HashMap<String, Object>();
 		processLog = new HashMap<String, String>();
 		//	Apply Listener
-		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId)
+		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId, document.getAD_Org_ID())
 			.forEach(withholding -> processWithholding(withholding, document, ModelValidator.tableEventValidators[changeType]));
 		//	default
 		return errorMessage.toString();
