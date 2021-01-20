@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Change SB Translation" ReleaseNo="3.9.3" SeqNo="500170">
+  <Migration EntityType="WHH" Name="Change SB Translation" ReleaseNo="1.0" SeqNo="500170">
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="53226" Action="U" Record_ID="50181" Table="AD_Browse_Trl">
         <Data AD_Column_ID="58021" Column="AD_Browse_ID" oldValue="50181">50181</Data>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="WHH" Name="Add Description to Generated Withholding Browse" ReleaseNo="3.9.4" SeqNo="500220">
+  <Migration EntityType="WHH" Name="Add Description to Generated Withholding Browse" ReleaseNo="1.0" SeqNo="500220">
     <Comments>Add Withholding Description to Generated Withholding Smart Browse</Comments>
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="53223" Action="U" Record_ID="69491" Table="AD_Browse_Field">

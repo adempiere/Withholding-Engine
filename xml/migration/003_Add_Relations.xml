@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Withholding New Relation" ReleaseNo="3.9.3" SeqNo="500030">
+  <Migration EntityType="WHH" Name="Withholding New Relation" ReleaseNo="1.0" SeqNo="500030">
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="102" Action="I" Record_ID="54141" Table="AD_Reference">
         <Data AD_Column_ID="556" Column="Updated">2019-06-13 16:48:31.879</Data>

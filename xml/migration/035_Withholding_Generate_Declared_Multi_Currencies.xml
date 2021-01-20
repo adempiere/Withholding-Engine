@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Withholding Generate / Declared on Multi Currencies" ReleaseNo="3.9.4" SeqNo="500200">
+  <Migration EntityType="WHH" Name="Withholding Generate / Declared on Multi Currencies" ReleaseNo="1.0" SeqNo="500200">
     <Comments>Add Support to Withholding Generate / Declared on Multi Currencies</Comments>
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="53231" Action="I" Record_ID="50518" Table="AD_View_Definition">

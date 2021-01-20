@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Add Document Type for Withholding" ReleaseNo="3.9.3" SeqNo="500080">
+  <Migration EntityType="WHH" Name="Add Document Type for Withholding" ReleaseNo="1.0" SeqNo="500080">
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="107" Action="U" Record_ID="95535" Table="AD_Field">
         <Data AD_Column_ID="15013" Column="IsMandatory" isOldNull="true">Y</Data>

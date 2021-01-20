@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Add Validation For Document Types Subject to Withholding" ReleaseNo="3.9.4" SeqNo="500260">
+  <Migration EntityType="WHH" Name="Add Validation For Document Types Subject to Withholding" ReleaseNo="1.0" SeqNo="500260">
     <Comments>Add Validation For Document Types Subject to Withholding</Comments>
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="108" Action="I" Record_ID="52818" Table="AD_Val_Rule">

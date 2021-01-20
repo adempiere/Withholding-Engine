@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Add Browser to Send Withholding" ReleaseNo="3.9.3" SeqNo="500190">
+  <Migration EntityType="WHH" Name="Add Browser to Send Withholding" ReleaseNo="1.0" SeqNo="500190">
     <Comments>Add Browser to Send Withholding</Comments>
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="284" Action="I" Record_ID="54363" Table="AD_Process">

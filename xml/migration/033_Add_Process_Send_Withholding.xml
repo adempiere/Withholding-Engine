@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Add Process to Send Withholding" ReleaseNo="3.9.3" SeqNo="500180">
+  <Migration EntityType="WHH" Name="Add Process to Send Withholding" ReleaseNo="1.0" SeqNo="500180">
     <Comments>Add Process for send Withholding by EMail</Comments>
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="284" Action="I" Record_ID="54362" Table="AD_Process">

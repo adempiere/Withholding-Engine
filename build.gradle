@@ -16,7 +16,8 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-def libraryVersion = '1.0.4'
+def libraryVersion = '1.0.5'
+def entityType = 'WHH'
 
 sourceSets {
     main {
@@ -33,7 +34,8 @@ dependencies {
 jar {
     manifest {
         attributes('Implementation-Title': project.name,
-                   'Implementation-Version': project.version)
+                   'Implementation-Version': project.version, 
+                   "EntityType": entityType)
     }
 }
 

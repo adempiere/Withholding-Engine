@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Add Invoice Source Tax to Withholding Generated Document" ReleaseNo="3.9.4" SeqNo="500210">
+  <Migration EntityType="WHH" Name="Add Invoice Source Tax to Withholding Generated Document" ReleaseNo="1.0" SeqNo="500210">
     <Comments>Add Invoice Source Tax to Withholding Generated Document</Comments>
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="101" Action="I" Record_ID="96885" Table="AD_Column">

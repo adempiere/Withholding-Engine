@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Add Relation Type for Withholding Generated Order" ReleaseNo="3.9.4" SeqNo="500240">
+  <Migration EntityType="WHH" Name="Add Relation Type for Withholding Generated Order" ReleaseNo="1.0" SeqNo="500240">
     <Comments>Add Relation Type for Withholding Generated Order</Comments>
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="102" Action="I" Record_ID="54236" Table="AD_Reference">

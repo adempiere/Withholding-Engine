@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Add Document Type for Setting" ReleaseNo="3.9.3" SeqNo="500090">
+  <Migration EntityType="WHH" Name="Add Document Type for Setting" ReleaseNo="1.0" SeqNo="500090">
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="276" Action="I" Record_ID="61146" Table="AD_Element">
         <Data AD_Column_ID="2600" Column="Updated">2019-08-17 14:27:04.249</Data>

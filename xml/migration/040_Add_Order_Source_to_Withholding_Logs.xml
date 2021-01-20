@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Add Order Source to Withholding Logs" ReleaseNo="3.9.4" SeqNo="500250">
+  <Migration EntityType="WHH" Name="Add Order Source to Withholding Logs" ReleaseNo="1.0" SeqNo="500250">
     <Comments>Add Order Source to Withholding Logs</Comments>
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="101" Action="I" Record_ID="96887" Table="AD_Column">
