@@ -49,7 +49,7 @@ public class MWHDefinition extends X_WH_Definition {
 	/** Static Cache */
 	private static CCache<Integer, MWHDefinition> definitionCacheIds = new CCache<Integer, MWHDefinition>(Table_Name, 30);
 	/** Static Cache */
-	private static CCache<Integer, List<MWHDefinition>> wihholdingDefinitionFromDocumentTypeCacheValues = new CCache<Integer, List<MWHDefinition>>(Table_Name + "_DocumentType", 30);
+	private static CCache<String, List<MWHDefinition>> wihholdingDefinitionFromDocumentTypeCacheValues = new CCache<String, List<MWHDefinition>>(Table_Name + "_DocumentType", 30);
 	/**	Type
 	
 	
@@ -123,7 +123,8 @@ public class MWHDefinition extends X_WH_Definition {
 	 * @return
 	 */
 	public static List<MWHDefinition> getFromDocumentType(Properties ctx, int documentTypeId, int org_ID) {
-		List<MWHDefinition> definitionList = wihholdingDefinitionFromDocumentTypeCacheValues.get(documentTypeId);
+		String key = documentTypeId + "_" + org_ID;
+		List<MWHDefinition> definitionList = wihholdingDefinitionFromDocumentTypeCacheValues.get(key);
 		if(definitionList != null) {
 			return definitionList;
 		}
@@ -139,7 +140,7 @@ public class MWHDefinition extends X_WH_Definition {
 				.setOnlyActiveRecords(true)
 				.<MWHDefinition>list();
 		//	Set
-		wihholdingDefinitionFromDocumentTypeCacheValues.put(documentTypeId, definitionList);
+		wihholdingDefinitionFromDocumentTypeCacheValues.put(key, definitionList);
 		//	Return 
 		return definitionList;
 	}
