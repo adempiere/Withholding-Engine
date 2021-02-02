@@ -21,6 +21,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.adempiere.exceptions.AdempiereException;
@@ -31,27 +33,20 @@ import org.compiere.model.MUser;
 import org.compiere.model.Query;
 import org.compiere.print.ReportEngine;
 import org.compiere.util.Env;
+import org.compiere.util.Util;
 
 
 /** Generated Process for (Withholding Send)
  *  @author ADempiere (generated) 
  *  @version Release 3.9.3
  */
-public class WithholdingSend extends WithholdingSendAbstract
-{
-	@Override
-	protected void prepare()
-	{
-		super.prepare();
-	}
+public class WithholdingSend extends WithholdingSendAbstract {
 
+	private AtomicInteger sends = new AtomicInteger();
+	
 	@Override
-	protected String doIt() throws Exception
-	{
-		AtomicReference<Integer> result = new AtomicReference<Integer>();
-		result.set(0);
-		
-		if (getMailTextId()==0)
+	protected String doIt() throws Exception {
+		if (getMailTextId() == 0)
 			throw new AdempiereException("@Invalid@ @R_MailTex_ID@");
 		
 		if (!isSelection()) {
@@ -93,60 +88,66 @@ public class WithholdingSend extends WithholdingSendAbstract
 				params.add(getDateDocTo());
 			else
 				params.add(Env.getContextAsDate(getCtx(), "@#Date@"));
-			
-			
-			
+			//	
 			new Query(getCtx(), MInvoice.Table_Name, whereClause, get_TrxName())
 					.setParameters(params)
-					.list().forEach(invoice ->{
-						result.set(result.get() + sendInvoiceEmail(invoice.get_ID(), getMailTextId()) );
-				});
+					.list().forEach(invoice -> sendInvoiceEmail(invoice.get_ID(), getMailTextId()));
+		} else {
+			getSelectionKeys().forEach(invoiceID -> sendInvoiceEmail(invoiceID, getMailTextId()));
 		}
-		else 
-			getSelectionKeys().forEach(invoiceID ->{
-				result.set(result.get() + sendInvoiceEmail(invoiceID, getMailTextId()));
-			});
-		
-			
-		return "@EMail@ @Sent@ " +result.get();
+		//	
+		return "@EMail@ @Sent@ " + sends.get();
 	}
 	/**
 	 * Send Withholding Document
-	 * @param Record_ID
-	 * @param MailText_ID
+	 * @param recordId
+	 * @param mailTextId
 	 * @return
 	 */
-	private int sendInvoiceEmail(int Record_ID, int MailText_ID) {
-		MInvoice invoice = new MInvoice(getCtx(), Record_ID, get_TrxName());
-		
-		MUser to = (MUser)invoice.getAD_User();
+	private void sendInvoiceEmail(int recordId, int mailTextId) {
+		MInvoice invoice = new MInvoice(getCtx(), recordId, get_TrxName());
+		AtomicReference<MUser> to = new AtomicReference<MUser>((MUser) invoice.getAD_User());
 		MUser from = MUser.get(getCtx(), getAD_User_ID());
-		if (to == null
-				|| (to!= null && to.get_ID()==0)) 
-			to =Arrays.asList(MUser.getOfBPartner(getCtx(), invoice.getC_BPartner_ID(), get_TrxName()))
-					.stream().filter(user -> user.getC_BPartner_Location_ID() == invoice.getC_BPartner_Location_ID())
-					.findFirst()
-					.orElse(null);
-		if (to!= null 
-				&& to.get_ID()!=0) {
-			ReportEngine re = ReportEngine.get(getCtx(), ReportEngine.INVOICE, invoice.get_ID());
+        //	Get from default account
+        if (to.get() == null) {
+        	Optional<MUser> maybeUser = Arrays.asList(MUser.getOfBPartner(getCtx(), invoice.getC_BPartner_ID(), get_TrxName()))
+        		.stream()
+        		.filter(user -> !Util.isEmpty(user.getNotificationType()) && (user.getNotificationType().equals(MUser.NOTIFICATIONTYPE_EMail) 
+        				|| user.getNotificationType().equals(MUser.NOTIFICATIONTYPE_EMailPlusNotice)))
+        		.filter(user -> !Util.isEmpty(user.getEMail()) && user.getC_BPartner_Location_ID() == invoice.getC_BPartner_Location_ID())
+        		.findFirst();
+        	if(maybeUser.isPresent()) {
+        		to.set(maybeUser.get());
+        	} else {
+        		maybeUser = Arrays.asList(MUser.getOfBPartner(getCtx(), invoice.getC_BPartner_ID(), get_TrxName()))
+                		.stream()
+                		.filter(user -> !Util.isEmpty(user.getNotificationType()) && (user.getNotificationType().equals(MUser.NOTIFICATIONTYPE_EMail) 
+                				|| user.getNotificationType().equals(MUser.NOTIFICATIONTYPE_EMailPlusNotice)))
+                		.filter(user -> !Util.isEmpty(user.getEMail()))
+                		.findFirst();
+                if(maybeUser.isPresent()) {
+                	to.set(maybeUser.get());
+                }
+        	}
+        }
+        //	
+        Optional.ofNullable(to.get()).ifPresent(toUser -> {
+        	ReportEngine re = ReportEngine.get(getCtx(), ReportEngine.INVOICE, invoice.get_ID());
 			File attachment = re.getPDF();
 			MClient client = MClient.get(getCtx(), getAD_Client_ID());
-			MMailText template = new MMailText(getCtx(), MailText_ID, get_TrxName());
+			MMailText template = new MMailText(getCtx(), mailTextId, get_TrxName());
 			template.setPO(invoice);
 			template.setBPartner(invoice.getC_BPartner_ID());
 			template.setUser(getAD_User_ID());
 			
-			if (client.sendEMail(from, to, template.getMailHeader(), template.getMailText(true), attachment,template.isHtml())) { 
-				addLog("@EMail@ @Sent@ @to@ " + to.getName());
-				return 1;
-			}else
-				return 0;
-			
-		}else {
-			addLog("@NotFound@ @AD_User_ID@ -> @C_BPartner_ID@ " + invoice.getC_BPartner().getName() + " @DocumentNo@ " + invoice.getDocumentNo());
-			return 0;
-		}
-		
+			if (client.sendEMail(from, to.get(), template.getMailHeader(), template.getMailText(true), attachment,template.isHtml())) { 
+				addLog("@EMail@ @Sent@ @to@ " + to.get().getName());
+				sends.incrementAndGet();
+			}
+        });
+        //	Other
+        if(!Optional.ofNullable(to.get()).isPresent()) {
+        	addLog("@NotFound@ @AD_User_ID@ -> @C_BPartner_ID@ " + invoice.getC_BPartner().getName() + " @DocumentNo@ " + invoice.getDocumentNo());
+        }
 	}
 }
