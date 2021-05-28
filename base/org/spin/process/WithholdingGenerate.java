@@ -208,21 +208,15 @@ public class WithholdingGenerate extends WithholdingGenerateAbstract {
 						invoice.setC_BPartner_ID(invoiceFrom.getC_BPartner_ID());
 						invoice.setC_BPartner_Location_ID(invoiceFrom.getC_BPartner_Location_ID());
 						invoice.setIsSOTrx(invoiceFrom.isSOTrx());
-						
-						if (getCurrencyId() != getCurrencyToId()) {
-							Optional.ofNullable(MPriceList.getDefault(getCtx(), 
-																	  invoice.isSOTrx(), 
-																	  MCurrency.get(getCtx(), getCurrencyToId()).getISO_Code()))
-									.ifPresent(priceList ->{
-										invoice.setM_PriceList_ID(priceList.getM_PriceList_ID());
-									});
-							invoice.setDateInvoiced(invoiceFrom.getDateInvoiced());
-							invoice.setDateAcct(invoiceFrom.getDateAcct());
-						}else {
-							invoice.setM_PriceList_ID(invoiceFrom.getM_PriceList_ID());
-							invoice.setDateInvoiced(getDateDoc());
-							invoice.setDateAcct(getDateDoc());
-						}
+						invoice.setDateInvoiced(getDateDoc());
+						invoice.setDateAcct(getDateDoc());
+						invoice.setM_PriceList_ID(invoiceFrom.getM_PriceList_ID());
+						invoice.setC_ConversionType_ID(invoiceFrom.getC_ConversionType_ID());
+						Optional<MPriceList> maybePriceList = Optional
+																.ofNullable(MPriceList.getDefault(getCtx(), 
+																	  					invoice.isSOTrx(), 
+																	  					MCurrency.get(getCtx(), getCurrencyToId()).getISO_Code()));
+						maybePriceList.ifPresent(priceList -> invoice.setM_PriceList_ID(priceList.getM_PriceList_ID()));
 						
 						int C_DocType_ID =  Curr_C_DocType_ID.get();
 						if (C_DocType_ID > 0)
