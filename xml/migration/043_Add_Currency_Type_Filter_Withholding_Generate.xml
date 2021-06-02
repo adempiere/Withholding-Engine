@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Add Currency Type Filter on Withhollding Generate " ReleaseNo="1.0" SeqNo="500280">
+  <Migration EntityType="WHH" Name="Add Currency Type Filter on Withhollding Generate " ReleaseNo="1.0" SeqNo="500280">
     <Comments>Add Currency Type Filter on Withhollding Generate </Comments>
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="53232" Action="I" Record_ID="71516" Table="AD_View_Column">
