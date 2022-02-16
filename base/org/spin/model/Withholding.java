@@ -16,15 +16,21 @@
 package org.spin.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.adempiere.exceptions.AdempiereException;
+import org.compiere.model.I_C_Order;
 import org.compiere.model.MClient;
 import org.compiere.model.MInvoice;
+import org.compiere.model.MTable;
 import org.compiere.model.ModelValidationEngine;
 import org.compiere.model.ModelValidator;
 import org.compiere.model.PO;
+import org.compiere.model.Query;
+import org.compiere.process.DocAction;
 import org.compiere.util.CLogger;
 import org.compiere.util.Env;
+import org.compiere.util.Util;
 import org.spin.util.WithholdingEngine;
 
 /**
@@ -57,6 +63,33 @@ public class Withholding implements ModelValidator {
 		}
 		// Add Timing change only for invoice
 		engine.addDocValidate(MInvoice.Table_Name, this);
+		//	List it
+		List<MWHSetting> settings = new Query(Env.getCtx(), MWHSetting.Table_Name, "EventType = 'E' "
+				+ "AND EXISTS(SELECT 1 FROM WH_Type wt WHERE wt.WH_Type_ID = WH_Setting.WH_Type_ID AND wt.IsActive = 'Y')", null)
+                .setOnlyActiveRecords(true)
+                .setClient_ID()
+                .setOrderBy(MWHSetting.COLUMNNAME_SeqNo)
+                .<MWHSetting>list();
+		//	for Tables
+		settings
+		.stream()
+		.filter(setting -> setting.getEventModelValidator().startsWith("T"))
+        .collect(Collectors.groupingBy(MWHSetting::getAD_Table_ID))
+        .entrySet()
+        .forEach(tableSet -> {
+        	String tableName = MTable.getTableName(Env.getCtx(), tableSet.getKey());
+            engine.addModelChange(tableName, this);
+        });
+		//	For documents
+		settings
+		.stream()
+		.filter(setting -> setting.getEventModelValidator().startsWith("D"))
+        .collect(Collectors.groupingBy(MWHSetting::getAD_Table_ID))
+        .entrySet()
+        .forEach(tableSet -> {
+        	String tableName = MTable.getTableName(Env.getCtx(), tableSet.getKey());
+            engine.addDocValidate(tableName, this);
+        });
 	}
 
 	@Override
@@ -71,14 +104,17 @@ public class Withholding implements ModelValidator {
 	}
 
 	@Override
-	public String docValidate(PO po, int timing) {
+	public String docValidate(PO entity, int timing) {
 		//	Default running for invoices
-		String error = null;
-		if (po.get_TableName().equals(MInvoice.Table_Name)) {
-			MInvoice invoice = (MInvoice) po;
-			if(!invoice.isReversal()) {
-				error = WithholdingEngine.get().fireDocValidate(invoice, timing);
+		if(DocAction.class.isAssignableFrom(entity.getClass())) {
+			String error = WithholdingEngine.get().fireDocValidate((DocAction) entity, timing);
+			if(!Util.isEmpty(error)) {
+				throw new AdempiereException(error);
 			}
+		}
+		//	For table
+		if (entity.get_TableName().equals(MInvoice.Table_Name)) {
+			MInvoice invoice = (MInvoice) entity;
 			//	For Reverse Correct
 			if(timing == TIMING_BEFORE_REVERSECORRECT
 					|| timing == TIMING_BEFORE_REVERSEACCRUAL
@@ -110,13 +146,27 @@ public class Withholding implements ModelValidator {
 					});
 				}
 			}
-		}	
+		}
 		//
-		return error;
+		return null;
 	}
 
 	@Override
-	public String modelChange(PO po, int type) throws Exception {
+	public String modelChange(PO entity, int type) throws Exception {
+		//	Default running for invoices
+		if(DocAction.class.isAssignableFrom(entity.getClass())) {
+			int documentTypeId = entity.get_ValueAsInt(I_C_Order.COLUMNNAME_C_DocTypeTarget_ID);
+			if(documentTypeId <= 0) {
+				documentTypeId = entity.get_ValueAsInt(I_C_Order.COLUMNNAME_C_DocType_ID);
+			}
+			if(documentTypeId <= 0) {
+				return null;
+			}
+			String error = WithholdingEngine.get().fireModelChange((DocAction) entity, type, documentTypeId);
+			if(!Util.isEmpty(error)) {
+				throw new AdempiereException(error);
+			}
+		}
 		return null;
 	}
 }

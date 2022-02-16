@@ -96,6 +96,28 @@ public class MWHDefinitionLine extends X_WH_DefinitionLine {
 				.collect(Collectors.toList());
 		return  definitionLineList;
 	}
+	
+	/**
+	 * Clear values from local store
+	 * @return void
+	 */
+	public static void clear() {
+		definitionLineCacheIds.clear();
+	}
+	
+	@Override
+	protected boolean afterDelete(boolean success) {
+		clear();
+		MWHDefinition.clear();
+		return super.afterDelete(success);
+	}
+	
+	@Override
+	protected boolean afterSave(boolean newRecord, boolean success) {
+		clear();
+		MWHDefinition.clear();
+		return super.afterSave(newRecord, success);
+	}
 
 	@Override
 	public String toString() {

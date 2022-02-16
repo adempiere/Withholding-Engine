@@ -146,6 +146,15 @@ public class MWHDefinition extends X_WH_Definition {
 	}
 	
 	/**
+	 * Clear values from local store
+	 * @return void
+	 */
+	public static void clear() {
+		definitionCacheIds.clear();
+		wihholdingDefinitionFromDocumentTypeCacheValues.clear();
+	}
+	
+	/**
 	 * Get Applicability without table
 	 * @param eventType
 	 * @return
@@ -177,6 +186,20 @@ public class MWHDefinition extends X_WH_Definition {
 	public List<MWHSetting> getSettingList(String eventType) {
 		MWHType withholdingType = MWHType.getById(getCtx(), getWH_Type_ID(), get_TrxName());
 		return withholdingType.getApplicability(eventType);
+	}
+	
+	@Override
+	protected boolean afterDelete(boolean success) {
+		clear();
+		MWHDefinitionLine.clear();
+		return super.afterDelete(success);
+	}
+	
+	@Override
+	protected boolean afterSave(boolean newRecord, boolean success) {
+		clear();
+		MWHDefinitionLine.clear();
+		return super.afterSave(newRecord, success);
 	}
 	
 	@Override
