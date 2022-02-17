@@ -48,7 +48,7 @@ public class WithholdingReProcess extends WithholdingReProcessAbstract {
 		if(!document.getDocStatus().equals(DocAction.STATUS_Completed)) {
 			throw new AdempiereException("@InvoiceCreateDocNotCompleted@");
 		}
-		String error = WithholdingEngine.get().fireDocValidate(document, ModelValidator.TIMING_AFTER_COMPLETE);
+		String error = WithholdingEngine.get().fireDocValidate(entity, ModelValidator.TIMING_AFTER_COMPLETE);
 		if(Util.isEmpty(error)) {
 			return "Ok";
 		}

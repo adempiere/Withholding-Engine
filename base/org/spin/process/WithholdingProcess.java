@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.adempiere.model.MView;
 import org.compiere.model.MInvoice;
 import org.compiere.model.MOrder;
-import org.compiere.process.DocAction;
+import org.compiere.model.PO;
 import org.compiere.process.ProcessInfoParameter;
 import org.compiere.util.DB;
 import org.spin.model.MWHDefinition;
@@ -140,7 +140,7 @@ public class WithholdingProcess extends WithholdingProcessAbstract
 	 */
 	private String processDocument(MWHType type, int AD_Table_ID, int Record_ID) {
 		String result = "";
-		DocAction document = null;
+		PO document = null;
 		if (AD_Table_ID != 0
 				&& Record_ID!= 0) {
 			

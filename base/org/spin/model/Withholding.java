@@ -27,7 +27,6 @@ import org.compiere.model.ModelValidationEngine;
 import org.compiere.model.ModelValidator;
 import org.compiere.model.PO;
 import org.compiere.model.Query;
-import org.compiere.process.DocAction;
 import org.compiere.util.CLogger;
 import org.compiere.util.Env;
 import org.compiere.util.Util;
@@ -106,11 +105,9 @@ public class Withholding implements ModelValidator {
 	@Override
 	public String docValidate(PO entity, int timing) {
 		//	Default running for invoices
-		if(DocAction.class.isAssignableFrom(entity.getClass())) {
-			String error = WithholdingEngine.get().fireDocValidate((DocAction) entity, timing);
-			if(!Util.isEmpty(error)) {
-				throw new AdempiereException(error);
-			}
+		String error = WithholdingEngine.get().fireDocValidate(entity, timing);
+		if(!Util.isEmpty(error)) {
+			throw new AdempiereException(error);
 		}
 		//	For table
 		if (entity.get_TableName().equals(MInvoice.Table_Name)) {
@@ -154,18 +151,13 @@ public class Withholding implements ModelValidator {
 	@Override
 	public String modelChange(PO entity, int type) throws Exception {
 		//	Default running for invoices
-		if(DocAction.class.isAssignableFrom(entity.getClass())) {
-			int documentTypeId = entity.get_ValueAsInt(I_C_Order.COLUMNNAME_C_DocTypeTarget_ID);
-			if(documentTypeId <= 0) {
-				documentTypeId = entity.get_ValueAsInt(I_C_Order.COLUMNNAME_C_DocType_ID);
-			}
-			if(documentTypeId <= 0) {
-				return null;
-			}
-			String error = WithholdingEngine.get().fireModelChange((DocAction) entity, type, documentTypeId);
-			if(!Util.isEmpty(error)) {
-				throw new AdempiereException(error);
-			}
+		int documentTypeId = entity.get_ValueAsInt(I_C_Order.COLUMNNAME_C_DocTypeTarget_ID);
+		if(documentTypeId <= 0) {
+			documentTypeId = entity.get_ValueAsInt(I_C_Order.COLUMNNAME_C_DocType_ID);
+		}
+		String error = WithholdingEngine.get().fireModelChange(entity, type, documentTypeId);
+		if(!Util.isEmpty(error)) {
+			throw new AdempiereException(error);
 		}
 		return null;
 	}

@@ -26,7 +26,7 @@ import java.util.Properties;
 import org.adempiere.exceptions.AdempiereException;
 import org.compiere.model.MInvoice;
 import org.compiere.model.MOrder;
-import org.compiere.process.DocAction;
+import org.compiere.model.PO;
 import org.compiere.util.CLogger;
 import org.compiere.util.Env;
 import org.compiere.util.Msg;
@@ -74,7 +74,7 @@ public abstract class AbstractWithholdingSetting {
 	/**	Withholding Rate	*/
 	private BigDecimal withholdingRate;
 	/**	Document	*/
-	private DocAction document;
+	private PO document;
 	/**	Logger							*/
 	protected CLogger	log = CLogger.getCLogger (getClass());
 	/**
@@ -97,7 +97,7 @@ public abstract class AbstractWithholdingSetting {
 	 * Set document
 	 * @param document
 	 */
-	public void setDocument(DocAction document) {
+	public void setDocument(PO document) {
 		this.document = document;
 		setTransactionName(document.get_TrxName());
 		setContext(document.getCtx());
@@ -108,7 +108,7 @@ public abstract class AbstractWithholdingSetting {
 	 * Get Document
 	 * @return
 	 */
-	public DocAction getDocument() {
+	public PO getDocument() {
 		return document;
 	}
 	

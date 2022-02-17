@@ -83,7 +83,7 @@ public class WithholdingEngine {
 	 *	@param documentTiming see ModelValidator.TIMING_ constants
      *	@return error message or null
 	 */
-	public String fireDocValidate(DocAction document, int documentTiming, int documentTypeId) {
+	public String fireDocValidate(PO document, int documentTiming, int documentTypeId) {
 		if (document == null
 				|| documentTypeId <= 0) {
 			return null;
@@ -109,14 +109,14 @@ public class WithholdingEngine {
 	 * @param documentTiming
 	 * @return
 	 */
-	public String fireDocValidate(DocAction document, int documentTiming) {
+	public String fireDocValidate(PO document, int documentTiming) {
 		if(document == null) {
 			return null;
 		}
 		//	Validate for Document Type Target
-		int documentTypeId = ((PO)document).get_ValueAsInt(I_C_Invoice.COLUMNNAME_C_DocTypeTarget_ID);
+		int documentTypeId = document.get_ValueAsInt(I_C_Invoice.COLUMNNAME_C_DocTypeTarget_ID);
 		if(documentTypeId <= 0) {
-			documentTypeId = ((PO)document).get_ValueAsInt(I_C_DocType.COLUMNNAME_C_DocType_ID);
+			documentTypeId = document.get_ValueAsInt(I_C_DocType.COLUMNNAME_C_DocType_ID);
 		}
 		return fireDocValidate(document, documentTiming, documentTypeId);
 	}
@@ -128,22 +128,24 @@ public class WithholdingEngine {
 	 *	@param changeType ModelValidator.TYPE_*
 	 *	@return error message or NULL for no veto
 	 */
-	public String fireModelChange(DocAction document, int changeType, int documentTypeId) {
-		if (document == null
-				|| documentTypeId <= 0) {
-			return null;
-		}
-		//	Get Document Type
-		MDocType documentType = MDocType.get(document.getCtx(), documentTypeId);
-		if(documentType == null) {
-			return null;
-		}
+	public String fireModelChange(PO document, int changeType, int documentTypeId) {
 		//	flush return values
 		returnValues = new HashMap<String, Object>();
 		processLog = new HashMap<String, String>();
-		//	Apply Listener
-		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId, document.getAD_Org_ID())
-			.forEach(withholding -> processWithholding(withholding, document, ModelValidator.tableEventValidators[changeType]));
+		//	Get Document Type
+		if(DocAction.class.isAssignableFrom(document.getClass())
+				|| documentTypeId > 0) {
+			MDocType documentType = MDocType.get(document.getCtx(), documentTypeId);
+			if(documentType == null) {
+				return null;
+			}
+			//	Apply Listener
+			MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId, document.getAD_Org_ID())
+				.forEach(withholding -> processWithholding(withholding, document, ModelValidator.tableEventValidators[changeType]));
+		} else {
+			MWHDefinition.getFromTable(Env.getCtx(), document.get_TableName())
+				.forEach(withholding -> processWithholding(withholding, document, ModelValidator.tableEventValidators[changeType]));
+		}
 		//	default
 		return errorMessage.toString();
 	}
@@ -153,7 +155,7 @@ public class WithholdingEngine {
 	 * @param document
 	 * @param eventModelValidator
 	 */
-	private void processWithholding(MWHDefinition withholdingDefinition, DocAction document, String eventModelValidator) {
+	private void processWithholding(MWHDefinition withholdingDefinition, PO document, String eventModelValidator) {
 		processWithholding(withholdingDefinition, document, eventModelValidator, null, false);
 	}
 	/**
@@ -162,7 +164,7 @@ public class WithholdingEngine {
 	 * @param po
 	 * @param docTiming
 	 */
-	private void processWithholding(MWHDefinition withholdingDefinition, DocAction document, String eventModelValidator, HashMap<String, Object> parameters, boolean eventProcess) {
+	private void processWithholding(MWHDefinition withholdingDefinition, PO document, String eventModelValidator, HashMap<String, Object> parameters, boolean eventProcess) {
 		if (!eventProcess) {
 			withholdingDefinition.getSettingList(((PO)document).get_TableName(), eventModelValidator)
 				.stream()
@@ -187,7 +189,7 @@ public class WithholdingEngine {
 	 * @param document
 	 * @param eventModelValidator
 	 */
-	private void processWithholding(MWHSetting setting,MWHDefinition withholdingDefinition, DocAction document, String eventModelValidator) {
+	private void processWithholding(MWHSetting setting,MWHDefinition withholdingDefinition, PO document, String eventModelValidator) {
 		processWithholding(setting, withholdingDefinition, document, eventModelValidator, null);
 	}
 	
@@ -198,7 +200,7 @@ public class WithholdingEngine {
 	 * @param document
 	 * @param eventModelValidator
 	 */
-	private void processWithholding(MWHSetting setting,MWHDefinition withholdingDefinition, DocAction document, String eventModelValidator, HashMap<String, Object> parameters) {
+	private void processWithholding(MWHSetting setting,MWHDefinition withholdingDefinition, PO document, String eventModelValidator, HashMap<String, Object> parameters) {
 		try {
 			AbstractWithholdingSetting settingRunningImplementation = setting.getSettingInstance();
 			//	Validate Null Value
@@ -243,7 +245,7 @@ public class WithholdingEngine {
 	 * @param document
 	 * @return
 	 */
-	public String fireProcess(DocAction document, HashMap<String, Object> parameters) {
+	public String fireProcess(PO document, HashMap<String, Object> parameters) {
 		return fireProcess(document, null, null, null, parameters);
 	}
 	
@@ -253,7 +255,7 @@ public class WithholdingEngine {
 	 * @param type
 	 * @return
 	 */
-	public String fireProcess(DocAction document, MWHType type, HashMap<String, Object> parameters) {
+	public String fireProcess(PO document, MWHType type, HashMap<String, Object> parameters) {
 		return fireProcess(document, type, null, null, parameters);
 	}
 	
@@ -264,7 +266,7 @@ public class WithholdingEngine {
 	 * @param setting
 	 * @return
 	 */
-	public String fireProcess(DocAction document ,MWHType type, MWHSetting setting, HashMap<String, Object> parameters) {
+	public String fireProcess(PO document ,MWHType type, MWHSetting setting, HashMap<String, Object> parameters) {
 		return fireProcess(document, type, setting, null, parameters);
 	}
 	
@@ -276,7 +278,7 @@ public class WithholdingEngine {
 	 * @param definition
 	 * @return
 	 */
-	public String fireProcess(DocAction document ,MWHType type, MWHSetting setting, MWHDefinition definition, HashMap<String, Object> parameters) {
+	public String fireProcess(PO document ,MWHType type, MWHSetting setting, MWHDefinition definition, HashMap<String, Object> parameters) {
 		
 		if (document == null)
 			return "";

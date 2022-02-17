@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+import org.compiere.model.MTable;
 import org.compiere.model.Query;
 import org.compiere.util.CCache;
 import org.compiere.util.Env;
@@ -50,6 +51,8 @@ public class MWHDefinition extends X_WH_Definition {
 	private static CCache<Integer, MWHDefinition> definitionCacheIds = new CCache<Integer, MWHDefinition>(Table_Name, 30);
 	/** Static Cache */
 	private static CCache<String, List<MWHDefinition>> wihholdingDefinitionFromDocumentTypeCacheValues = new CCache<String, List<MWHDefinition>>(Table_Name + "_DocumentType", 30);
+	/** Static Cache  for tables */
+	private static CCache<String, List<MWHDefinition>> wihholdingDefinitionFromTableCacheValues = new CCache<String, List<MWHDefinition>>(Table_Name + "_Table", 30);
 	/**	Type
 	
 	
@@ -119,11 +122,11 @@ public class MWHDefinition extends X_WH_Definition {
 	 * Get from document type
 	 * @param ctx
 	 * @param documentTypeId
-	 * @param org_ID
+	 * @param organizationId
 	 * @return
 	 */
-	public static List<MWHDefinition> getFromDocumentType(Properties ctx, int documentTypeId, int org_ID) {
-		String key = documentTypeId + "_" + org_ID;
+	public static List<MWHDefinition> getFromDocumentType(Properties ctx, int documentTypeId, int organizationId) {
+		String key = documentTypeId + "_" + organizationId;
 		List<MWHDefinition> definitionList = wihholdingDefinitionFromDocumentTypeCacheValues.get(key);
 		if(definitionList != null) {
 			return definitionList;
@@ -136,11 +139,40 @@ public class MWHDefinition extends X_WH_Definition {
 		//	
 		definitionList = new Query(ctx, I_WH_Definition.Table_Name, whereClause, null)
 				.setClient_ID()
-				.setParameters(documentTypeId, org_ID)
+				.setParameters(documentTypeId, organizationId)
 				.setOnlyActiveRecords(true)
 				.<MWHDefinition>list();
 		//	Set
 		wihholdingDefinitionFromDocumentTypeCacheValues.put(key, definitionList);
+		//	Return 
+		return definitionList;
+	}
+	
+	/**
+	 * Get from table
+	 * @param ctx
+	 * @param tableName
+	 * @param organizationId
+	 * @return
+	 */
+	public static List<MWHDefinition> getFromTable(Properties ctx, String tableName) {
+		List<MWHDefinition> definitionList = wihholdingDefinitionFromTableCacheValues.get(tableName);
+		if(definitionList != null) {
+			return definitionList;
+		}
+		//	
+		MTable table = MTable.get(ctx, tableName);
+		String whereClause = new String("EXISTS(SELECT 1 FROM WH_Setting s "
+				+ "WHERE s.AD_Table_ID = ? "
+				+ "AND s.WH_Type_ID = WH_Definition.WH_Type_ID)");
+		//	
+		definitionList = new Query(ctx, I_WH_Definition.Table_Name, whereClause, null)
+				.setClient_ID()
+				.setParameters(table.getAD_Table_ID())
+				.setOnlyActiveRecords(true)
+				.<MWHDefinition>list();
+		//	Set
+		wihholdingDefinitionFromTableCacheValues.put(tableName, definitionList);
 		//	Return 
 		return definitionList;
 	}
