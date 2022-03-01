@@ -106,8 +106,12 @@ public class WithholdingSend extends WithholdingSendAbstract {
 	 */
 	private void sendInvoiceEmail(int recordId, int mailTextId) {
 		MInvoice invoice = new MInvoice(getCtx(), recordId, get_TrxName());
-		AtomicReference<MUser> to = new AtomicReference<MUser>((MUser) invoice.getAD_User());
+		AtomicReference<MUser> to = new AtomicReference<MUser>();
 		MUser from = MUser.get(getCtx(), getAD_User_ID());
+		
+		if (invoice.getAD_User_ID() > 0)
+			to.set((MUser) invoice.getAD_User());
+		
         //	Get from default account
         if (to.get() == null) {
         	Optional<MUser> maybeUser = Arrays.asList(MUser.getOfBPartner(getCtx(), invoice.getC_BPartner_ID(), get_TrxName()))
