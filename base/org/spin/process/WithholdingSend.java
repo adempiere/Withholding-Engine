@@ -141,9 +141,8 @@ public class WithholdingSend extends WithholdingSendAbstract {
 			MClient client = MClient.get(getCtx(), getAD_Client_ID());
 			MMailText template = new MMailText(getCtx(), mailTextId, get_TrxName());
 			template.setPO(invoice);
-			template.setBPartner(invoice.getC_BPartner_ID());
 			template.setUser(getAD_User_ID());
-			
+			template.setBPartner(invoice.getC_BPartner_ID());
 			if (client.sendEMail(from, to.get(), template.getMailHeader(), template.getMailText(true), attachment,template.isHtml())) { 
 				addLog("@EMail@ @Sent@ @to@ " + to.get().getName());
 				sends.incrementAndGet();
