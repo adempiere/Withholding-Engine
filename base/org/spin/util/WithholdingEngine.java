@@ -96,6 +96,7 @@ public class WithholdingEngine {
 		//	flush return values
 		returnValues = new HashMap<String, Object>();
 		processLog = new HashMap<String, String>();
+		errorMessage = new StringBuffer();
 		//	Apply Listener
 		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId, document.getAD_Org_ID())
 			.forEach(withholding -> processWithholding(withholding, document, ModelValidator.documentEventValidators[documentTiming]));
@@ -132,6 +133,7 @@ public class WithholdingEngine {
 		//	flush return values
 		returnValues = new HashMap<String, Object>();
 		processLog = new HashMap<String, String>();
+		errorMessage = new StringBuffer();
 		//	Get Document Type
 		if(DocAction.class.isAssignableFrom(document.getClass())
 				|| documentTypeId > 0) {
@@ -292,7 +294,7 @@ public class WithholdingEngine {
 		//	flush return values
 		returnValues = new HashMap<String, Object>();
 		processLog = new HashMap<String, String>();
-		
+		errorMessage = new StringBuffer();
 		MWHDefinition.getFromDocumentType(Env.getCtx(), documentTypeId, document.getAD_Org_ID())
 					 .stream()
 					 .filter(whDef -> ((type!=null && type.get_ID()==whDef.getWH_Type_ID()) || type ==null)
