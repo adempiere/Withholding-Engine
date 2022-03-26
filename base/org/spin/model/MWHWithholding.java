@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 
 import org.adempiere.exceptions.AdempiereException;
@@ -134,6 +135,11 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 		return true;
 	}	//	invalidateIt
 	
+	@Override
+	protected boolean beforeSave(boolean newRecord) {
+		setC_Currency_ID();
+		return true;
+	}
 	/**
 	 *	Prepare Document
 	 * 	@return new status (In Progress or Invalid) 
@@ -262,6 +268,25 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 			setC_DocType_ID(documentTypeId);
 		}
 	}	//	setC_DocTypeTarget_ID
+	
+	/**
+	 * Set Currency
+	 * @return void
+	 */
+	private void setC_Currency_ID() {
+		
+		if (getC_Currency_ID() > 0)
+			return ;
+		PO document = null;
+		if (getSourceInvoice_ID() > 0)
+			document = MInvoice.get(getCtx(), getSourceInvoice_ID());
+		if (document == null 
+				&& getSourceOrder_ID() > 0)
+			document = new MOrder(getCtx(), getSourceInvoice_ID(), get_TrxName());
+		
+		Optional<PO> maybeSourceDocument = Optional.ofNullable(document);
+		maybeSourceDocument.ifPresent(sourceDocument -> setC_Currency_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_Currency_ID)));
+	}
 	
 	/**
 	 * 	Void Document.
