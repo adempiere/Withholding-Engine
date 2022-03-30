@@ -146,7 +146,7 @@ public class WithholdingProcess extends WithholdingProcessAbstract
 			
 			if (AD_Table_ID==MInvoice.Table_ID) 
 				document = new MInvoice(getCtx(), Record_ID, get_TrxName());
-			else if (AD_Table_ID==MInvoice.Table_ID)
+			else if (AD_Table_ID==MOrder.Table_ID)
 				document = new MOrder(getCtx(), Record_ID, get_TrxName());
 			else 
 				return "";

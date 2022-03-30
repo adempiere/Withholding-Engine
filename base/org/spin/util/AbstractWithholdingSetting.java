@@ -413,7 +413,6 @@ public abstract class AbstractWithholdingSetting {
 				withholding.setSourceOrder_ID(sourceDocument.get_ID());
 			
 			withholding.setC_BPartner_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_BPartner_ID));
-			withholding.setC_Currency_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_Currency_ID));
 		});
 		
 		//	Description
@@ -468,7 +467,7 @@ public abstract class AbstractWithholdingSetting {
 		//	Add additional references
 		//	Note that not exist validation for types
 		getReturnValues().entrySet().forEach(value -> {
-			if(log.get_ColumnIndex(value.getKey()) > 0) {
+			if(log.get_ColumnIndex(value.getKey()) >= 0) {
 				if(value.getValue() != null) {
 					log.set_ValueOfColumn(value.getKey(), value.getValue());
 				}

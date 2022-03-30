@@ -483,17 +483,6 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 	}	//	getApprovalAmt
 	
 	/**
-	 * 	Get Document Currency
-	 *	@return C_Currency_ID
-	 */
-	public int getC_Currency_ID()
-	{
-	//	MPriceList pl = MPriceList.get(getCtx(), getM_PriceList_ID());
-	//	return pl.getC_Currency_ID();
-		return 0;
-	}	//	getC_Currency_ID
-	
-	/**
 	 * Get Withholding list from invoice
 	 * @param context
 	 * @param sourceInvoiceId
