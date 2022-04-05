@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="D" Name="Change Currency on SB Generate Withholding" ReleaseNo="1.0" SeqNo="500320">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="53232" Action="I" Record_ID="72852" Table="AD_View_Column">
+        <Data AD_Column_ID="84462" Column="UUID">4435613d-ad55-4b1c-8d23-5d0e6cdf5e52</Data>
+        <Data AD_Column_ID="58095" Column="IsActive">true</Data>
+        <Data AD_Column_ID="58096" Column="Created">2022-04-05 12:26:21.48</Data>
+        <Data AD_Column_ID="58097" Column="Updated">2022-04-05 12:26:21.48</Data>
+        <Data AD_Column_ID="58101" Column="AD_View_Definition_ID">50429</Data>
+        <Data AD_Column_ID="58104" Column="Help">Indicates the Currency to be used when processing or reporting on this record</Data>
+        <Data AD_Column_ID="58106" Column="ColumnSQL">wh.C_Currency_ID</Data>
+        <Data AD_Column_ID="58105" Column="Name">Currency</Data>
+        <Data AD_Column_ID="58107" Column="ColumnName">WH_C_Currency_ID</Data>
+        <Data AD_Column_ID="58102" Column="Description">The Currency for this record</Data>
+        <Data AD_Column_ID="58100" Column="AD_View_Column_ID">72852</Data>
+        <Data AD_Column_ID="58094" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="58093" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="58103" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="58099" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="58108" Column="AD_View_ID">50155</Data>
+        <Data AD_Column_ID="58109" Column="AD_Column_ID">99919</Data>
+        <Data AD_Column_ID="58098" Column="CreatedBy">100</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="53228" Action="I" Record_ID="72852" Table="AD_View_Column_Trl">
+        <Data AD_Column_ID="58044" Column="Updated">2022-04-05 12:26:28.39</Data>
+        <Data AD_Column_ID="58042" Column="IsActive">true</Data>
+        <Data AD_Column_ID="58043" Column="Created">2022-04-05 12:26:28.39</Data>
+        <Data AD_Column_ID="58049" Column="Description">The Currency for this record</Data>
+        <Data AD_Column_ID="58050" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="58051" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="58052" Column="Name">Currency</Data>
+        <Data AD_Column_ID="58047" Column="AD_View_Column_ID">72852</Data>
+        <Data AD_Column_ID="58040" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="58041" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="58045" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="58048" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="58046" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="84463" Column="UUID">95526e5c-dbd3-4deb-85a6-e4d1b6a4a631</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="69487" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57971" Column="AD_View_Column_ID" oldValue="70325">72852</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
