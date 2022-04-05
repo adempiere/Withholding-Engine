@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="D" Name="Change Currency on SB Generate Withholding" ReleaseNo="1.0" SeqNo="500320">
+  <Migration EntityType="WHH" Name="Change Currency on SB Generate Withholding" ReleaseNo="1.0" SeqNo="500320">
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="53232" Action="I" Record_ID="72852" Table="AD_View_Column">
         <Data AD_Column_ID="84462" Column="UUID">4435613d-ad55-4b1c-8d23-5d0e6cdf5e52</Data>
