@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="WHH" Name="Set Currency on Withholding" ReleaseNo="1.0" SeqNo="500310">
+    <Step DBType="Postgres" Parse="Y" SeqNo="10" StepType="SQL">
+      <Comments>Update Currency From Source Invoice</Comments>
+      <SQLStatement>UPDATE WH_Withholding SET C_Currency_ID = invoice.C_Currency_ID FROM C_Invoice invoice WHERE WH_Withholding.C_Currency_ID IS NULL AND WH_Withholding.SourceInvoice_ID = invoice.C_Invoice_ID;</SQLStatement>
+      <RollbackStatement>UPDATE WH_Withholding SET C_Currency_ID = NULL ;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="20" StepType="SQL">
+      <Comments>Update Currency From Source Order
+</Comments>
+      <SQLStatement>UPDATE WH_Withholding SET C_Currency_ID = o.C_Currency_ID FROM C_Order o WHERE WH_Withholding.C_Currency_ID IS NULL AND WH_Withholding.SourceOrder_ID = o.C_Order_ID;</SQLStatement>
+      <RollbackStatement>UPDATE WH_Withholding SET C_Currency_ID = NULL ;</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>
