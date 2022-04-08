@@ -44,11 +44,11 @@ import org.spin.model.MWHWithholding;
 public class WithholdingGenerate extends WithholdingGenerateAbstract {
 	
 	/**View Column Currency*/
-	private static String COLUMN_C_Currency_ID = "I_C_Currency_ID";
+	private final static String COLUMN_C_Currency_ID = "WH_C_Currency_ID";
 	/**View Column Currency To*/
-	private static String COLUMN_C_Currency_ID_To = "CTO_C_Currency_ID_To";
+	private final static String COLUMN_C_Currency_ID_To = "CTO_C_Currency_ID_To";
 	/**View Column Converted Withholding Amount*/
-	private static String COLUMN_Converted_WithholdingAmt = "WH_Converted_WithholdingAmt";
+	private final static String COLUMN_Converted_WithholdingAmt = "WH_Converted_WithholdingAmt";
 
 	private ArrayList<Withholding> withholdingDocList = new ArrayList<Withholding> ();
 	protected void prepare() {
