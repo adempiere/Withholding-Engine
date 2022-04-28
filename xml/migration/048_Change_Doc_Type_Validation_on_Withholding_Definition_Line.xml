@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="WHH" Name="Change Doc Type Validation on Withholding Definition Line" ReleaseNo="1.0" SeqNo="500330">
+    <Step SeqNo="100" StepType="AD">
+      <PO AD_Table_ID="108" Action="U" Record_ID="52818" Table="AD_Val_Rule">
+        <Data AD_Column_ID="7715" Column="EntityType" oldValue="U">WHH</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="110" StepType="AD">
+      <PO AD_Table_ID="108" Action="U" Record_ID="52818" Table="AD_Val_Rule">
+        <Data AD_Column_ID="193" Column="Code" oldValue="C_DocType.DocBaseType IN ('ARI', 'API','ARC','APC','POO')">C_DocType.DocBaseType IN ('ARI', 'API','ARC','APC','POO', 'ARR', 'APP')</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
