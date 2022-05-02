@@ -1,0 +1,95 @@
+# This is a basic workflow to help you get started with Actions
+# This file was contributed by EdwinBetancourt@outlook.com
+# from ERP Consultores y Asociados, C.A
+
+name: Withholding Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+      - bugfix/**
+      - feature/**
+      - test**
+
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  # This workflow contains a single job called "build"
+  build-dist:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        java: [ '11' ]
+        os: [ 'ubuntu-latest' ] # , 'macos-latest', 'windows-latest' ]
+
+    name: Run on ${{ matrix.os }} with java ${{ matrix.java }}
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Set up Java JDK
+        uses: actions/setup-java@v3
+        with:
+            distribution: 'temurin'
+            java-package: 'jdk'
+            java-version: ${{ matrix.java }}
+            architecture: x64
+
+      - name: Get adempiere source
+        run: |
+          download_repo="https://github.com/erpcya/adempiere/releases/download/3.9.3-rs-4.5/Adempiere_393LTS.zip"
+          wget $download_repo -c -O Adempiere.zip
+
+      - name: Uncompress Adempiere.jar file
+        run: |
+          mkdir dependences
+          unzip -j Adempiere.zip Adempiere/lib/Adempiere.jar -d dependences/
+
+      # - name: Validate Gradle wrapper
+      #   uses: gradle/wrapper-validation-action@v1.0.4
+
+      - name: Compile
+        uses: gradle/gradle-build-action@v2.1.5
+        with:
+          gradle-version: 7.1
+          arguments: build
+      # - name: Compile
+      #   run: gradle build
+
+      - name: Prepare Dist Release
+        uses: gradle/gradle-build-action@v2.1.5
+        with:
+          gradle-version: 7.1
+          arguments: createRelease
+      # - name: Prepare Release
+      #   run: gradle createRelease
+
+      - name: Uncompress build binaries
+        run: unzip build/release/Withholding.zip -d build/release/
+
+      - name: Artifact upload Withholding.jar
+        uses: actions/upload-artifact@v3
+        with:
+          name: Withholding.jar
+          path: build/release/Withholding.jar
+
+      - name: Artifact upload migration folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: migration.zip
+          path: build/release/migration
+
+      - name: Artifact upload binay and migration
+        uses: actions/upload-artifact@v3
+        with:
+          name: Withholding.zip
+          path: |
+            build/release/migration
+            build/release/Withholding.jar
