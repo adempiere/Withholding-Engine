@@ -63,10 +63,10 @@ public class Withholding implements ModelValidator {
 		// Add Timing change only for invoice
 		engine.addDocValidate(MInvoice.Table_Name, this);
 		//	List it
-		List<MWHSetting> settings = new Query(Env.getCtx(), MWHSetting.Table_Name, "EventType = 'E' "
+		List<MWHSetting> settings = new Query(Env.getCtx(), MWHSetting.Table_Name, "EventType = 'E' AND AD_Client_ID =? "
 				+ "AND EXISTS(SELECT 1 FROM WH_Type wt WHERE wt.WH_Type_ID = WH_Setting.WH_Type_ID AND wt.IsActive = 'Y')", null)
                 .setOnlyActiveRecords(true)
-                .setClient_ID()
+                .setParameters(clientId)
                 .setOrderBy(MWHSetting.COLUMNNAME_SeqNo)
                 .<MWHSetting>list();
 		//	for Tables
