@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="WHH" Name="Change Currency Type on SB Generate Withholding" ReleaseNo="1.0" SeqNo="500350">
+    <Comments>Change Currency Type on SB Generate Withholding</Comments>
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="53232" Action="I" Record_ID="72853" Table="AD_View_Column">
+        <Data AD_Column_ID="84462" Column="UUID">4c0538cf-dc3c-4b9a-a75e-23be27a5f811</Data>
+        <Data AD_Column_ID="58095" Column="IsActive">true</Data>
+        <Data AD_Column_ID="58096" Column="Created">2022-05-16 10:51:21.199</Data>
+        <Data AD_Column_ID="58097" Column="Updated">2022-05-16 10:51:21.199</Data>
+        <Data AD_Column_ID="58101" Column="AD_View_Definition_ID">50429</Data>
+        <Data AD_Column_ID="58104" Column="Help">The Currency Conversion Rate Type lets you define different type of rates, e.g. Spot, Corporate and/or Sell/Buy rates.</Data>
+        <Data AD_Column_ID="58106" Column="ColumnSQL">wh.C_ConversionType_ID</Data>
+        <Data AD_Column_ID="58105" Column="Name">Currency Type</Data>
+        <Data AD_Column_ID="58107" Column="ColumnName">WH_C_ConversionType_ID</Data>
+        <Data AD_Column_ID="58102" Column="Description">Currency Conversion Rate Type</Data>
+        <Data AD_Column_ID="58100" Column="AD_View_Column_ID">72853</Data>
+        <Data AD_Column_ID="58094" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="58093" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="58103" Column="EntityType">WHH</Data>
+        <Data AD_Column_ID="58099" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="58108" Column="AD_View_ID">50155</Data>
+        <Data AD_Column_ID="58109" Column="AD_Column_ID">99958</Data>
+        <Data AD_Column_ID="58098" Column="CreatedBy">100</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="53228" Action="I" Record_ID="72853" Table="AD_View_Column_Trl">
+        <Data AD_Column_ID="58044" Column="Updated">2022-05-16 10:51:28.002</Data>
+        <Data AD_Column_ID="58042" Column="IsActive">true</Data>
+        <Data AD_Column_ID="58043" Column="Created">2022-05-16 10:51:28.002</Data>
+        <Data AD_Column_ID="58049" Column="Description">Currency Conversion Rate Type</Data>
+        <Data AD_Column_ID="58050" Column="Help" isNewNull="true"/>
+        <Data AD_Column_ID="58051" Column="IsTranslated">false</Data>
+        <Data AD_Column_ID="58052" Column="Name">Currency Type</Data>
+        <Data AD_Column_ID="58047" Column="AD_View_Column_ID">72853</Data>
+        <Data AD_Column_ID="58040" Column="AD_Client_ID">0</Data>
+        <Data AD_Column_ID="58041" Column="AD_Org_ID">0</Data>
+        <Data AD_Column_ID="58045" Column="CreatedBy">100</Data>
+        <Data AD_Column_ID="58048" Column="AD_Language">es_MX</Data>
+        <Data AD_Column_ID="58046" Column="UpdatedBy">100</Data>
+        <Data AD_Column_ID="84463" Column="UUID">508d9f06-226c-4683-9b41-7a538ed2b3d6</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="71875" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57971" Column="AD_View_Column_ID" oldValue="71516">72853</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="40" StepType="AD">
+      <PO AD_Table_ID="53232" Action="D" Record_ID="70325" Table="AD_View_Column">
+        <Data AD_Column_ID="58098" Column="CreatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="84462" Column="UUID" isNewNull="true" oldValue="34d5c8ad-f4cd-4dff-8bd3-f50db83fbb1d"/>
+        <Data AD_Column_ID="58095" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="58096" Column="Created" isNewNull="true" oldValue="2020-09-15 11:46:51.0"/>
+        <Data AD_Column_ID="58097" Column="Updated" isNewNull="true" oldValue="2022-03-25 12:40:36.0"/>
+        <Data AD_Column_ID="58101" Column="AD_View_Definition_ID" isNewNull="true" oldValue="50518"/>
+        <Data AD_Column_ID="58104" Column="Help" isNewNull="true" oldValue="Indicates the Currency to be used when processing or reporting on this record"/>
+        <Data AD_Column_ID="58106" Column="ColumnSQL" isNewNull="true" oldValue="i.C_Currency_ID"/>
+        <Data AD_Column_ID="58105" Column="Name" isNewNull="true" oldValue="C_Currency_ID"/>
+        <Data AD_Column_ID="58107" Column="ColumnName" isNewNull="true" oldValue="I_C_Currency_ID"/>
+        <Data AD_Column_ID="58102" Column="Description" isNewNull="true" oldValue="The Currency for this record"/>
+        <Data AD_Column_ID="58100" Column="AD_View_Column_ID" isNewNull="true" oldValue="70325"/>
+        <Data AD_Column_ID="58094" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="58093" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="58103" Column="EntityType" isNewNull="true" oldValue="WHH"/>
+        <Data AD_Column_ID="58099" Column="UpdatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="58108" Column="AD_View_ID" isNewNull="true" oldValue="50155"/>
+        <Data AD_Column_ID="58109" Column="AD_Column_ID" isNewNull="true" oldValue="3505"/>
+      </PO>
+    </Step>
+    <Step SeqNo="50" StepType="AD">
+      <PO AD_Table_ID="53232" Action="D" Record_ID="71516" Table="AD_View_Column">
+        <Data AD_Column_ID="84462" Column="UUID" isNewNull="true" oldValue="11effe91-dded-4e88-8b1c-8967679f37da"/>
+        <Data AD_Column_ID="58095" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="58096" Column="Created" isNewNull="true" oldValue="2021-05-28 12:30:34.0"/>
+        <Data AD_Column_ID="58097" Column="Updated" isNewNull="true" oldValue="2021-05-28 12:30:34.0"/>
+        <Data AD_Column_ID="58101" Column="AD_View_Definition_ID" isNewNull="true" oldValue="50518"/>
+        <Data AD_Column_ID="58104" Column="Help" isNewNull="true" oldValue="The Currency Conversion Rate Type lets you define different type of rates, e.g. Spot, Corporate and/or Sell/Buy rates."/>
+        <Data AD_Column_ID="58106" Column="ColumnSQL" isNewNull="true" oldValue="i.C_ConversionType_ID"/>
+        <Data AD_Column_ID="58105" Column="Name" isNewNull="true" oldValue="C_ConversionType_ID"/>
+        <Data AD_Column_ID="58107" Column="ColumnName" isNewNull="true" oldValue="I_C_ConversionType_ID"/>
+        <Data AD_Column_ID="58102" Column="Description" isNewNull="true" oldValue="Currency Conversion Rate Type"/>
+        <Data AD_Column_ID="58100" Column="AD_View_Column_ID" isNewNull="true" oldValue="71516"/>
+        <Data AD_Column_ID="58094" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="58093" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="58103" Column="EntityType" isNewNull="true" oldValue="WHH"/>
+        <Data AD_Column_ID="58099" Column="UpdatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="58108" Column="AD_View_ID" isNewNull="true" oldValue="50155"/>
+        <Data AD_Column_ID="58109" Column="AD_Column_ID" isNewNull="true" oldValue="10264"/>
+        <Data AD_Column_ID="58098" Column="CreatedBy" isNewNull="true" oldValue="100"/>
+      </PO>
+    </Step>
+    <Step SeqNo="60" StepType="AD">
+      <PO AD_Table_ID="53231" Action="D" Record_ID="50518" Table="AD_View_Definition">
+        <Data AD_Column_ID="58092" Column="Processing" isNewNull="true" oldValue="false"/>
+        <Data AD_Column_ID="58081" Column="IsActive" isNewNull="true" oldValue="true"/>
+        <Data AD_Column_ID="58082" Column="Created" isNewNull="true" oldValue="2020-09-15 11:42:59.0"/>
+        <Data AD_Column_ID="58083" Column="Updated" isNewNull="true" oldValue="2020-09-15 11:42:59.0"/>
+        <Data AD_Column_ID="58090" Column="TableAlias" isNewNull="true" oldValue="i"/>
+        <Data AD_Column_ID="58091" Column="JoinClause" isNewNull="true" oldValue="LEFT JOIN C_Invoice i ON (i.C_Invoice_ID = wh.SourceInvoice_ID)"/>
+        <Data AD_Column_ID="58086" Column="AD_View_Definition_ID" isNewNull="true" oldValue="50518"/>
+        <Data AD_Column_ID="58079" Column="AD_Client_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="58080" Column="AD_Org_ID" isNewNull="true" oldValue="0"/>
+        <Data AD_Column_ID="58084" Column="CreatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="58085" Column="UpdatedBy" isNewNull="true" oldValue="100"/>
+        <Data AD_Column_ID="58089" Column="AD_Table_ID" isNewNull="true" oldValue="318"/>
+        <Data AD_Column_ID="58087" Column="AD_View_ID" isNewNull="true" oldValue="50155"/>
+        <Data AD_Column_ID="58088" Column="SeqNo" isNewNull="true" oldValue="30"/>
+        <Data AD_Column_ID="84464" Column="UUID" isNewNull="true" oldValue="ebd243e6-f2ef-4590-b327-439fb83a961c"/>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

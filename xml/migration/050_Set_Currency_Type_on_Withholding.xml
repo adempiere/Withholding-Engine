@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="WHH" Name="Set Currency Type on Withholding" ReleaseNo="1.0" SeqNo="500340">
+    <Comments>Set Currency Type on Withholding</Comments>
+    <Step DBType="Postgres" Parse="Y" SeqNo="10" StepType="SQL">
+      <Comments>Update Currency Type From Source Invoice</Comments>
+      <SQLStatement>UPDATE WH_Withholding SET C_ConversionType_ID = invoice.C_ConversionType_ID FROM C_Invoice invoice WHERE WH_Withholding.C_ConversionType_ID IS NULL AND WH_Withholding.SourceInvoice_ID = invoice.C_Invoice_ID;</SQLStatement>
+      <RollbackStatement>UPDATE WH_Withholding SET C_ConversionType_ID = NULL WHERE SourceInvoice_ID IS NOT NULL;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="20" StepType="SQL">
+      <Comments>Update Currency Type From Source Order
+</Comments>
+      <SQLStatement>UPDATE WH_Withholding SET C_ConversionType_ID = o.C_ConversionType_ID FROM C_Order o WHERE WH_Withholding.C_ConversionType_ID IS NULL AND WH_Withholding.SourceOrder_ID = o.C_Order_ID;</SQLStatement>
+      <RollbackStatement>UPDATE WH_Withholding SET C_ConversionType_ID = NULL WHERE  SourceOrder_ID IS NOT NULL;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="30" StepType="SQL">
+      <Comments>Update Currency Type From Default Currency Type</Comments>
+      <SQLStatement>UPDATE WH_Withholding SET C_ConversionType_ID = currencyType.C_ConversionType_ID FROM (SELECT AD_Client_ID,C_ConversionType_ID FROM C_ConversionType WHERE IsActive = 'Y' AND IsDefault = 'Y') AS currencyType WHERE WH_Withholding.C_ConversionType_ID IS NULL AND currencyType.AD_Client_ID = WH_Withholding.AD_Client_ID;</SQLStatement>
+      <RollbackStatement>UPDATE WH_Withholding SET C_ConversionType_ID = NULL;</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>
