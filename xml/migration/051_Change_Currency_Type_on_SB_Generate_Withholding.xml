@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="WHH" Name="Change Currency Type on SB Generate Withholding" ReleaseNo="1.0" SeqNo="500350">
+  <Migration EntityType="WHH" Name="Change Currency Type on SB Generate Withholding" ReleaseNo="1.0" SeqNo="500360">
     <Comments>Change Currency Type on SB Generate Withholding</Comments>
     <Step SeqNo="10" StepType="AD">
       <PO AD_Table_ID="53232" Action="I" Record_ID="72853" Table="AD_View_Column">

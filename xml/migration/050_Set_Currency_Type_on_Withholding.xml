@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Migrations>
-  <Migration EntityType="WHH" Name="Set Currency Type on Withholding" ReleaseNo="1.0" SeqNo="500340">
+  <Migration EntityType="WHH" Name="Set Currency Type on Withholding" ReleaseNo="1.0" SeqNo="500350">
     <Comments>Set Currency Type on Withholding</Comments>
     <Step DBType="Postgres" Parse="Y" SeqNo="10" StepType="SQL">
       <Comments>Update Currency Type From Source Invoice</Comments>
