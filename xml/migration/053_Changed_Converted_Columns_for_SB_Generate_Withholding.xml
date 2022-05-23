@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="WHH" Name="Changed Converted Columns for SB Generate Withholding" ReleaseNo="1.0" SeqNo="500380">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="53232" Action="U" Record_ID="70327" Table="AD_View_Column">
+        <Data AD_Column_ID="58106" Column="ColumnSQL" oldValue="COALESCE(CurrenCyconvert(wh.A_Base_Amount, i.C_Currency_ID, cto.C_Currency_ID, i.DateAcct, i.C_ConversionType_ID, i.AD_Client_ID, i.AD_Org_ID),0)">COALESCE(CurrenCyconvert(wh.A_Base_Amount, wh.C_Currency_ID, cto.C_Currency_ID, wh.DateAcct, wh.C_ConversionType_ID, wh.AD_Client_ID, wh.AD_Org_ID),0)</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="20" StepType="AD">
+      <PO AD_Table_ID="53232" Action="U" Record_ID="70328" Table="AD_View_Column">
+        <Data AD_Column_ID="58106" Column="ColumnSQL" oldValue="COALESCE(CurrenCyconvert(wh.WithholdingAmt, i.C_Currency_ID, cto.C_Currency_ID, i.DateAcct, i.C_ConversionType_ID, i.AD_Client_ID, i.AD_Org_ID),0)">COALESCE(CurrenCyconvert(wh.WithholdingAmt, wh.C_Currency_ID, cto.C_Currency_ID, wh.DateAcct, wh.C_ConversionType_ID, wh.AD_Client_ID, wh.AD_Org_ID),0)</Data>
+      </PO>
+    </Step>
+    <Step SeqNo="30" StepType="AD">
+      <PO AD_Table_ID="53223" Action="U" Record_ID="71875" Table="AD_Browse_Field">
+        <Data AD_Column_ID="57979" Column="IsQueryCriteria" oldValue="true">false</Data>
+        <Data AD_Column_ID="57985" Column="IsMandatory" oldValue="true">false</Data>
+        <Data AD_Column_ID="64356" Column="DisplayLogic" isNewNull="true" oldValue="@I_C_Currency_ID@!@CTO_C_Currency_ID_To@"/>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>

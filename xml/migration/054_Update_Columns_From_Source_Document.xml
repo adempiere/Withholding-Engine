@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="WHH" Name="Update Columns From Source Document" ReleaseNo="1.0" SeqNo="500390">
+    <Comments>Update from Document the next Columns:
+- DateAcct
+- IsSOTrx
+- C_BPartner_Location_ID</Comments>
+    <Step DBType="Postgres" Parse="Y" SeqNo="10" StepType="SQL">
+      <Comments>Update DateAcct From Invoice</Comments>
+      <SQLStatement>UPDATE WH_Withholding SET DateAcct = invoice.DateAcct FROM C_Invoice invoice WHERE WH_Withholding.DateAcct IS NULL AND WH_Withholding.SourceInvoice_ID = invoice.C_Invoice_ID;</SQLStatement>
+      <RollbackStatement>UPDATE WH_Withholding SET DateAcct = NULL WHERE SourceInvoice_ID IS NOT NULL;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="20" StepType="SQL">
+      <Comments>Update IsSOTrx From Invoice</Comments>
+      <SQLStatement>UPDATE WH_Withholding SET IsSOTrx = invoice.IsSOTrx FROM C_Invoice invoice WHERE WH_Withholding.IsSOTrx IS NULL AND WH_Withholding.SourceInvoice_ID = invoice.C_Invoice_ID;</SQLStatement>
+      <RollbackStatement>UPDATE WH_Withholding SET IsSOTrx = NULL WHERE SourceInvoice_ID IS NOT NULL;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="30" StepType="SQL">
+      <Comments>Update C_BPartner_Location_ID From Invoice</Comments>
+      <SQLStatement>UPDATE WH_Withholding SET C_BPartner_Location_ID = invoice.C_BPartner_Location_ID FROM C_Invoice invoice WHERE WH_Withholding.C_BPartner_Location_ID IS NULL AND WH_Withholding.SourceInvoice_ID = invoice.C_Invoice_ID;</SQLStatement>
+      <RollbackStatement>UPDATE WH_Withholding SET C_BPartner_Location_ID = NULL WHERE SourceInvoice_ID IS NOT NULL;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="40" StepType="SQL">
+      <Comments>Update DateAcct From Order</Comments>
+      <SQLStatement>UPDATE WH_Withholding SET DateAcct = o.DateAcct FROM C_Order o WHERE WH_Withholding.DateAcct IS NULL AND WH_Withholding.SourceOrder_ID = o.C_Order_ID;</SQLStatement>
+      <RollbackStatement>UPDATE WH_Withholding SET DateAcct = NULL WHERE SourceOrder_ID IS NOT NULL;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="50" StepType="SQL">
+      <Comments>Update IsSOTrx From Order</Comments>
+      <SQLStatement>UPDATE WH_Withholding SET IsSOTrx = o.IsSOTrx FROM C_Order o WHERE WH_Withholding.IsSOTrx IS NULL AND WH_Withholding.SourceOrder_ID = o.C_Order_ID;</SQLStatement>
+      <RollbackStatement>UPDATE WH_Withholding SET IsSOTrx = NULL WHERE SourceOrder_ID IS NOT NULL;</RollbackStatement>
+    </Step>
+    <Step DBType="Postgres" Parse="Y" SeqNo="60" StepType="SQL">
+      <Comments>Update C_BPartner_Location_ID From Order</Comments>
+      <SQLStatement>UPDATE WH_Withholding SET C_BPartner_Location_ID = o.C_BPartner_Location_ID FROM C_Order o WHERE WH_Withholding.C_BPartner_Location_ID IS NULL AND WH_Withholding.SourceOrder_ID = o.C_Order_ID;</SQLStatement>
+      <RollbackStatement>UPDATE WH_Withholding SET C_BPartner_Location_ID = NULL WHERE SourceOrder_ID IS NOT NULL;</RollbackStatement>
+    </Step>
+  </Migration>
+</Migrations>

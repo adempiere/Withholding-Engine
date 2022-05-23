@@ -137,8 +137,7 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 	
 	@Override
 	protected boolean beforeSave(boolean newRecord) {
-		setC_Currency_ID();
-		setC_ConversionType_ID();
+		setValuesFromSourceDocument();
 		return true;
 	}
 	/**
@@ -274,7 +273,7 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 	 * Set Currency
 	 * @return void
 	 */
-	private void setC_Currency_ID() {
+	private void setValuesFromSourceDocument() {
 		
 		if (getC_Currency_ID() > 0)
 			return ;
@@ -286,27 +285,15 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 			document = new MOrder(getCtx(), getSourceInvoice_ID(), get_TrxName());
 		
 		Optional<PO> maybeSourceDocument = Optional.ofNullable(document);
-		maybeSourceDocument.ifPresent(sourceDocument -> setC_Currency_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_Currency_ID)));
+		maybeSourceDocument.ifPresent(sourceDocument -> {
+			setC_Currency_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_Currency_ID));
+			setC_ConversionType_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_ConversionType_ID));
+			setIsSOTrx(sourceDocument.get_ValueAsBoolean(MWHWithholding.COLUMNNAME_IsSOTrx));
+			setC_BPartner_Location_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_BPartner_Location_ID));
+			setDateAcct((Timestamp)sourceDocument.get_Value(MWHWithholding.COLUMNNAME_DateAcct));
+		});
 	}
-	
-	/**
-	 * Set Currency
-	 * @return void
-	 */
-	private void setC_ConversionType_ID() {
-		
-		if (getC_ConversionType_ID() > 0)
-			return ;
-		PO document = null;
-		if (getSourceInvoice_ID() > 0)
-			document = MInvoice.get(getCtx(), getSourceInvoice_ID());
-		if (document == null 
-				&& getSourceOrder_ID() > 0)
-			document = new MOrder(getCtx(), getSourceInvoice_ID(), get_TrxName());
-		
-		Optional<PO> maybeSourceDocument = Optional.ofNullable(document);
-		maybeSourceDocument.ifPresent(sourceDocument -> setC_ConversionType_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_ConversionType_ID)));
-	}
+
 	/**
 	 * 	Void Document.
 	 * 	Same as Close.
