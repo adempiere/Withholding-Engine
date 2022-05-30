@@ -270,13 +270,11 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 	}	//	setC_DocTypeTarget_ID
 	
 	/**
-	 * Set Currency
+	 * Set Values From Document
 	 * @return void
 	 */
 	private void setValuesFromSourceDocument() {
 		
-		if (getC_Currency_ID() > 0)
-			return ;
 		PO document = null;
 		if (getSourceInvoice_ID() > 0)
 			document = MInvoice.get(getCtx(), getSourceInvoice_ID());
@@ -286,11 +284,16 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 		
 		Optional<PO> maybeSourceDocument = Optional.ofNullable(document);
 		maybeSourceDocument.ifPresent(sourceDocument -> {
-			setC_Currency_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_Currency_ID));
-			setC_ConversionType_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_ConversionType_ID));
+			if (getC_Currency_ID() == 0)
+				setC_Currency_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_Currency_ID));
+			if (getC_ConversionType_ID() == 0)
+				setC_ConversionType_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_ConversionType_ID));
+			if (getC_BPartner_Location_ID() == 0 )
+				setC_BPartner_Location_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_BPartner_Location_ID));
+			if (getDateAcct() == null)
+				setDateAcct((Timestamp)sourceDocument.get_Value(MWHWithholding.COLUMNNAME_DateAcct));
+			
 			setIsSOTrx(sourceDocument.get_ValueAsBoolean(MWHWithholding.COLUMNNAME_IsSOTrx));
-			setC_BPartner_Location_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_BPartner_Location_ID));
-			setDateAcct((Timestamp)sourceDocument.get_Value(MWHWithholding.COLUMNNAME_DateAcct));
 		});
 	}
 
