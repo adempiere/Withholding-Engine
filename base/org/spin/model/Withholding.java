@@ -142,26 +142,26 @@ public class Withholding implements ModelValidator {
 							withholding.saveEx();
 					});
 				}
-					StringBuffer errorMessage = new StringBuffer();
-					List<MWHWithholding> withholdingList = new Query(Env.getCtx(), MWHWithholding.Table_Name, "C_Invoice_ID = ? AND WithholdingDeclaration_ID > 0", null)
-			                .setOnlyActiveRecords(true)
-			                .setParameters(invoice.getC_Invoice_ID())
-			                .<MWHWithholding>list();
-					withholdingList.stream()
-					.forEach(withholding -> {
-						MInvoice withholdingDeclaration = MInvoice.get(Env.getCtx(), withholding.getWithholdingDeclaration_ID());
-						if(errorMessage.length() > 0) {
-							errorMessage.append(Env.NL);
-						}
-						if (withholdingDeclaration.getDocStatus().equals(MInvoice.DOCSTATUS_Completed) 
-								|| withholdingDeclaration.getDocStatus().equals(MInvoice.DOCSTATUS_Closed)
-								|| withholdingDeclaration.getDocStatus().equals(MInvoice.DOCSTATUS_Drafted)) {
-							errorMessage.append("@WH_Withholding_ID@ ").append(withholding.getDocumentNo()).append(" @C_Invoice_ID@ ").append(withholdingDeclaration.getDocumentNo());
-						}						
-					});					
+				StringBuffer errorMessage = new StringBuffer();
+				List<MWHWithholding> withholdingList = new Query(Env.getCtx(), MWHWithholding.Table_Name, "C_Invoice_ID = ? AND WithholdingDeclaration_ID > 0", null)
+		                .setOnlyActiveRecords(true)
+		                .setParameters(invoice.getC_Invoice_ID())
+		                .<MWHWithholding>list();
+				withholdingList.stream()
+				.forEach(withholding -> {
+					MInvoice withholdingDeclaration = MInvoice.get(Env.getCtx(), withholding.getWithholdingDeclaration_ID());
 					if(errorMessage.length() > 0) {
-						throw new AdempiereException("@WithholdingReferenceError@: " + errorMessage);
-					}				
+						errorMessage.append(Env.NL);
+					}
+					if (withholdingDeclaration.getDocStatus().equals(MInvoice.DOCSTATUS_Completed) 
+							|| withholdingDeclaration.getDocStatus().equals(MInvoice.DOCSTATUS_Closed)
+							|| withholdingDeclaration.getDocStatus().equals(MInvoice.DOCSTATUS_Drafted)) {
+						errorMessage.append("@WH_Withholding_ID@ ").append(withholding.getDocumentNo()).append(" @C_Invoice_ID@ ").append(withholdingDeclaration.getDocumentNo());
+					}						
+				});					
+				if(errorMessage.length() > 0) {
+					throw new AdempiereException("@WithholdingReferenceError@: " + errorMessage);
+				}				
 			}			
 		}
 		//
