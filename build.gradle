@@ -63,8 +63,8 @@ publishing {
             version
            	from components.java
            	pom {
-                name = 'Test For Gradle'
-                description = 'Test for publish Gradle .'
+                name = 'Withholding Engine'
+                description = 'Withholding Engine for ADempiere'
                 url = 'http://erpya.com/'
                 licenses {
                     license {
