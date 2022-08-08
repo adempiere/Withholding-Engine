@@ -25,7 +25,7 @@ dependencies {
 sourceSets {
     main {
          java {
-            srcDirs = ['src']
+            srcDirs = ['src/main/java']
          }
     }
 }
@@ -58,8 +58,8 @@ publishing {
     }
     publications {
         mavenJava(MavenPublication) {
-        	groupId 'erpya.com'
-            artifactId 'withholding'
+        	groupId 'io.github.adempiere'
+            artifactId 'withholding-engine'
             version
            	from components.java
            	pom {
@@ -68,8 +68,8 @@ publishing {
                 url = 'http://erpya.com/'
                 licenses {
                     license {
-                        name = 'GNU General Public License, version 2'
-                        url = 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt'
+                        name = 'GNU General Public License v3.0'
+                        url = 'https://www.gnu.org/licenses/gpl-3.0.txt'
                     }
                 }
                 developers {
@@ -80,9 +80,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'scm:git:git://github.com/erpcya/Withholding.git'
-                    developerConnection = 'scm:git:ssh://github.com/erpcya/Withholding.git'
-                    url = 'http://github.com/erpcya/Withholding'
+                    connection = 'scm:git:git://github.com/adempiere/Withholding-Engine.git'
+                    developerConnection = 'scm:git:ssh://github.com/adempiere/Withholding-Engine.git'
+                    url = 'http://github.com/adempiere/Withholding-Engine'
                 }
             }
 		}
