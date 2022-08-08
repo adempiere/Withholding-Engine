@@ -1,29 +1,20 @@
 apply plugin: 'java-library'
 apply plugin: 'maven-publish'
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven {
-		url = "https://maven.pkg.github.com/erpcya/Repository"
-        credentials {
-        	username = System.properties['deploy.user'] ?: System.getenv("GITHUB_DEPLOY_USER")
-            password = System.properties['deploy.token'] ?: System.getenv("GITHUB_DEPLOY_TOKEN")
-		}
-	}
-}
+apply plugin: 'signing'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-def libraryVersion = '1.2.2'
-def entityType = 'WHH'
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
 
-sourceSets {
-    main {
-         java {
-            srcDirs = ['base']
-         }
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
     }
 }
 
@@ -31,56 +22,54 @@ dependencies {
     compileOnly fileTree(dir: 'dependences', include: ['*.jar'])
 }
 
-jar {
-    manifest {
-        attributes('Implementation-Title': project.name,
-                   'Implementation-Version': project.version, 
-                   "EntityType": entityType)
+sourceSets {
+    main {
+         java {
+            srcDirs = ['src']
+         }
     }
 }
 
-//	Create release for project
-task createRelease(type: Zip) {
-   dependsOn build
-   from 'build/libs/'
-   from 'xml/'
-   include '*'
-   include '*/*'
-   archiveName project.name + '.zip'
-   destinationDir(file('build/release/'))
-   doLast {
-        file('build/release/')
-        	.listFiles({file -> file.isFile()} as FileFilter).sort()
-        	.each { File file ->
-            ant.checksum file: file
-        }
-   	}
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+def entityType = 'WHH'
+version = System.getenv("ADEMIERE_LIBRARY_VERSION")
+
+jar {
+    manifest {
+        attributes("Implementation-Title": "A Test of Project",
+                   "Implementation-Version": version, 
+                   "EntityType": entityType)
+    }
 }
 
 publishing {
     repositories {
         maven {
-            url = "https://maven.pkg.github.com/erpcya/Repository"
+            url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             credentials {
-                username = System.properties['deploy.user'] ?: System.getenv("GITHUB_DEPLOY_USER")
-                password = System.properties['deploy.token'] ?: System.getenv("GITHUB_DEPLOY_TOKEN")
+                username = findProperty("sonatypeUsername")
+                password = findProperty("sonatypePassword")
             }
         }
     }
     publications {
-		mavenJava(MavenPublication) {
-        	groupId 'org.erpya.adempiere.tools'
+        mavenJava(MavenPublication) {
+        	groupId 'erpya.com'
             artifactId 'withholding'
-            version libraryVersion
-           	artifact jar
+            version
+           	from components.java
            	pom {
-                name = 'ADempiere Withholding Engine'
-                description = 'This library have all related to Withholding Engine'
-                 url = 'https://www.erpya.com/'
+                name = 'Test For Gradle'
+                description = 'Test for publish Gradle .'
+                url = 'http://erpya.com/'
                 licenses {
                     license {
-                        name = 'GNU General Public License v3.0'
-                        url = 'https://www.gnu.org/licenses/gpl-3.0.txt'
+                        name = 'GNU General Public License, version 2'
+                        url = 'https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt'
                     }
                 }
                 developers {
@@ -90,7 +79,19 @@ publishing {
                         email = 'ysenih@erpya.com'
                     }
                 }
+                scm {
+                    connection = 'scm:git:git://github.com/erpcya/Withholding.git'
+                    developerConnection = 'scm:git:ssh://github.com/erpcya/Withholding.git'
+                    url = 'http://github.com/erpcya/Withholding'
+                }
             }
 		}
 	}
+}
+
+signing {
+	def signingKey = findProperty("signingKey")
+    def signingPassword = findProperty("signingPassword")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign publishing.publications.mavenJava
 }
