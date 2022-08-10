@@ -277,10 +277,10 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 		
 		PO document = null;
 		if (getSourceInvoice_ID() > 0)
-			document = MInvoice.get(getCtx(), getSourceInvoice_ID());
+			document = new MInvoice(getCtx(), getSourceInvoice_ID(), get_TrxName());
 		if (document == null 
 				&& getSourceOrder_ID() > 0)
-			document = new MOrder(getCtx(), getSourceInvoice_ID(), get_TrxName());
+			document = new MOrder(getCtx(), getSourceOrder_ID(), get_TrxName());
 		
 		Optional<PO> maybeSourceDocument = Optional.ofNullable(document);
 		maybeSourceDocument.ifPresent(sourceDocument -> {
