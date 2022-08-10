@@ -286,8 +286,12 @@ public class MWHWithholding extends X_WH_Withholding implements DocAction, DocOp
 		maybeSourceDocument.ifPresent(sourceDocument -> {
 			if (getC_Currency_ID() == 0)
 				setC_Currency_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_Currency_ID));
-			if (getC_ConversionType_ID() == 0)
-				setC_ConversionType_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_ConversionType_ID));
+			if (getC_ConversionType_ID() == 0) {
+				int C_ConversionType_ID = sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_ConversionType_ID); 
+				if (C_ConversionType_ID == 0)
+					C_ConversionType_ID = MConversionType.getDefault(getAD_Client_ID());
+				setC_ConversionType_ID(C_ConversionType_ID);
+			}
 			if (getC_BPartner_Location_ID() == 0 )
 				setC_BPartner_Location_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_BPartner_Location_ID));
 			if (getDateAcct() == null)
