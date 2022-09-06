@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="WHH" Name="Add Sales Order to Document Types of WH Line" ReleaseNo="1.0" SeqNo="500420">
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="108" Action="U" Record_ID="52818" Table="AD_Val_Rule">
+        <Data AD_Column_ID="193" Column="Code" oldValue="C_DocType.DocBaseType IN ('ARI', 'API','ARC','APC','POO', 'ARR', 'APP')">C_DocType.DocBaseType IN ('ARI', 'API','ARC','APC','POO', 'SOO', 'ARR', 'APP')</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
