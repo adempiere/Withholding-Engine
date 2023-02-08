@@ -2,20 +2,18 @@ apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-if (JavaVersion.current().isJava8Compatible()) {
-    allprojects {
-        tasks.withType(Javadoc) {
-            options.addStringOption('Xdoclint:none', '-quiet')
-        }
-    }
-}
-
-sourceCompatibility = 1.11
-def baseVersion = '3.9.4'
 repositories {
     mavenLocal()
     mavenCentral()
 }
+
+//Solution by the second link
+allprojects {
+    tasks.withType(Javadoc).all { enabled = false }
+}
+
+sourceCompatibility = 1.11
+def baseVersion = '3.9.4'
 
 dependencies {
     api fileTree(
