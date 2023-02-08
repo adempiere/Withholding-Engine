@@ -21,8 +21,8 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 import org.adempiere.exceptions.AdempiereException;
-import org.compiere.model.I_C_DocType;
-import org.compiere.model.I_C_Invoice;
+import org.adempiere.core.domains.models.I_C_DocType;
+import org.adempiere.core.domains.models.I_C_Invoice;
 import org.compiere.model.MDocType;
 import org.compiere.model.ModelValidator;
 import org.compiere.model.PO;

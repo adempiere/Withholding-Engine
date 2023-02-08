@@ -76,7 +76,7 @@ public interface I_WH_DefinitionLine
 	  */
 	public int getC_DocType_ID();
 
-	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_DocType getC_DocType() throws RuntimeException;
 
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";

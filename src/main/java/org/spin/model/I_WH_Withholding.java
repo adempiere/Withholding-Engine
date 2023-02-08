@@ -85,7 +85,7 @@ public interface I_WH_Withholding
 	  */
 	public int getC_BPartner_ID();
 
-	public org.compiere.model.I_C_BPartner getC_BPartner() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_BPartner getC_BPartner() throws RuntimeException;
 
     /** Column name C_BPartner_Location_ID */
     public static final String COLUMNNAME_C_BPartner_Location_ID = "C_BPartner_Location_ID";
@@ -100,7 +100,7 @@ public interface I_WH_Withholding
 	  */
 	public int getC_BPartner_Location_ID();
 
-	public org.compiere.model.I_C_BPartner_Location getC_BPartner_Location() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_BPartner_Location getC_BPartner_Location() throws RuntimeException;
 
     /** Column name C_ConversionType_ID */
     public static final String COLUMNNAME_C_ConversionType_ID = "C_ConversionType_ID";
@@ -115,7 +115,7 @@ public interface I_WH_Withholding
 	  */
 	public int getC_ConversionType_ID();
 
-	public org.compiere.model.I_C_ConversionType getC_ConversionType() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_ConversionType getC_ConversionType() throws RuntimeException;
 
     /** Column name C_Currency_ID */
     public static final String COLUMNNAME_C_Currency_ID = "C_Currency_ID";
@@ -130,7 +130,7 @@ public interface I_WH_Withholding
 	  */
 	public int getC_Currency_ID();
 
-	public org.compiere.model.I_C_Currency getC_Currency() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_Currency getC_Currency() throws RuntimeException;
 
     /** Column name C_DocType_ID */
     public static final String COLUMNNAME_C_DocType_ID = "C_DocType_ID";
@@ -145,7 +145,7 @@ public interface I_WH_Withholding
 	  */
 	public int getC_DocType_ID();
 
-	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_DocType getC_DocType() throws RuntimeException;
 
     /** Column name C_InvoiceLine_ID */
     public static final String COLUMNNAME_C_InvoiceLine_ID = "C_InvoiceLine_ID";
@@ -160,7 +160,7 @@ public interface I_WH_Withholding
 	  */
 	public int getC_InvoiceLine_ID();
 
-	public org.compiere.model.I_C_InvoiceLine getC_InvoiceLine() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_InvoiceLine getC_InvoiceLine() throws RuntimeException;
 
     /** Column name C_Invoice_ID */
     public static final String COLUMNNAME_C_Invoice_ID = "C_Invoice_ID";
@@ -175,7 +175,7 @@ public interface I_WH_Withholding
 	  */
 	public int getC_Invoice_ID();
 
-	public org.compiere.model.I_C_Invoice getC_Invoice() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_Invoice getC_Invoice() throws RuntimeException;
 
     /** Column name C_Tax_ID */
     public static final String COLUMNNAME_C_Tax_ID = "C_Tax_ID";
@@ -190,7 +190,7 @@ public interface I_WH_Withholding
 	  */
 	public int getC_Tax_ID();
 
-	public org.compiere.model.I_C_Tax getC_Tax() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_Tax getC_Tax() throws RuntimeException;
 
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
@@ -395,7 +395,7 @@ public interface I_WH_Withholding
 	/** Get Source Invoice Line	  */
 	public int getSourceInvoiceLine_ID();
 
-	public org.compiere.model.I_C_InvoiceLine getSourceInvoiceLine() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_InvoiceLine getSourceInvoiceLine() throws RuntimeException;
 
     /** Column name SourceInvoice_ID */
     public static final String COLUMNNAME_SourceInvoice_ID = "SourceInvoice_ID";
@@ -406,7 +406,7 @@ public interface I_WH_Withholding
 	/** Get Source Invoice	  */
 	public int getSourceInvoice_ID();
 
-	public org.compiere.model.I_C_Invoice getSourceInvoice() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_Invoice getSourceInvoice() throws RuntimeException;
 
     /** Column name SourceOrderLine_ID */
     public static final String COLUMNNAME_SourceOrderLine_ID = "SourceOrderLine_ID";
@@ -417,7 +417,7 @@ public interface I_WH_Withholding
 	/** Get Source Order Line	  */
 	public int getSourceOrderLine_ID();
 
-	public org.compiere.model.I_C_OrderLine getSourceOrderLine() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_OrderLine getSourceOrderLine() throws RuntimeException;
 
     /** Column name SourceOrder_ID */
     public static final String COLUMNNAME_SourceOrder_ID = "SourceOrder_ID";
@@ -428,7 +428,7 @@ public interface I_WH_Withholding
 	/** Get Source Order	  */
 	public int getSourceOrder_ID();
 
-	public org.compiere.model.I_C_Order getSourceOrder() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_Order getSourceOrder() throws RuntimeException;
 
     /** Column name UUID */
     public static final String COLUMNNAME_UUID = "UUID";
@@ -520,7 +520,7 @@ public interface I_WH_Withholding
 	  */
 	public int getWithholdingDeclaration_ID();
 
-	public org.compiere.model.I_C_Invoice getWithholdingDeclaration() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_Invoice getWithholdingDeclaration() throws RuntimeException;
 
     /** Column name WithholdingRate */
     public static final String COLUMNNAME_WithholdingRate = "WithholdingRate";

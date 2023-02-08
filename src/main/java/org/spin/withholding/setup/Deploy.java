@@ -19,7 +19,7 @@ package org.spin.withholding.setup;
 import java.util.Properties;
 
 import org.compiere.model.Query;
-import org.compiere.model.X_AD_ModelValidator;
+import org.adempiere.core.domains.models.X_AD_ModelValidator;
 import org.spin.model.Withholding;
 import org.spin.util.ISetupDefinition;
 

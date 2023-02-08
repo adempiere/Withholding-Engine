@@ -2,14 +2,6 @@ apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-}
-
 if (JavaVersion.current().isJava8Compatible()) {
     allprojects {
         tasks.withType(Javadoc) {
@@ -18,8 +10,22 @@ if (JavaVersion.current().isJava8Compatible()) {
     }
 }
 
+sourceCompatibility = 1.11
+def baseVersion = '3.9.4'
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
 dependencies {
-    compileOnly fileTree(dir: 'dependences', include: ['*.jar'])
+    api fileTree(
+        dir: 'lib',
+        include: [
+            '*.jar'
+        ]
+    )
+    //	ADempiere Core
+	api "io.github.adempiere:base:${baseVersion}"
 }
 
 sourceSets {

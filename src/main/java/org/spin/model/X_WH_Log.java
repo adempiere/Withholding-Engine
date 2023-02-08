@@ -73,9 +73,9 @@ public class X_WH_Log extends PO implements I_WH_Log, I_Persistent
       return sb.toString();
     }
 
-	public org.compiere.model.I_C_Invoice getC_Invoice() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_Invoice getC_Invoice() throws RuntimeException
     {
-		return (org.compiere.model.I_C_Invoice)MTable.get(getCtx(), org.compiere.model.I_C_Invoice.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_Invoice)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_Invoice.Table_Name)
 			.getPO(getC_Invoice_ID(), get_TrxName());	}
 
 	/** Set Invoice.
@@ -101,9 +101,9 @@ public class X_WH_Log extends PO implements I_WH_Log, I_Persistent
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_InvoiceLine getC_InvoiceLine() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_InvoiceLine getC_InvoiceLine() throws RuntimeException
     {
-		return (org.compiere.model.I_C_InvoiceLine)MTable.get(getCtx(), org.compiere.model.I_C_InvoiceLine.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_InvoiceLine)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_InvoiceLine.Table_Name)
 			.getPO(getC_InvoiceLine_ID(), get_TrxName());	}
 
 	/** Set Invoice Line.
@@ -146,9 +146,9 @@ public class X_WH_Log extends PO implements I_WH_Log, I_Persistent
 		return (String)get_Value(COLUMNNAME_Comments);
 	}
 
-	public org.compiere.model.I_C_Invoice getSourceInvoice() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_Invoice getSourceInvoice() throws RuntimeException
     {
-		return (org.compiere.model.I_C_Invoice)MTable.get(getCtx(), org.compiere.model.I_C_Invoice.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_Invoice)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_Invoice.Table_Name)
 			.getPO(getSourceInvoice_ID(), get_TrxName());	}
 
 	/** Set Source Invoice.
@@ -171,9 +171,9 @@ public class X_WH_Log extends PO implements I_WH_Log, I_Persistent
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_InvoiceLine getSourceInvoiceLine() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_InvoiceLine getSourceInvoiceLine() throws RuntimeException
     {
-		return (org.compiere.model.I_C_InvoiceLine)MTable.get(getCtx(), org.compiere.model.I_C_InvoiceLine.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_InvoiceLine)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_InvoiceLine.Table_Name)
 			.getPO(getSourceInvoiceLine_ID(), get_TrxName());	}
 
 	/** Set Source Invoice Line.

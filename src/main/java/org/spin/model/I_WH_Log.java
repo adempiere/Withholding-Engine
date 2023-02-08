@@ -76,7 +76,7 @@ public interface I_WH_Log
 	  */
 	public int getC_Invoice_ID();
 
-	public org.compiere.model.I_C_Invoice getC_Invoice() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_Invoice getC_Invoice() throws RuntimeException;
 
     /** Column name C_InvoiceLine_ID */
     public static final String COLUMNNAME_C_InvoiceLine_ID = "C_InvoiceLine_ID";
@@ -91,7 +91,7 @@ public interface I_WH_Log
 	  */
 	public int getC_InvoiceLine_ID();
 
-	public org.compiere.model.I_C_InvoiceLine getC_InvoiceLine() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_InvoiceLine getC_InvoiceLine() throws RuntimeException;
 
     /** Column name Comments */
     public static final String COLUMNNAME_Comments = "Comments";
@@ -144,7 +144,7 @@ public interface I_WH_Log
 	/** Get Source Invoice	  */
 	public int getSourceInvoice_ID();
 
-	public org.compiere.model.I_C_Invoice getSourceInvoice() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_Invoice getSourceInvoice() throws RuntimeException;
 
     /** Column name SourceInvoiceLine_ID */
     public static final String COLUMNNAME_SourceInvoiceLine_ID = "SourceInvoiceLine_ID";
@@ -155,7 +155,7 @@ public interface I_WH_Log
 	/** Get Source Invoice Line	  */
 	public int getSourceInvoiceLine_ID();
 
-	public org.compiere.model.I_C_InvoiceLine getSourceInvoiceLine() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_InvoiceLine getSourceInvoiceLine() throws RuntimeException;
 
     /** Column name Updated */
     public static final String COLUMNNAME_Updated = "Updated";

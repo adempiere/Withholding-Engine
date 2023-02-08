@@ -76,7 +76,7 @@ public interface I_WH_Setting
 	  */
 	public int getAD_Table_ID();
 
-	public org.compiere.model.I_AD_Table getAD_Table() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_AD_Table getAD_Table() throws RuntimeException;
 
     /** Column name C_Charge_ID */
     public static final String COLUMNNAME_C_Charge_ID = "C_Charge_ID";
@@ -91,7 +91,7 @@ public interface I_WH_Setting
 	  */
 	public int getC_Charge_ID();
 
-	public org.compiere.model.I_C_Charge getC_Charge() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_Charge getC_Charge() throws RuntimeException;
 
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
@@ -281,7 +281,7 @@ public interface I_WH_Setting
 	  */
 	public int getWithholdingCreditDocType_ID();
 
-	public org.compiere.model.I_C_DocType getWithholdingCreditDocType() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_DocType getWithholdingCreditDocType() throws RuntimeException;
 
     /** Column name WithholdingDebitDocType_ID */
     public static final String COLUMNNAME_WithholdingDebitDocType_ID = "WithholdingDebitDocType_ID";
@@ -296,5 +296,5 @@ public interface I_WH_Setting
 	  */
 	public int getWithholdingDebitDocType_ID();
 
-	public org.compiere.model.I_C_DocType getWithholdingDebitDocType() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_DocType getWithholdingDebitDocType() throws RuntimeException;
 }

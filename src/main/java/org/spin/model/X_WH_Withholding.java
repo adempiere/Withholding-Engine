@@ -109,9 +109,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return bd;
 	}
 
-	public org.compiere.model.I_C_BPartner getC_BPartner() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_BPartner getC_BPartner() throws RuntimeException
     {
-		return (org.compiere.model.I_C_BPartner)MTable.get(getCtx(), org.compiere.model.I_C_BPartner.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_BPartner)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_BPartner.Table_Name)
 			.getPO(getC_BPartner_ID(), get_TrxName());	}
 
 	/** Set Business Partner .
@@ -137,9 +137,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_BPartner_Location getC_BPartner_Location() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_BPartner_Location getC_BPartner_Location() throws RuntimeException
     {
-		return (org.compiere.model.I_C_BPartner_Location)MTable.get(getCtx(), org.compiere.model.I_C_BPartner_Location.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_BPartner_Location)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_BPartner_Location.Table_Name)
 			.getPO(getC_BPartner_Location_ID(), get_TrxName());	}
 
 	/** Set Partner Location.
@@ -165,9 +165,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_ConversionType getC_ConversionType() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_ConversionType getC_ConversionType() throws RuntimeException
     {
-		return (org.compiere.model.I_C_ConversionType)MTable.get(getCtx(), org.compiere.model.I_C_ConversionType.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_ConversionType)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_ConversionType.Table_Name)
 			.getPO(getC_ConversionType_ID(), get_TrxName());	}
 
 	/** Set Currency Type.
@@ -193,9 +193,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_Currency getC_Currency() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_Currency getC_Currency() throws RuntimeException
     {
-		return (org.compiere.model.I_C_Currency)MTable.get(getCtx(), org.compiere.model.I_C_Currency.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_Currency)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_Currency.Table_Name)
 			.getPO(getC_Currency_ID(), get_TrxName());	}
 
 	/** Set Currency.
@@ -221,9 +221,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_DocType getC_DocType() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_DocType getC_DocType() throws RuntimeException
     {
-		return (org.compiere.model.I_C_DocType)MTable.get(getCtx(), org.compiere.model.I_C_DocType.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_DocType)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_DocType.Table_Name)
 			.getPO(getC_DocType_ID(), get_TrxName());	}
 
 	/** Set Document Type.
@@ -249,9 +249,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_InvoiceLine getC_InvoiceLine() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_InvoiceLine getC_InvoiceLine() throws RuntimeException
     {
-		return (org.compiere.model.I_C_InvoiceLine)MTable.get(getCtx(), org.compiere.model.I_C_InvoiceLine.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_InvoiceLine)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_InvoiceLine.Table_Name)
 			.getPO(getC_InvoiceLine_ID(), get_TrxName());	}
 
 	/** Set Invoice Line.
@@ -277,9 +277,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_Invoice getC_Invoice() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_Invoice getC_Invoice() throws RuntimeException
     {
-		return (org.compiere.model.I_C_Invoice)MTable.get(getCtx(), org.compiere.model.I_C_Invoice.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_Invoice)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_Invoice.Table_Name)
 			.getPO(getC_Invoice_ID(), get_TrxName());	}
 
 	/** Set Invoice.
@@ -305,9 +305,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_Tax getC_Tax() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_Tax getC_Tax() throws RuntimeException
     {
-		return (org.compiere.model.I_C_Tax)MTable.get(getCtx(), org.compiere.model.I_C_Tax.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_Tax)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_Tax.Table_Name)
 			.getPO(getC_Tax_ID(), get_TrxName());	}
 
 	/** Set Tax.
@@ -666,9 +666,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return false;
 	}
 
-	public org.compiere.model.I_C_InvoiceLine getSourceInvoiceLine() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_InvoiceLine getSourceInvoiceLine() throws RuntimeException
     {
-		return (org.compiere.model.I_C_InvoiceLine)MTable.get(getCtx(), org.compiere.model.I_C_InvoiceLine.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_InvoiceLine)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_InvoiceLine.Table_Name)
 			.getPO(getSourceInvoiceLine_ID(), get_TrxName());	}
 
 	/** Set Source Invoice Line.
@@ -691,9 +691,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_Invoice getSourceInvoice() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_Invoice getSourceInvoice() throws RuntimeException
     {
-		return (org.compiere.model.I_C_Invoice)MTable.get(getCtx(), org.compiere.model.I_C_Invoice.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_Invoice)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_Invoice.Table_Name)
 			.getPO(getSourceInvoice_ID(), get_TrxName());	}
 
 	/** Set Source Invoice.
@@ -716,9 +716,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_OrderLine getSourceOrderLine() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_OrderLine getSourceOrderLine() throws RuntimeException
     {
-		return (org.compiere.model.I_C_OrderLine)MTable.get(getCtx(), org.compiere.model.I_C_OrderLine.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_OrderLine)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_OrderLine.Table_Name)
 			.getPO(getSourceOrderLine_ID(), get_TrxName());	}
 
 	/** Set Source Order Line.
@@ -741,9 +741,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_Order getSourceOrder() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_Order getSourceOrder() throws RuntimeException
     {
-		return (org.compiere.model.I_C_Order)MTable.get(getCtx(), org.compiere.model.I_C_Order.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_Order)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_Order.Table_Name)
 			.getPO(getSourceOrder_ID(), get_TrxName());	}
 
 	/** Set Source Order.
@@ -876,9 +876,9 @@ public class X_WH_Withholding extends PO implements I_WH_Withholding, I_Persiste
 		return bd;
 	}
 
-	public org.compiere.model.I_C_Invoice getWithholdingDeclaration() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_Invoice getWithholdingDeclaration() throws RuntimeException
     {
-		return (org.compiere.model.I_C_Invoice)MTable.get(getCtx(), org.compiere.model.I_C_Invoice.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_Invoice)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_Invoice.Table_Name)
 			.getPO(getWithholdingDeclaration_ID(), get_TrxName());	}
 
 	/** Set Withholding Declaration.

@@ -76,7 +76,7 @@ public interface I_WH_Definition
 	  */
 	public int getC_BPartner_ID();
 
-	public org.compiere.model.I_C_BPartner getC_BPartner() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_BPartner getC_BPartner() throws RuntimeException;
 
     /** Column name C_Charge_ID */
     public static final String COLUMNNAME_C_Charge_ID = "C_Charge_ID";
@@ -91,7 +91,7 @@ public interface I_WH_Definition
 	  */
 	public int getC_Charge_ID();
 
-	public org.compiere.model.I_C_Charge getC_Charge() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_Charge getC_Charge() throws RuntimeException;
 
     /** Column name Created */
     public static final String COLUMNNAME_Created = "Created";
@@ -122,7 +122,7 @@ public interface I_WH_Definition
 	  */
 	public int getDeclarationCreditDocType_ID();
 
-	public org.compiere.model.I_C_DocType getDeclarationCreditDocType() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_DocType getDeclarationCreditDocType() throws RuntimeException;
 
     /** Column name DeclarationDebitDocType_ID */
     public static final String COLUMNNAME_DeclarationDebitDocType_ID = "DeclarationDebitDocType_ID";
@@ -137,7 +137,7 @@ public interface I_WH_Definition
 	  */
 	public int getDeclarationDebitDocType_ID();
 
-	public org.compiere.model.I_C_DocType getDeclarationDebitDocType() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_DocType getDeclarationDebitDocType() throws RuntimeException;
 
     /** Column name Description */
     public static final String COLUMNNAME_Description = "Description";
@@ -248,7 +248,7 @@ public interface I_WH_Definition
 	  */
 	public int getWithholdingCreditDocType_ID();
 
-	public org.compiere.model.I_C_DocType getWithholdingCreditDocType() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_DocType getWithholdingCreditDocType() throws RuntimeException;
 
     /** Column name WithholdingDebitDocType_ID */
     public static final String COLUMNNAME_WithholdingDebitDocType_ID = "WithholdingDebitDocType_ID";
@@ -263,5 +263,5 @@ public interface I_WH_Definition
 	  */
 	public int getWithholdingDebitDocType_ID();
 
-	public org.compiere.model.I_C_DocType getWithholdingDebitDocType() throws RuntimeException;
+	public org.adempiere.core.domains.models.I_C_DocType getWithholdingDebitDocType() throws RuntimeException;
 }
