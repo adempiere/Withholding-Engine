@@ -144,9 +144,6 @@ public class MWHSetting extends X_WH_Setting {
 		return  settingList;
 	}
 	
-	/**	Export class	*/
-	private AbstractWithholdingSetting functionalSetting = null;
-	
 	/**
 	 * Get Class from device type, used for handler
 	 * @author Yamel Senih, ysenih@erpcya.com, ERPCyA http://www.erpcya.com
@@ -179,37 +176,24 @@ public class MWHSetting extends X_WH_Setting {
 		log.finest("Not found: " + className);
 		return null;
 	}	//	getHandlerClass
-
-	/**
-	 * Load class for export
-	 * @throws Exception
-	 */
-	private void loadClass() throws Exception {
-		if(functionalSetting != null) {
-			return;
-		}
-		//	Load it
-		//	Get class from parent
-		Class<?> clazz = getHandlerClass();
-		//	Not yet implemented
-		if (clazz == null) {
-			log.log(Level.INFO, "Using Standard Functional Setting");
-			functionalSetting = new GenericWithholdingSetting(this);
-			return;
-		}
-		//	
-		Constructor<?> constructor = clazz.getDeclaredConstructor(new Class[]{MWHSetting.class});
-		//	new instance
-		functionalSetting = (AbstractWithholdingSetting) constructor.newInstance(new Object[] {this});
-	}
 	
 	/**
 	 * Get Report export instance
 	 * @return
 	 */
 	public AbstractWithholdingSetting getSettingInstance() throws Exception {
-		loadClass();
-		return functionalSetting;
+		//	Load it
+		//	Get class from parent
+		Class<?> clazz = getHandlerClass();
+		//	Not yet implemented
+		if (clazz == null) {
+			log.log(Level.INFO, "Using Standard Functional Setting");
+			return new GenericWithholdingSetting(this);
+		}
+		//	
+		Constructor<?> constructor = clazz.getDeclaredConstructor(new Class[]{MWHSetting.class});
+		//	new instance
+		return (AbstractWithholdingSetting) constructor.newInstance(new Object[] {this});
 	}
 
 	@Override
