@@ -18,14 +18,14 @@ def baseGroupId = 'io.github.adempiere'
 def customGroupId = System.getenv("ADEMPIERE_LIBRARY_GROUP")
 
 dependencies {
-    api fileTree(
+    implementation fileTree(
         dir: 'lib',
         include: [
             '*.jar'
         ]
     )
     //	ADempiere Core
-	api "${baseGroupId}:base:${baseVersion}"
+	implementation "${baseGroupId}:base:${baseVersion}"
 }
 
 sourceSets {
