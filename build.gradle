@@ -2,24 +2,30 @@ apply plugin: 'java-library'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 repositories {
     mavenLocal()
     mavenCentral()
 }
 
-if (JavaVersion.current().isJava8Compatible()) {
-    allprojects {
-        tasks.withType(Javadoc) {
-            options.addStringOption('Xdoclint:none', '-quiet')
-        }
-    }
+//Solution by the second link
+allprojects {
+    tasks.withType(Javadoc).all { enabled = false }
 }
 
+sourceCompatibility = 1.11
+def baseVersion = '3.9.4'
+def baseGroupId = 'io.github.adempiere'
+def customGroupId = System.getenv("ADEMPIERE_LIBRARY_GROUP")
+
 dependencies {
-    compileOnly fileTree(dir: 'dependences', include: ['*.jar'])
+    api fileTree(
+        dir: 'lib',
+        include: [
+            '*.jar'
+        ]
+    )
+    //	ADempiere Core
+	api "${baseGroupId}:base:${baseVersion}"
 }
 
 sourceSets {
@@ -58,7 +64,7 @@ publishing {
     }
     publications {
         mavenJava(MavenPublication) {
-        	groupId 'io.github.adempiere'
+        	groupId customGroupId
             artifactId 'withholding-engine'
             version
            	from components.java

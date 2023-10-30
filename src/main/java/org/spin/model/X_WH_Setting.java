@@ -78,9 +78,9 @@ public class X_WH_Setting extends PO implements I_WH_Setting, I_Persistent
       return sb.toString();
     }
 
-	public org.compiere.model.I_AD_Table getAD_Table() throws RuntimeException
+	public org.adempiere.core.domains.models.I_AD_Table getAD_Table() throws RuntimeException
     {
-		return (org.compiere.model.I_AD_Table)MTable.get(getCtx(), org.compiere.model.I_AD_Table.Table_Name)
+		return (org.adempiere.core.domains.models.I_AD_Table)MTable.get(getCtx(), org.adempiere.core.domains.models.I_AD_Table.Table_Name)
 			.getPO(getAD_Table_ID(), get_TrxName());	}
 
 	/** Set Table.
@@ -106,9 +106,9 @@ public class X_WH_Setting extends PO implements I_WH_Setting, I_Persistent
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_Charge getC_Charge() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_Charge getC_Charge() throws RuntimeException
     {
-		return (org.compiere.model.I_C_Charge)MTable.get(getCtx(), org.compiere.model.I_C_Charge.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_Charge)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_Charge.Table_Name)
 			.getPO(getC_Charge_ID(), get_TrxName());	}
 
 	/** Set Charge.
@@ -389,9 +389,9 @@ public class X_WH_Setting extends PO implements I_WH_Setting, I_Persistent
 		return (String)get_Value(COLUMNNAME_WithholdingClassName);
 	}
 
-	public org.compiere.model.I_C_DocType getWithholdingCreditDocType() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_DocType getWithholdingCreditDocType() throws RuntimeException
     {
-		return (org.compiere.model.I_C_DocType)MTable.get(getCtx(), org.compiere.model.I_C_DocType.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_DocType)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_DocType.Table_Name)
 			.getPO(getWithholdingCreditDocType_ID(), get_TrxName());	}
 
 	/** Set Withholding Credit Document Type.
@@ -417,9 +417,9 @@ public class X_WH_Setting extends PO implements I_WH_Setting, I_Persistent
 		return ii.intValue();
 	}
 
-	public org.compiere.model.I_C_DocType getWithholdingDebitDocType() throws RuntimeException
+	public org.adempiere.core.domains.models.I_C_DocType getWithholdingDebitDocType() throws RuntimeException
     {
-		return (org.compiere.model.I_C_DocType)MTable.get(getCtx(), org.compiere.model.I_C_DocType.Table_Name)
+		return (org.adempiere.core.domains.models.I_C_DocType)MTable.get(getCtx(), org.adempiere.core.domains.models.I_C_DocType.Table_Name)
 			.getPO(getWithholdingDebitDocType_ID(), get_TrxName());	}
 
 	/** Set Withholding Debit Document Type.
