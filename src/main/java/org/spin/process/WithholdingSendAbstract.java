@@ -3,7 +3,7 @@
  * Copyright (C) 2006-2017 ADempiere Foundation, All Rights Reserved.         *
  * This program is free software, you can redistribute it and/or modify it    *
  * under the terms version 2 of the GNU General Public License as published   *
- * or (at your option) any later version.										*
+ * or (at your option) any later version.                                     *
  * by the Free Software Foundation. This program is distributed in the hope   *
  * that it will be useful, but WITHOUT ANY WARRANTY, without even the implied *
  * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.           *
@@ -12,7 +12,8 @@
  * with this program, if not, write to the Free Software Foundation, Inc.,    *
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.                     *
  * For the text or an alternative of this public license, you may reach us    *
- * or via info@adempiere.net or http://www.adempiere.net/license.html         *
+ * or via info@adempiere.net                                                  *
+ * or https://github.com/adempiere/adempiere/blob/develop/license.html        *
  *****************************************************************************/
 
 package org.spin.process;
@@ -22,7 +23,7 @@ import org.compiere.process.SvrProcess;
 
 /** Generated Process for (Withholding Send)
  *  @author ADempiere (generated) 
- *  @version Release 3.9.3
+ *  @version Release 3.9.4
  */
 public abstract class WithholdingSendAbstract extends SvrProcess {
 	/** Process Value 	*/
@@ -35,33 +36,38 @@ public abstract class WithholdingSendAbstract extends SvrProcess {
 	public static final String C_BPARTNER_ID = "C_BPartner_ID";
 	/**	Parameter Name for Withholding Type	*/
 	public static final String WH_TYPE_ID = "WH_Type_ID";
+	/**	Parameter Name for Sales Transaction	*/
+	public static final String ISSOTRX = "IsSOTrx";
 	/**	Parameter Name for Mail Template	*/
 	public static final String R_MAILTEXT_ID = "R_MailText_ID";
 	/**	Parameter Name for Document Date	*/
 	public static final String DATEDOC = "DateDoc";
-	/**	Parameter Name for Sales Transaction	*/
-	public static final String ISSOTRX = "IsSOTrx";
+	/**	Parameter Name for Send Withholding to Notification Queue	*/
+	public static final String WH_SENDDOCUMENTTOQUEUE = "WH_SendDocumentToQueue";
 	/**	Parameter Value for Business Partner 	*/
 	private int bPartnerId;
 	/**	Parameter Value for Withholding Type	*/
 	private int typeId;
+	/**	Parameter Value for Sales Transaction	*/
+	private String isSOTrx;
 	/**	Parameter Value for Mail Template	*/
 	private int mailTextId;
 	/**	Parameter Value for Document Date	*/
 	private Timestamp dateDoc;
 	/**	Parameter Value for Document Date(To)	*/
 	private Timestamp dateDocTo;
-	/**	Parameter Value for Sales Transaction	*/
-	private String isSOTrx;
+	/**	Parameter Value for Send Withholding to Notification Queue	*/
+	private boolean isSendDocumentToQueue;
 
 	@Override
 	protected void prepare() {
 		bPartnerId = getParameterAsInt(C_BPARTNER_ID);
 		typeId = getParameterAsInt(WH_TYPE_ID);
+		isSOTrx = getParameterAsString(ISSOTRX);
 		mailTextId = getParameterAsInt(R_MAILTEXT_ID);
 		dateDoc = getParameterAsTimestamp(DATEDOC);
 		dateDocTo = getParameterToAsTimestamp(DATEDOC);
-		isSOTrx = getParameterAsString(ISSOTRX);
+		isSendDocumentToQueue = getParameterAsBoolean(WH_SENDDOCUMENTTOQUEUE);
 	}
 
 	/**	 Getter Parameter Value for Business Partner 	*/
@@ -82,6 +88,16 @@ public abstract class WithholdingSendAbstract extends SvrProcess {
 	/**	 Setter Parameter Value for Withholding Type	*/
 	protected void setTypeId(int typeId) {
 		this.typeId = typeId;
+	}
+
+	/**	 Getter Parameter Value for Sales Transaction	*/
+	protected String getIsSOTrx() {
+		return isSOTrx;
+	}
+
+	/**	 Setter Parameter Value for Sales Transaction	*/
+	protected void setIsSOTrx(String isSOTrx) {
+		this.isSOTrx = isSOTrx;
 	}
 
 	/**	 Getter Parameter Value for Mail Template	*/
@@ -114,14 +130,14 @@ public abstract class WithholdingSendAbstract extends SvrProcess {
 		this.dateDocTo = dateDocTo;
 	}
 
-	/**	 Getter Parameter Value for Sales Transaction	*/
-	protected String getIsSOTrx() {
-		return isSOTrx;
+	/**	 Getter Parameter Value for Send Withholding to Notification Queue	*/
+	protected boolean isSendDocumentToQueue() {
+		return isSendDocumentToQueue;
 	}
 
-	/**	 Setter Parameter Value for Sales Transaction	*/
-	protected void setIsSOTrx(String isSOTrx) {
-		this.isSOTrx = isSOTrx;
+	/**	 Setter Parameter Value for Send Withholding to Notification Queue	*/
+	protected void setSendDocumentToQueue(boolean isSendDocumentToQueue) {
+		this.isSendDocumentToQueue = isSendDocumentToQueue;
 	}
 
 	/**	 Getter Parameter Value for Process ID	*/

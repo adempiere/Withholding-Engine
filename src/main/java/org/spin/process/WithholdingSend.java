@@ -31,9 +31,13 @@ import org.compiere.model.MInvoice;
 import org.compiere.model.MMailText;
 import org.compiere.model.MUser;
 import org.compiere.model.Query;
+import org.compiere.print.MPrintFormat;
 import org.compiere.print.ReportEngine;
+import org.compiere.print.ServerReportCtl;
 import org.compiere.util.Env;
 import org.compiere.util.Util;
+import org.spin.queue.notification.DefaultNotifier;
+import org.spin.queue.util.QueueLoader;
 
 
 /** Generated Process for (Withholding Send)
@@ -43,11 +47,14 @@ import org.compiere.util.Util;
 public class WithholdingSend extends WithholdingSendAbstract {
 
 	private AtomicInteger sends = new AtomicInteger();
+	private boolean sendToQueue = false;
 	
 	@Override
 	protected String doIt() throws Exception {
 		if (getMailTextId() == 0)
 			throw new AdempiereException("@Invalid@ @R_MailTex_ID@");
+		
+		sendToQueue = isSendDocumentToQueue();
 		
 		if (!isSelection()) {
 			List<Object> params = new ArrayList<>();
@@ -106,14 +113,14 @@ public class WithholdingSend extends WithholdingSendAbstract {
 	 */
 	private void sendInvoiceEmail(int recordId, int mailTextId) {
 		MInvoice invoice = new MInvoice(getCtx(), recordId, get_TrxName());
-		AtomicReference<MUser> to = new AtomicReference<MUser>();
-		MUser from = MUser.get(getCtx(), getAD_User_ID());
+		AtomicReference<MUser> recipient = new AtomicReference<MUser>();
+		MUser sender = MUser.get(getCtx(), getAD_User_ID());
 		
 		if (invoice.getAD_User_ID() > 0)
-			to.set((MUser) invoice.getAD_User());
+			recipient.set((MUser) invoice.getAD_User());
 		
         //	Get from default account
-        if (to.get() == null) {
+        if (recipient.get() == null) {
         	Optional<MUser> maybeUser = Arrays.asList(MUser.getOfBPartner(getCtx(), invoice.getC_BPartner_ID(), get_TrxName()))
         		.stream()
         		.filter(user -> !Util.isEmpty(user.getNotificationType()) && (user.getNotificationType().equals(MUser.NOTIFICATIONTYPE_EMail) 
@@ -121,7 +128,7 @@ public class WithholdingSend extends WithholdingSendAbstract {
         		.filter(user -> !Util.isEmpty(user.getEMail()) && user.getC_BPartner_Location_ID() == invoice.getC_BPartner_Location_ID())
         		.findFirst();
         	if(maybeUser.isPresent()) {
-        		to.set(maybeUser.get());
+        		recipient.set(maybeUser.get());
         	} else {
         		maybeUser = Arrays.asList(MUser.getOfBPartner(getCtx(), invoice.getC_BPartner_ID(), get_TrxName()))
                 		.stream()
@@ -130,27 +137,99 @@ public class WithholdingSend extends WithholdingSendAbstract {
                 		.filter(user -> !Util.isEmpty(user.getEMail()))
                 		.findFirst();
                 if(maybeUser.isPresent()) {
-                	to.set(maybeUser.get());
+                	recipient.set(maybeUser.get());
                 }
         	}
         }
-        //	
-        Optional.ofNullable(to.get()).ifPresent(toUser -> {
-        	ReportEngine re = ReportEngine.get(getCtx(), ReportEngine.INVOICE, invoice.get_ID());
-			File attachment = re.getPDF();
-			MClient client = MClient.get(getCtx(), getAD_Client_ID());
-			MMailText template = new MMailText(getCtx(), mailTextId, get_TrxName());
-			template.setPO(invoice);
-			template.setUser(getAD_User_ID());
-			template.setBPartner(invoice.getC_BPartner_ID());
-			if (client.sendEMail(from, to.get(), template.getMailHeader(), template.getMailText(true), attachment,template.isHtml())) { 
-				addLog("@EMail@ @Sent@ @to@ " + to.get().getName());
-				sends.incrementAndGet();
+        File attachment = getPDF(invoice);
+    	if (attachment == null)
+			return;
+    	
+        if (!sendToQueue) {
+	        //	
+	        Optional.ofNullable(recipient.get()).ifPresent(toUser -> {
+	    		//	
+	        	MClient client = MClient.get(getCtx(), getAD_Client_ID());
+	        	MMailText template = getTemplate(invoice, mailTextId);
+				if (client.sendEMail(sender, recipient.get(), template.getMailHeader(), template.getMailText(true), attachment,template.isHtml())) { 
+					addLog("@EMail@ @Sent@ @to@ " + recipient.get().getName());
+					sends.incrementAndGet();
+				}
+	        });
+	        //	Other
+	        if(!Optional.ofNullable(recipient.get()).isPresent()) {
+	        	addLog("@NotFound@ @AD_User_ID@ -> @C_BPartner_ID@ " + invoice.getC_BPartner().getName() + " @DocumentNo@ " + invoice.getDocumentNo());
+	        }
+        }else {
+			MMailText template = getTemplate(invoice, mailTextId);
+			//	Get instance for notifier
+			DefaultNotifier notifier = (DefaultNotifier) QueueLoader.getInstance().getQueueManager(DefaultNotifier.QUEUETYPE_DefaultNotifier)
+					.withContext(getCtx())
+					.withTransactionName(get_TrxName());
+			//	Send notification to queue
+			notifier
+				.clearMessage()
+				.withApplicationType(DefaultNotifier.DefaultNotificationType_UserDefined)
+				.withUserId(sender.get_ID())
+				.withText(template.getMailText(true))
+				.withDescription(template.getMailHeader())
+				.withEntity(invoice);
+			
+			if (recipient.get() != null) 
+				notifier.addRecipient(recipient.get().getAD_User_ID());
+			else {
+				addLog(invoice.getC_Invoice_ID(), null, null, "@RequestActionEMailNoTo@");
+				return;
 			}
-        });
-        //	Other
-        if(!Optional.ofNullable(to.get()).isPresent()) {
-        	addLog("@NotFound@ @AD_User_ID@ -> @C_BPartner_ID@ " + invoice.getC_BPartner().getName() + " @DocumentNo@ " + invoice.getDocumentNo());
+			//	Attachment
+			notifier.addAttachment(attachment);
+			//	Add to queue
+			notifier.addToQueue();
+			addLog (invoice.getC_Invoice_ID(), null, null, "@MessageAddedToQueue@");
+			//	
+			sends.incrementAndGet();
         }
+	}
+	
+	/**
+	 * Get Mail Template 
+	 * @param invoice
+	 * @param mailTextId
+	 * @return
+	 * @return MMailText
+	 */
+	private MMailText getTemplate (MInvoice invoice, int mailTextId) {
+		MMailText template = new MMailText(getCtx(), mailTextId, get_TrxName());
+		template.setPO(invoice);
+		template.setUser(getAD_User_ID());
+		template.setBPartner(invoice.getC_BPartner_ID());
+		
+		return template;
+	}
+	
+	/**
+	 * Get PDF from Print Format 
+	 * @param invoice
+	 * @return
+	 * @return File
+	 */
+	private File getPDF(MInvoice invoice) {
+		ReportEngine reportEngine = ReportEngine.get(getCtx(), ReportEngine.INVOICE, invoice.get_ID());
+		MPrintFormat printFormat = reportEngine.getPrintFormat();
+    	File attachment = null;
+    	if (printFormat.getJasperProcess_ID() > 0) {
+    		if (ServerReportCtl.runJasperProcess(invoice.get_ID(), reportEngine, false, null, getProcessInfo())) {
+    			attachment = getProcessInfo().getPDFReport();
+    		}
+    	}else 
+    		attachment = reportEngine.getPDF();
+    	
+		//	
+		if(attachment == null) {
+			addLog(invoice.getC_Invoice_ID(), null, null, "@FilePDF@ @NotFound@");
+			return null;
+		}
+		
+		return attachment;
 	}
 }
