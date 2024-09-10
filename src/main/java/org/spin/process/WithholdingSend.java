@@ -218,7 +218,7 @@ public class WithholdingSend extends WithholdingSendAbstract {
 		MPrintFormat printFormat = reportEngine.getPrintFormat();
     	File attachment = null;
     	if (printFormat.getJasperProcess_ID() > 0) {
-    		if (ServerReportCtl.runJasperProcess(invoice.get_ID(), reportEngine, false, null, getProcessInfo())) {
+    		if (ServerReportCtl.runJasperProcess(invoice.get_ID(), reportEngine, true, null, getProcessInfo())) {
     			attachment = getProcessInfo().getPDFReport();
     		}
     	}else 
