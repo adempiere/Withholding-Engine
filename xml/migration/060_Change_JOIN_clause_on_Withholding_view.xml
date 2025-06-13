@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Migrations>
+  <Migration EntityType="WHH" Name="060 Change JOIN clause on Withholding view" ReleaseNo="1.0" SeqNo="500450">
+    <Comments>comma and table as join. By EdwinBetanc0urt.</Comments>
+    <Step SeqNo="10" StepType="AD">
+      <PO AD_Table_ID="53231" Action="U" Record_ID="50519" Table="AD_View_Definition">
+        <Data AD_Column_ID="58091" Column="JoinClause" oldValue=", C_Currency cto">LEFT JOIN C_Currency AS cto ON (cto.C_Currency_ID = wh.C_Currency_ID OR cto.isActive = 'Y')</Data>
+      </PO>
+    </Step>
+  </Migration>
+</Migrations>
